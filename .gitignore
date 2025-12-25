@@ -1,2 +1,7 @@
 .idea
 **/.venv
+
+# Build output
+metadata.json
+motors.db
+motors.db.gz
