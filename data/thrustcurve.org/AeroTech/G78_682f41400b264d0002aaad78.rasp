@@ -1,0 +1,44 @@
+; @File: G78G_Typ.txt, @Pts-I: 1001, @Pts-O: 31, @Sm: 0, @CO: 5%
+; @TI: 109.776, @TIa: 109.5639, @TIe: 0.0%, @ThMax: 102.242, @ThAvg: 79.5671, @Tb: 1.377
+; Exported using ThrustCurveTool, www.ThrustGear.com
+; kjh started with John's 2008 RASP file.
+; changed motor length from 146mm to 124mm in the header row
+; reprocessed by: raspifix AeroTech_G78G_L.raw to calc metadata and reformat
+;
+G78G        29   124 4-7-10,          0.0597  0.1250 AT/RCS  
+      0.004       2.762
+      0.006      34.771
+      0.008      44.326
+      0.010      41.279
+      0.012      28.593
+      0.014      27.393
+      0.016      38.057
+      0.020      47.704
+      0.022      48.201
+      0.030      56.434
+      0.042      61.403
+      0.060      65.883
+      0.212      84.526
+      0.266      88.922
+      0.404      95.593
+      0.430      98.975
+      0.466     100.536
+      0.580     102.242
+      0.694     101.319
+      0.860      95.453
+      1.100      90.419
+      1.132      82.562
+      1.156      72.638
+      1.168      64.903
+      1.194      42.339
+      1.216      28.342
+      1.226      24.980
+      1.256      17.401
+      1.286      13.047
+      1.382       5.053
+      1.472       0.000
+; Total Impulse         109.78 (N-sec)
+; Avg Thrust             74.59 (N)
+; Max Thrust            102.24 (N) at 0.580 sec
+; Specific Impulse      187.51 (sec)
+;

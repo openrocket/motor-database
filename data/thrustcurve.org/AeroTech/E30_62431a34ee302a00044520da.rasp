@@ -1,0 +1,38 @@
+; Aerotech E30 RASP.ENG file made from NAR published data
+; File produced Sept 30, 2010
+; The total impulse, peak thrust, average thrust and burn time are
+; the same as the averaged static test data on the NAR web site in
+; the certification file. The curve drawn with these data points is as
+; close to the certification curve as can be with such a limited
+; number of points (32) allowed with wRASP up to v1.6.
+E30 24 70 4-7 .0178 .047 A
+0.006 49.3000
+0.030 45.7010
+0.038 47.1810
+0.050 45.1800
+0.062 43.7010
+0.112 43.4020
+0.138 42.8170
+0.206 42.0730
+0.238 43.3680
+0.282 41.5750
+0.324 41.0860
+0.342 41.7330
+0.362 40.1680
+0.436 38.1580
+0.524 36.3980
+0.650 32.9720
+0.712 31.0500
+0.836 25.0770
+0.874 22.4750
+0.888 21.5080
+0.900 20.0080
+0.912 17.1760
+0.924 13.3000
+0.942 6.6500
+0.962 2.7550
+0.974 1.6370
+0.988 0.7810
+1.000 0.4290
+1.010 0.1410
+1.020 0.0000
