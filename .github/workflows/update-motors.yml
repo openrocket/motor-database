@@ -1,0 +1,61 @@
+name: Update Motor Database
+
+on:
+  schedule:
+    # Run at 02:00 every Sunday
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Fetch New Motors
+        run: python scripts/fetch_updates.py
+
+      - name: Build Database
+        run: python scripts/build_database.py
+
+      - name: Commit Raw Data Changes
+        # This saves the downloaded .eng files back to the repo
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update motor cache [skip ci]"
+          file_pattern: "data/ state/"
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          keep_files: false
+          # We only want to publish the artifacts, not the whole repo
+          exclude_assets: "scripts,schema,data,.github"
+          # Or better, move artifacts to a 'public' folder and publish that:
+
+      - name: Prepare Publish Folder
+        run: |
+          mkdir public
+          mv motors.db.gz public/
+          mv metadata.json public/
+
+      - name: Deploy Artifacts
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          force_orphan: true
