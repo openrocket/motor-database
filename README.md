@@ -2,6 +2,10 @@
 
 This repository acts as the dynamic backend for OpenRocket's thrust curve data.
 
+## Deployment & API Endpoints
+
+This repository utilizes **GitHub Pages** to act as a static Content Delivery Network (CDN) for the compiled motor data. This ensures high availability and fast downloads for OpenRocket users without requiring a dedicated backend server.
+
 ## Architecture
 
 1.  **Source:** [ThrustCurve.org](https://www.thrustcurve.org/) API (thanks a lot for this incredible resource!).
@@ -12,6 +16,35 @@ This repository acts as the dynamic backend for OpenRocket's thrust curve data.
     *   Compiles them into a SQLite database (`motors.db`).
     *   GZips and hashes the database.
 4.  **Distribution:** The resulting `motors.db.gz` and `metadata.json` are published to GitHub Pages.
+
+The deployment process follows a split-branch strategy:
+
+1.  **`main` branch:** Contains the source code, scripts, and the raw text cache (`.eng`/`.rse` files).
+2.  **`gh-pages` branch:** Contains **only** the build artifacts (`motors.db.gz` and `metadata.json`).
+
+Every time the [Update Workflow](.github/workflows/update-motors.yml) runs (scheduled weekly), it commits the new raw data to `main`, compiles the database, and force-pushes the binary artifacts to `gh-pages`.
+
+### Public Endpoints
+
+The OpenRocket client (and other interested 3rd parties) can access the live data at the following URLs:
+
+| File | URL | Description |
+| :--- | :--- | :--- |
+| **Manifest** | `https://openrocket.info/motor-database/metadata.json` | Lightweight JSON file. Contains the `database_version`, `timestamp`, and `sha256` checksum. Checked by the client on startup. |
+| **Database** | `https://openrocket.info/motor-database/motors.db.gz` | GZipped SQLite database. Downloaded by the client *only* if the manifest version differs from the local cache. |
+
+### Manifest Format
+The `metadata.json` structure is defined as follows:
+```json
+{
+  "schema_version": 1,
+  "database_version": 20251225,
+  "generated_at": "2025-12-25T14:00:00.000000",
+  "motor_count": 1033,
+  "sha256": "a1b2c3d4e5f6...",
+  "download_url": "https://openrocket.info/motor-database/motors.db.gz"
+}
+```
 
 ## Manual Usage
 
