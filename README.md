@@ -35,10 +35,11 @@ The OpenRocket client (and other interested 3rd parties) can access the live dat
 
 ### Manifest Format
 The `metadata.json` structure is defined as follows:
+`database_version` is a sortable timestamp in `YYYYMMDDHHMMSS` format.
 ```json
 {
   "schema_version": 1,
-  "database_version": 20251225,
+  "database_version": 20251225140000,
   "generated_at": "2025-12-25T14:00:00.000000",
   "motor_count": 1033,
   "sha256": "a1b2c3d4e5f6...",

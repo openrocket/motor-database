@@ -217,7 +217,7 @@ def build():
 
     meta = {
         "schema_version": 1,
-        "database_version": int(datetime.now().strftime("%Y%m%d")),
+        "database_version": int(datetime.now().strftime("%Y%m%d%H%M%S")),
         "generated_at": datetime.now().isoformat(),
         "motor_count": motor_count,
         "sha256": sha256.hexdigest(),
