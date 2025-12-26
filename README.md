@@ -46,6 +46,56 @@ The `metadata.json` structure is defined as follows:
 }
 ```
 
+## Database Schema
+
+The SQLite schema lives in `schema/V1__initial_schema.sql` and is optimized for fast client lookups. Foreign keys are enabled, with `motors` referencing `manufacturers` and `thrust_data` referencing `motors` (cascade delete).
+
+### Tables and Columns
+
+**manufacturers**
+
+| Column | Type | Notes |
+| :--- | :--- | :--- |
+| id | INTEGER | Primary key, autoincrement |
+| name | TEXT | Required, unique |
+| abbrev | TEXT | Optional short name |
+
+**motors**
+
+| Column | Type | Notes |
+| :--- | :--- | :--- |
+| id | INTEGER | Primary key, autoincrement |
+| manufacturer_id | INTEGER | Required, FK to `manufacturers.id` |
+| designation | TEXT | Required motor designation |
+| common_name | TEXT | Optional display name |
+| diameter | REAL | mm |
+| length | REAL | mm |
+| impulse | REAL | Ns |
+| avg_thrust | REAL | N |
+| burn_time | REAL | s |
+| propellant_weight | REAL | kg |
+| total_weight | REAL | kg |
+| type | TEXT | e.g. SU (Single Use), RE (Reload) |
+| data_file_format | TEXT | e.g. RASP, RSE |
+| last_updated_source | TEXT | Source metadata string |
+
+**thrust_data**
+
+| Column | Type | Notes |
+| :--- | :--- | :--- |
+| id | INTEGER | Primary key, autoincrement |
+| motor_id | INTEGER | Required, FK to `motors.id`, cascade delete |
+| time_seconds | REAL | Required, seconds |
+| force_newtons | REAL | Required, newtons |
+
+### Indices
+
+| Index | Table | Columns | Purpose |
+| :--- | :--- | :--- | :--- |
+| idx_motor_mfr | motors | manufacturer_id | Filter by manufacturer |
+| idx_motor_diameter | motors | diameter | Filter by size |
+| idx_motor_impulse | motors | impulse | Filter by impulse class |
+
 ## Manual Usage
 
 1.  `pip install -r scripts/requirements.txt`
