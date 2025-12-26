@@ -9,6 +9,8 @@ from datetime import datetime
 DATA_DIR = "data/thrustcurve.org"
 STATE_FILE = "state/last_sync.json"
 MOTORS_METADATA_FILE = "data/thrustcurve.org/motors_metadata.json"
+MANUFACTURERS_FILE = "data/thrustcurve.org/manufacturers.json"
+SIMFILE_MAPPING_FILE = "data/thrustcurve.org/simfile_to_motor.json"
 TC_API_METADATA = "https://www.thrustcurve.org/api/v1/metadata.json"
 TC_API_SEARCH = "https://www.thrustcurve.org/api/v1/search.json"
 TC_API_DOWNLOAD = "https://www.thrustcurve.org/api/v1/download.json"
@@ -53,6 +55,26 @@ def save_motors_metadata(metadata):
         json.dump(metadata, f, indent=2)
 
 
+def load_simfile_mapping():
+    """Load simfileId -> motorId mapping from JSON file."""
+    if os.path.exists(SIMFILE_MAPPING_FILE):
+        try:
+            with open(SIMFILE_MAPPING_FILE, 'r') as f:
+                content = f.read().strip()
+                if content:
+                    return json.loads(content)
+        except (json.JSONDecodeError, IOError):
+            print("Warning: Simfile mapping file corrupted or empty. Starting fresh.")
+    return {}
+
+
+def save_simfile_mapping(mapping):
+    """Save simfileId -> motorId mapping to JSON file."""
+    os.makedirs(os.path.dirname(SIMFILE_MAPPING_FILE), exist_ok=True)
+    with open(SIMFILE_MAPPING_FILE, 'w') as f:
+        json.dump(mapping, f, indent=2)
+
+
 def save_state():
     # Ensure directory exists before writing
     os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
@@ -71,19 +93,32 @@ def sanitize_filename(name):
 
 
 def get_manufacturers():
+    """Fetch and save the canonical manufacturers list from ThrustCurve metadata API."""
     print("Fetching manufacturer list...")
     try:
         resp = requests.get(TC_API_METADATA, headers=HEADERS)
         if resp.status_code == 200:
             data = resp.json()
-            # Extract just the abbreviations or names, similar to Java implementation
-            return [m['name'] for m in data.get('manufacturers', [])]
+            manufacturers = data.get('manufacturers', [])
+            
+            # Save the full manufacturers list for use in build_database.py
+            os.makedirs(os.path.dirname(MANUFACTURERS_FILE), exist_ok=True)
+            with open(MANUFACTURERS_FILE, 'w') as f:
+                json.dump({"manufacturers": manufacturers}, f, indent=2)
+            print(f"Saved {len(manufacturers)} manufacturers to {MANUFACTURERS_FILE}")
+            
+            return [m['name'] for m in manufacturers]
     except Exception as e:
         print(f"Failed to fetch manufacturers: {e}")
     return []
 
 
-def download_motor_data(motor_id, mfr_name, motor_name):
+def download_motor_data(motor_id, mfr_name, motor_name, simfile_mapping):
+    """
+    Download motor data files and record simfileId -> motorId mapping with metadata.
+    
+    Returns: (saved_count, simfile_ids) - number of files saved and list of simfile IDs
+    """
     # Matches Java: info.openrocket.core.thrustcurve.ThrustCurveAPI.postDownload
     payload = {
         "motorIds": [motor_id],
@@ -94,20 +129,33 @@ def download_motor_data(motor_id, mfr_name, motor_name):
         resp = requests.post(TC_API_DOWNLOAD, json=payload, headers=HEADERS)
         if resp.status_code != 200:
             print(f"  [Error] Download failed for {motor_id}: Status {resp.status_code}")
-            return 0
+            return 0, []
 
         data = resp.json()
         results = data.get('results', [])
 
         saved_count = 0
+        simfile_ids = []
+        
         for res in results:
             # Matches Java: info.openrocket.core.thrustcurve.MotorBurnFile.decodeFile
             b64_data = res.get('data')
             simfile_id = res.get('simfileId')
-            fmt = res.get('format', 'eng').lower()
+            fmt = res.get('format', 'RASP')
 
-            if not b64_data:
+            if not b64_data or not simfile_id:
                 continue
+
+            # Record the simfileId -> motorId mapping with full metadata
+            simfile_mapping[simfile_id] = {
+                'motorId': motor_id,
+                'format': fmt,
+                'source': res.get('source'),        # 'cert', 'mfr', 'user'
+                'license': res.get('license'),      # 'PD', 'free', 'other'
+                'infoUrl': res.get('infoUrl'),
+                'dataUrl': res.get('dataUrl'),
+            }
+            simfile_ids.append(simfile_id)
 
             try:
                 # Decode Base64
@@ -117,7 +165,9 @@ def download_motor_data(motor_id, mfr_name, motor_name):
                 mfr_dir = os.path.join(DATA_DIR, sanitize_filename(mfr_name))
                 ensure_dir(mfr_dir)
 
-                filename = f"{sanitize_filename(motor_name)}_{simfile_id}.{fmt}"
+                # Keep original filename format for backward compatibility
+                # The simfile_mapping.json provides the motorId lookup
+                filename = f"{sanitize_filename(motor_name)}_{simfile_id}.{fmt.lower()}"
                 filepath = os.path.join(mfr_dir, filename)
 
                 with open(filepath, 'w') as f:
@@ -127,11 +177,11 @@ def download_motor_data(motor_id, mfr_name, motor_name):
             except Exception as e:
                 print(f"  [Error] Failed to decode/write {simfile_id}: {e}")
 
-        return saved_count
+        return saved_count, simfile_ids
 
     except Exception as e:
         print(f"  [Error] API Request failed: {e}")
-        return 0
+        return 0, []
 
 
 def fetch_motors():
@@ -140,6 +190,9 @@ def fetch_motors():
     
     # Load existing motor metadata
     motors_metadata = load_motors_metadata()
+    
+    # Load existing simfile -> motorId mapping
+    simfile_mapping = load_simfile_mapping()
     
     # If metadata file doesn't exist or is empty, force a full sync
     if not motors_metadata['motors']:
@@ -216,7 +269,7 @@ def fetch_motors():
                 total_metadata_updated += 1
 
                 # Download thrust curve data files
-                count = download_motor_data(mid, mfr, common_name)
+                count, _ = download_motor_data(mid, mfr, common_name, simfile_mapping)
                 total_downloaded += count
                 if count > 0:
                     print(f"  Downloaded {count} files for motor {common_name} (ID: {mid})")
@@ -233,9 +286,87 @@ def fetch_motors():
         save_motors_metadata(motors_metadata)
         print(f"Saved metadata for {len(motors_metadata['motors'])} total motors to {MOTORS_METADATA_FILE}")
     
+    if total_downloaded > 0:
+        save_simfile_mapping(simfile_mapping)
+        print(f"Saved {len(simfile_mapping)} simfile->motor mappings to {SIMFILE_MAPPING_FILE}")
+    
     if total_downloaded > 0 or total_metadata_updated > 0:
         save_state()
 
 
+def rebuild_simfile_mapping():
+    """
+    Rebuild the simfile mapping by querying the ThrustCurve API for all motors
+    in the metadata. This is useful if you already have the data files but
+    the mapping wasn't created.
+    """
+    print("Rebuilding simfile->motor mapping from existing metadata...")
+    
+    # Load existing motor metadata
+    motors_metadata = load_motors_metadata()
+    tc_motors = motors_metadata.get('motors', {})
+    
+    if not tc_motors:
+        print("No motor metadata found. Run fetch_updates first.")
+        return
+    
+    # Load existing mapping
+    simfile_mapping = load_simfile_mapping()
+    initial_count = len(simfile_mapping)
+    
+    print(f"Found {len(tc_motors)} motors in metadata, {initial_count} existing mappings")
+    
+    # For each motor, query the download API to get simfile IDs
+    processed = 0
+    for motor_id, motor_meta in tc_motors.items():
+        common_name = motor_meta.get('commonName', 'Unknown')
+        mfr = motor_meta.get('manufacturer', 'Unknown')
+        
+        # Query download API (but don't save the files)
+        payload = {
+            "motorIds": [motor_id],
+            "format": "RASP"
+        }
+        
+        try:
+            resp = requests.post(TC_API_DOWNLOAD, json=payload, headers=HEADERS)
+            if resp.status_code == 200:
+                data = resp.json()
+                results = data.get('results', [])
+                
+                for res in results:
+                    simfile_id = res.get('simfileId')
+                    if simfile_id:
+                        # Store full metadata for each simfile
+                        simfile_mapping[simfile_id] = {
+                            'motorId': motor_id,
+                            'format': res.get('format', 'RASP'),
+                            'source': res.get('source'),        # 'cert', 'mfr', 'user'
+                            'license': res.get('license'),      # 'PD', 'free', 'other'
+                            'infoUrl': res.get('infoUrl'),
+                            'dataUrl': res.get('dataUrl'),
+                        }
+                
+                processed += 1
+                if processed % 100 == 0:
+                    print(f"  Processed {processed}/{len(tc_motors)} motors...")
+            
+            # Brief sleep to respect API
+            time.sleep(0.01)
+            
+        except Exception as e:
+            print(f"  [Error] Failed to query {motor_id}: {e}")
+    
+    # Save the mapping
+    save_simfile_mapping(simfile_mapping)
+    print(f"Done! Added {len(simfile_mapping) - initial_count} new mappings.")
+    print(f"Total: {len(simfile_mapping)} simfile->motor mappings saved to {SIMFILE_MAPPING_FILE}")
+
+
 if __name__ == "__main__":
-    fetch_motors()
+    import sys
+    
+    if len(sys.argv) > 1 and sys.argv[1] == "--rebuild-mapping":
+        rebuild_simfile_mapping()
+    else:
+        fetch_motors()

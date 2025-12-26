@@ -1,0 +1,980 @@
+swagger: '2.0'
+
+info:
+  title: ThrustCurve.org API
+  description: Programmatic access to ThrustCurve.org motor and simulator file database.
+  contact:
+    name: John Coker
+    url: 'https://www.thrustcurve.org/info/api.html'
+    email: john@jcsw.com
+  license:
+    name: ISC license
+    url: 'https://opensource.org/licenses/ISC'
+  version: 1.0.3
+
+host: www.thrustcurve.org
+basePath: /api/v1
+schemes:
+  - https
+  - http
+
+tags:
+  - name: metadata
+    description: Get metadata about all motors in the database.
+  - name: search
+    description: Find motors by various criteria.
+  - name: download
+    description: Retrieve simulator file data for specific motors.
+  - name: account
+    description: Synchronize account info.
+  - name: guide
+    description: Find motors that work for a rocket.
+
+paths:
+  /metadata.json:
+    get:
+      tags:
+        - metadata
+      description: The GET method specifies search criteria as query parameters.
+      consumes:
+        - application/x-www-form-urlencoded
+      produces:
+        - application/json
+      parameters:
+        - name: manufacturer
+          in: query
+          description: manufacturer name or abbreviation
+          type: string
+          required: false
+        - name: impulseClass
+          in: query
+          description: letter class of motor
+          type: string
+          required: false
+        - name: diameter
+          in: query
+          description: motor diameter in mm
+          type: number
+          required: false
+        - name: type
+          in: query
+          description: motor type
+          type: string
+          enum:
+            - SU
+            - reload
+            - hybrid
+          required: false
+        - name: certOrg
+          in: query
+          description: certification organization name or abbreviation
+          type: string
+          required: false
+        - name: availability
+          in: query
+          description: motor current availability
+          type: string
+          enum:
+            - regular
+            - occasional
+            - OOP
+            - available
+            - all
+          required: false
+      responses:
+        '200':
+          description: metadata response
+          schema:
+            $ref: '#/definitions/MetadataResponse'
+    post:
+      tags:
+        - metadata
+      description: The POST method specifies JSON object with search criteria.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Metadata query criteria. All fields are optional.
+          required: true
+          schema:
+            $ref: '#/definitions/MetadataRequest'
+      responses:
+        '200':
+          description: Metadata response. A list of possible value is returned for each bounded search criterion.
+          schema:
+            $ref: '#/definitions/MetadataResponse'
+  /search.json:
+    post:
+      tags:
+        - search
+      description: The POST method specifies a JSON object with search criteria.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Search query criteria. All fields are optional, but at least one criterion must be specified.
+          required: true
+          schema:
+            $ref: '#/definitions/SearchRequest'
+      responses:
+        '200':
+          description: Search response. Only fields with values will be returned.
+          schema:
+            $ref: '#/definitions/SearchResponse'
+  /download.json:
+    post:
+      tags:
+        - download
+      description: The POST method specifies JSON object with motor identifiers, at least one required.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Motor identifier list. At least one must be specified.
+          required: true
+          schema:
+            $ref: '#/definitions/DownloadRequest'
+      responses:
+        '200':
+          description: Motor data downloads. One or more result returned for each valid motor identifier.
+          schema:
+            $ref: '#/definitions/DownloadResponse'
+  /getrockets.json:
+    post:
+      tags:
+        - account
+      description: The POST method specifies a JSON object with account credentials.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Account credentials. At least username must be specified.
+          required: true
+          schema:
+            $ref: '#/definitions/GetRocketsRequest'
+      responses:
+        '200':
+          description: Saved rocket definitions.
+          schema:
+            $ref: '#/definitions/GetRocketsResponse'
+  /saverockets.json:
+    post:
+      tags:
+        - account
+      description: The POST method specifies a JSON object with account credentials and rockets.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Account credentials and list of rockets to save.
+          required: true
+          schema:
+            $ref: '#/definitions/SaveRocketsRequest'
+      responses:
+        '200':
+          description: Saved rocket status.
+          schema:
+            $ref: '#/definitions/SaveRocketsResponse'
+  /motorguide.json:
+    post:
+      tags:
+        - guide
+      description: The POST method specifies a JSON object with the rocket info.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Rocket information and search criteria
+          required: true
+          schema:
+            $ref: '#/definitions/MotorGuideRequest'
+      responses:
+        '200':
+          description: Motors for this rocket
+          schema:
+            $ref: '#/definitions/MotorGuideResponse'
+
+definitions:
+  MetadataRequest:
+    type: object
+    description: metadata query criteria
+    properties:
+      manufacturer:
+        description: manufacturer name or abbreviation
+        type: string
+        example: Estes
+      impulseClass:
+        description: letter class of motor
+        type: string
+        example: C
+      diameter:
+        description: motor diameter in mm
+        type: number
+        example: 18
+      type:
+        description: motor type
+        type: string
+        enum:
+          - SU
+          - reload
+          - hybrid
+        example: SU
+      certOrg:
+        description: certification organization name or abbreviation
+        type: string
+        example: NAR
+      availability:
+        description: motor current availability
+        type: string
+        enum:
+          - regular
+          - occasional
+          - OOP
+          - available
+          - all
+        example: available
+
+  MetadataResponse:
+    type: object
+    description: motor metadata
+    properties:
+      manufacturers:
+        type: array
+        description: motor manufacturers
+        items:
+          $ref: '#/definitions/NameAndAbbrev'
+        example:
+          - name: Estes Industries
+            abbrev: Estes
+      certOrgs:
+        type: array
+        description: certification organizations
+        items:
+          $ref: '#/definitions/NameAndAbbrev'
+        example:
+          - name: National Association of Rocketry
+            abbrev: NAR
+      types:
+        type: array
+        description: motor types
+        items:
+          type: string
+          enum:
+            - SU
+            - reload
+            - hybrid
+        example:
+          - SU
+      diameters:
+        type: array
+        description: motor diameters
+        items:
+          type: number
+        example:
+          - 13
+          - 18
+      impulseClasses:
+        type: array
+        description: total impulse letter classes
+        items:
+          type: string
+        example:
+          - A
+          - B
+          - C
+      error:
+        description: errors in criteria specification
+        type: string
+        example: Invalid manufacturer value "Estus".
+
+  NameAndAbbrev:
+    type: object
+    description: full name and abbreviation
+    properties:
+      name:
+        type: string
+        description: full (official) name
+      abbrev:
+        type: string
+        description: most common abbreviation
+
+  SearchRequest:
+    type: object
+    description: motor search query criteria
+    properties:
+      manufacturer:
+        description: manufacturer name or abbreviation
+        type: string
+        example: Estes
+      designation:
+        description: manufacturer designation of motor
+        type: string
+        example: C6
+      commonName:
+        description: standard name of motor
+        type: string
+        pattern: '(1/8A|1/4A|1/2A|[A-O])[0-9]+'
+        example: C6
+      impulseClass:
+        description: letter class of motor
+        type: string
+        example: C
+      diameter:
+        description: motor diameter in mm
+        type: number
+        example: 18
+      type:
+        description: motor type
+        type: string
+        enum:
+          - SU
+          - reload
+          - hybrid
+        example: SU
+      certOrg:
+        description: certification organization name or abbreviation
+        type: string
+        example: NAR
+      sparky:
+        description: whether or not the motor produces sparks in the exhaust
+        type: boolean
+        example: false
+      infoUpdatedSince:
+        description: only motors updated since the specified date
+        type: string
+        format: date
+        example: 2020-01-01
+      hasDataFiles:
+        description: only motors with data files
+        type: boolean
+        example: true
+      dataUpdatedSince:
+        description: only motors with data files updated since the specified date
+        type: string
+        format: date
+        example: 2020-01-01
+      availability:
+        description: motor current availability
+        type: string
+        enum:
+          - regular
+          - occasional
+          - OOP
+          - available
+          - all
+        example: available
+      maxResults:
+        description: maximum number of motors to return
+        type: integer
+        example: 20
+
+  SearchResponse:
+    type: object
+    description: motor search results
+    properties:
+      criteria:
+        description: the search criteria with errors and matches
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              description: name of search criterion
+              type: string
+              example: commonName
+            value:
+              description: value of search criterion
+              type: string
+              example: C6
+            matches:
+              description: number of matches of this criterion
+              type: integer
+              example: 3
+            error:
+              description: error in criterion specification
+              type: string
+              example: Invalid commonName value "X6".
+      matches:
+        description: number of matches of all criteria (and)
+        type: integer
+        example: 25
+      results:
+        description: information on the motors matched
+        type: array
+        items:
+          type: object
+          properties:
+            motorId:
+              description: unique identifier of motor; used to download data
+              type: string
+              example: 5872d0980002310000000015
+            manufacturer:
+              description: manufacturer full name
+              type: string
+              example: Estes Industries
+            manufacturerAbbrev:
+              description: manufacturer abbreviation
+              type: string
+              example: Estes
+            designation:
+              description: manufacturer designation
+              type: string
+              example: C6
+            commonName:
+              description: common name of motor
+              type: string
+              example: C6
+            impulseClass:
+              description: letter class of motor total impulse
+              type: string
+              example: C
+            diameter:
+              description: motor diameter in millimeters
+              type: number
+              example: 18
+            length:
+              description: motor length in millimeters
+              type: number
+              example: 70
+            type:
+              description: type of motor
+              type: string
+              example: SU
+            avgThrustN:
+              description: average thrust in Newtons
+              type: number
+              example: 4.7
+            maxThrustN:
+              description: maximum thrust in Newtons
+              type: number
+              example: 14.1
+            totImpulseNs:
+              description: total impulse in Newton-seconds
+              type: number
+              example: 8.8
+            burnTimeS:
+              description: burn time in seconds
+              type: number
+              example: 1.9
+            dataFiles:
+              description: number of data files
+              type: integer
+              example: 3
+            infoUrl:
+              description: ThrustCurve info URL
+              type: string
+              format: url
+              example: 'https://nar.org/SandT/pdf/Estes/C6.pdf'
+            totalWeightG:
+              description: total weight in grams
+              type: number
+              example: 24
+            propWeightG:
+              description: propellant weight in grams
+              type: number
+              example: 11
+            delays:
+              description: available delays
+              type: string
+              example: '0,3,5,7'
+            caseInfo:
+              description: case info if any
+              type: string
+              example: 'RMS 40/120'
+            propInfo:
+              description: propellant type
+              type: string
+              example: Blue Thunder
+            sparky:
+              description: if this motor produces sparks
+              type: boolean
+              example: false
+            updatedOn:
+              description: last updated date of motor info
+              type: string
+              format: date
+              example: '2014-12-02'
+
+  DownloadRequest:
+    type: object
+    description: motor identifier list
+    properties:
+      motorIds:
+        type: array
+        description: unique identifiers of motors to download data for
+        items:
+          type: string
+          example: 5f4294d20002310000000015
+      format:
+        description: data file format
+        type: string
+        example: RASP
+        enum:
+          - RASP
+          - RockSim
+      license:
+        description: license for data file
+        type: string
+        example: PD
+        enum:
+          - PD
+          - free
+          - other
+      data:
+        description: what data is desired
+        type: string
+        example: both
+        enum:
+          - file
+          - samples
+          - both
+      maxResults:
+        description: maximum number of data files to return
+        type: integer
+        example: 20
+
+  DownloadResponse:
+    type: object
+    description: motor data downloads
+    properties:
+      results:
+        description: motor data files
+        type: array
+        items:
+          type: object
+          properties:
+            motorId:
+              description: unique identifier of motor
+              type: string
+              example: 5f4294d20002310000000015
+            simfileId:
+              description: unique identifier of data file
+              type: string
+              example: 5f4294d20002e90000000833
+            format:
+              description: data file format
+              type: string
+              example: RASP
+              enum:
+                - RASP
+                - RockSim
+            source:
+              description: source of data
+              type: string
+              example: cert
+              enum:
+                - cert
+                - mfr
+                - user
+            license:
+              description: license for data file
+              type: string
+              example: PD
+              enum:
+                - PD
+                - free
+                - other
+            data:
+              description: simulator file content, Base64 encoded
+              type: string
+              example: 'OyBDNi0wDQpDNi0wIDE4I...'
+            samples:
+              description: extracted data points
+              type: array
+              items:
+                type: object
+                properties:
+                  time:
+                    description: time since ignition in seconds
+                    type: number
+                    example: 0.01
+                  thrust:
+                    description: thrust at this time in Newtons
+                    type: number
+                    example: 3.5
+            infoUrl:
+              description: ThrustCurve.org data info page
+              type: string
+              format: url
+              example: 'https://www.thrustcurve.org/simfiles/5f4294d20002e900000004e7/'
+            dataUrl:
+              description: ThrustCurve.org data download URL
+              type: string
+              format: url
+              example: 'https://www.thrustcurve.org/simfiles/5f4294d20002e900000004e7/download/Estes_C6.eng'
+      error:
+        description: any errors that occurred
+        type: string
+        example: Invalid format value "ANG".
+
+  Rocket:
+    type: object
+    description: saved rocket definition
+    properties:
+      id:
+        description: unique identifier of rocket
+        type: string
+        example: 5f70ff46e645437e11edd06b
+      name:
+        description: name of rocket
+        type: string
+        example: Alpha III
+      public:
+        description: is rocket publicly visible
+        type: boolean
+        example: true
+      bodyDiameterM:
+        description: main diameter in meters
+        type: number
+        example: 0.025
+      mmtDiameterMm:
+        description: motor mount tube diameter in millimeters
+        type: number
+        example: 18
+      mmtLengthMm:
+        description: motor mount tube length in millimeters
+        type: number
+        example: 70
+      mmtCount:
+        description: number of motor mount tubes (cluster)
+        type: integer
+        example: 1
+      weightKg:
+        description: dry weight of rocket in kilograms
+        type: number
+        example: 0.035
+      adapters:
+        type: array
+        description: motor adapters available for rocket
+        items:
+          type: object
+          properties:
+            mmtDiameterMm:
+              description: adapter MMT diameter in millimeters
+              type: number
+              example: 13
+            mmtLengthMm:
+              description: adapter MMT length in millimeters
+              type: number
+              example: 70
+            weightKg:
+              description: weight of the adapter itself in kilograms
+              type: number
+              example: 0.0085
+      cd:
+        description: coeffient of drag
+        type: number
+        example: 0.4
+      guideLengthM:
+        description: length of launch guide (rod or rail) in meters
+        type: number
+        example: 1.0
+      website:
+        description: web page for this rocket
+        type: string
+        format: url
+        example: 'http://highflier.com/fred'
+      comments:
+        description: description of this rocket
+        type: string
+        example: My first rocket
+      createdOn:
+        description: date rocket was first entered
+        type: string
+        format: date
+        example: '2020-07-01'
+      updatedOn:
+        description: date rocket was first entered
+        type: string
+        format: date
+        example: '2020-08-15'
+      clientId:
+        description: unique identifier sent in saverockets request
+        type: string
+        example: 829fb49e-b599-4907-8607-e5bf07be9e7a
+
+  GetRocketsRequest:
+    type: object
+    description: account credentials
+    properties:
+      username:
+        type: string
+        description: account email address
+        example: flier.fred@gmail.com
+      password:
+        description: account password
+        type: string
+        example: secret
+  GetRocketsResponse:
+    type: object
+    description: list of saved rockets
+    properties:
+      results:
+        description: saved rockets
+        type: array
+        items:
+          $ref: '#/definitions/Rocket'
+      error:
+        description: any errors that occurred
+        type: string
+        example: Invalid username/password specified.
+
+  SaveRocketsRequest:
+    type: object
+    description: account credentials and list of rockets
+    properties:
+      username:
+        type: string
+        description: account email address
+        example: flier.fred@gmail.com
+      password:
+        description: account password
+        type: string
+        example: secret
+      rockets:
+        description: rocket(s) to save
+        type: array
+        items:
+          $ref: '#/definitions/Rocket'
+  SaveRocketsResponse:
+    type: object
+    description: status of saved rockets
+    properties:
+      results:
+        description: saved rocket info
+        type: array
+        items:
+          type: object
+          description: saved rocket confirmation
+          properties:
+            clientId:
+              description: unique identifier sent by client
+              type: string
+              example: 829fb49e-b599-4907-8607-e5bf07be9e7a
+            id:
+              description: unique identifier of rocket
+              type: string
+              example: 5f70ff46e645437e11edd06b
+            name:
+              description: name of rocket
+              type: string
+              example: Alpha III
+            status:
+              description: status of save
+              type: string
+              enum:
+                - created
+                - updated
+                - unchanged
+                - invalid
+              example: updated
+      error:
+        description: any errors that occurred
+        type: string
+        example: Missing name for rocket #1.
+
+  MotorGuideRequest:
+    type: object
+    description: rocket information and search criteria
+    properties:
+      rocket:
+        description: rocket to find motors for
+        type: object
+        properties:
+          name:
+            description: name of rocket (optional)
+            type: string
+            example: Alpha III
+          bodyDiameterM:
+            description: body diameter in meters
+            type: number
+            example: 0.025
+          mmtDiameterMm:
+            description: motor mount tube diameter in millimeters
+            type: number
+            example: 18
+          mmtLengthMm:
+            description: motor mount tube length in millimeters
+            type: number
+            example: 70
+          weightKg:
+            description: dry weight of rocket in kilograms
+            type: number
+            example: 0.045
+          cd:
+            description: coefficient of drag of rocket
+            type: number
+            example: 0.25
+          guideLengthM:
+            description: length of launch guide in meters
+            type: number
+            example: 1.0
+      manufacturer:
+        description: manufacturer name or abbreviation
+        type: string
+        example: Estes
+      impulseClass:
+        description: letter class of motor
+        type: string
+        example: C
+      type:
+        description: motor type
+        type: string
+        enum:
+          - SU
+          - reload
+          - hybrid
+        example: SU
+      availability:
+        description: motor current availability
+        type: string
+        enum:
+          - regular
+          - occasional
+          - OOP
+          - available
+          - all
+        example: available
+      maxResults:
+        description: maximum number of results returned
+        type: integer
+        example: 25
+  MotorGuideResponse:
+    type: object
+    description: motors for this rocket
+    properties:
+      criteria:
+        description: the search criteria with errors and matches
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              description: name of search criterion
+              type: string
+              example: commonName
+            value:
+              description: value of search criterion
+              type: string
+              example: C6
+            matches:
+              description: number of matches of this criterion
+              type: integer
+              example: 3
+            error:
+              description: error in criterion specification
+              type: string
+              example: 'Invalid commonName "X6".'
+      matches:
+        description: number of matches of all criteria (and)
+        type: integer
+        example: 25
+      results:
+        type: array
+        description: motors for this rocket
+        items:
+          type: object
+          properties:
+            motorId:
+              description: unique ID of motor
+              type: string
+              example: 56a40928000231000000001f
+            manufacturer:
+              description: manufacturer full name
+              type: string
+              example: Estes Industries
+            manufacturerAbbrev:
+              description: manufacturer abbreviation
+              type: string
+              example: Estes
+            designation:
+              description: manufacturer designation
+              type: string
+              example: D11
+            commonName:
+              description: common name of motor
+              type: string
+              example: D11
+            thrustToWeight:
+              description: thrust:weight ratio
+              type: number
+              example: 0.674
+            simulationsRun:
+              description: number of simulations run
+              type: number
+              example: 1
+            liftoffTime:
+              description: time until liftoff in seconds
+              type: number
+              example: 0.02
+            burnoutTime:
+              description: time until burnout in seconds
+              type: number
+              example: 1.86
+            apogeeTime:
+              description: time until apogee in seconds
+              type: number
+              example: 12.61
+            maxAcceleration:
+              description: maximum acceleration in meters/second/second
+              type: number
+              example: 266.037
+            guideVelocity:
+              description: velocity off launch guide in meters/second
+              type: number
+              example: 15.273
+            maxVelocity:
+              description: maximum velocity in meters/second
+              type: number
+              example: 144.364
+            burnoutAltitude:
+              type: number
+              description: altitude at burnout in meters
+              example: 162.242
+            maxAltitude:
+              description: maximum altitude in meters
+              type: number
+              example: 817.075
+            optimalDelay:
+              description: ideal delay in seconds
+              type: number
+              example: 10.75
+            status:
+              description: motor usability status
+              type: string
+              enum:
+                - ok
+                - 5-to-1
+                - guide-vel
+                - too-low
+              example: ok
+      okCount:
+        description: number of motors that work
+        type: integer
+        example: 16
+      failedCount:
+        description: number of motors that didn't work
+        type: integer
+        example: 9
+      error:
+        description: any errors that occurred
+        type: string
+        example: 'Invalid rocket cd value.'

@@ -1,0 +1,100 @@
+{
+  "manufacturers": [
+    {
+      "name": "AeroTech",
+      "abbrev": "AeroTech"
+    },
+    {
+      "name": "Alpha Hybrids",
+      "abbrev": "Alpha"
+    },
+    {
+      "name": "Animal Motor Works",
+      "abbrev": "AMW"
+    },
+    {
+      "name": "Apogee Components",
+      "abbrev": "Apogee"
+    },
+    {
+      "name": "Cesaroni Technology",
+      "abbrev": "Cesaroni"
+    },
+    {
+      "name": "Contrail Rockets",
+      "abbrev": "Contrail"
+    },
+    {
+      "name": "Ellis Mountain",
+      "abbrev": "Ellis"
+    },
+    {
+      "name": "Estes Industries",
+      "abbrev": "Estes"
+    },
+    {
+      "name": "Gorilla Rocket Motors",
+      "abbrev": "Gorilla"
+    },
+    {
+      "name": "Hypertek",
+      "abbrev": "Hypertek"
+    },
+    {
+      "name": "Kosdon by AeroTech",
+      "abbrev": "KBA"
+    },
+    {
+      "name": "Kosdon TRM",
+      "abbrev": "Kosdon"
+    },
+    {
+      "name": "Loki Research",
+      "abbrev": "Loki"
+    },
+    {
+      "name": "Piotr Tendera Rocket Motors",
+      "abbrev": "TSP"
+    },
+    {
+      "name": "Propulsion Polymers",
+      "abbrev": "PP"
+    },
+    {
+      "name": "Public Missiles, Ltd.",
+      "abbrev": "PML"
+    },
+    {
+      "name": "Quest Aerospace",
+      "abbrev": "Quest"
+    },
+    {
+      "name": "R.A.T.T. Works",
+      "abbrev": "RATT"
+    },
+    {
+      "name": "Raketenmodellbau Klima",
+      "abbrev": "Klima"
+    },
+    {
+      "name": "Roadrunner Rocketry",
+      "abbrev": "Roadrunner"
+    },
+    {
+      "name": "Rocketvision Flight-Star",
+      "abbrev": "RV"
+    },
+    {
+      "name": "Sky Ripper Systems",
+      "abbrev": "SkyR"
+    },
+    {
+      "name": "Southern Cross Rocketry",
+      "abbrev": "SCR"
+    },
+    {
+      "name": "West Coast Hybrids",
+      "abbrev": "WCH"
+    }
+  ]
+}

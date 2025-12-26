@@ -1,4 +1,5 @@
 import os
+import re
 import sqlite3
 import gzip
 import hashlib
@@ -10,6 +11,9 @@ DB_NAME = "motors.db"
 GZ_NAME = "motors.db.gz"
 SCHEMA_FILE = "schema/V1__initial_schema.sql"
 DATA_DIR = "data"
+MOTORS_METADATA_FILE = "data/thrustcurve.org/motors_metadata.json"
+MANUFACTURERS_FILE = "data/thrustcurve.org/manufacturers.json"
+SIMFILE_MAPPING_FILE = "data/thrustcurve.org/simfile_to_motor.json"
 METADATA_FILE = "metadata.json"
 
 
@@ -28,8 +32,240 @@ def init_db():
     return conn
 
 
+def load_motors_metadata():
+    """Load motors metadata from JSON file."""
+    if os.path.exists(MOTORS_METADATA_FILE):
+        try:
+            with open(MOTORS_METADATA_FILE, 'r') as f:
+                content = f.read().strip()
+                if content:
+                    return json.loads(content)
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Warning: Failed to load motors metadata: {e}")
+    return {"motors": {}}
+
+
+def load_manufacturers():
+    """Load canonical manufacturers list from JSON file."""
+    if os.path.exists(MANUFACTURERS_FILE):
+        try:
+            with open(MANUFACTURERS_FILE, 'r') as f:
+                content = f.read().strip()
+                if content:
+                    data = json.loads(content)
+                    return data.get('manufacturers', [])
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Warning: Failed to load manufacturers: {e}")
+    return []
+
+
+def load_simfile_mapping():
+    """Load simfileId -> motorId mapping from JSON file."""
+    if os.path.exists(SIMFILE_MAPPING_FILE):
+        try:
+            with open(SIMFILE_MAPPING_FILE, 'r') as f:
+                content = f.read().strip()
+                if content:
+                    return json.loads(content)
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Warning: Failed to load simfile mapping: {e}")
+    return {}
+
+
+def build_manufacturer_lookup(manufacturers):
+    """
+    Build a lookup table to map various manufacturer names/abbreviations 
+    to their canonical (name, abbrev) tuple.
+    
+    Based on OpenRocket's Manufacturer.java mappings.
+    """
+    lookup = {}
+    
+    for mfr in manufacturers:
+        name = mfr.get('name', '')
+        abbrev = mfr.get('abbrev', '')
+        canonical = (name, abbrev)
+        
+        # Add various lookup keys (all lowercase for case-insensitive matching)
+        if name:
+            lookup[name.lower()] = canonical
+        if abbrev:
+            lookup[abbrev.lower()] = canonical
+        
+        # Add without spaces
+        name_lower = name.lower()
+        lookup[name_lower.replace(' ', '')] = canonical
+        lookup[name_lower.replace(' ', '-')] = canonical
+        lookup[name_lower.replace(' ', '_')] = canonical
+    
+    # Comprehensive manufacturer alias mappings (from OpenRocket's Manufacturer.java)
+    # Format: alias -> (canonical_name, abbrev)
+    
+    # AeroTech has many name combinations
+    aerotech = ('AeroTech', 'AeroTech')
+    for prefix in ['a', 'at', 'aero', 'aerot', 'aerotech']:
+        lookup[prefix] = aerotech
+        lookup[f'{prefix}-rms'] = aerotech
+        lookup[f'{prefix}-rcs'] = aerotech
+        lookup[f'{prefix}_rms'] = aerotech
+        lookup[f'{prefix}_rcs'] = aerotech
+        lookup[f'rcs-{prefix}'] = aerotech
+        lookup[f'rcs_{prefix}'] = aerotech
+        lookup[f'{prefix}/rcs'] = aerotech
+        lookup[f'rcs/{prefix}'] = aerotech
+        lookup[f'{prefix}-apogee'] = aerotech
+        lookup[f'{prefix}_apogee'] = aerotech
+    lookup['isp'] = aerotech
+    lookup['aerotech/rcs'] = aerotech
+    lookup['rcs/aerotech'] = aerotech
+    
+    # Alpha Hybrid Rocketry
+    alpha = ('Alpha Hybrids', 'Alpha')
+    for alias in ['ahr', 'alpha', 'alpha hybrid', 'alpha hybrids', 
+                  'alpha hybrids rocketry', 'alpha hybrid rocketry llc',
+                  'alpha hybrid rocketry']:
+        lookup[alias] = alpha
+    
+    # Animal Motor Works
+    amw = ('Animal Motor Works', 'AMW')
+    for alias in ['amw', 'aw', 'animal', 'animal motor works', 'animal_motor_works',
+                  'amw/prox', 'amw-prox', 'amw_prox', 'prox']:
+        lookup[alias] = amw
+    
+    # Apogee
+    apogee = ('Apogee Components', 'Apogee')
+    for alias in ['ap', 'apog', 'p', 'apogee']:
+        lookup[alias] = apogee
+    
+    # Cesaroni Technology
+    cesaroni = ('Cesaroni Technology', 'Cesaroni')
+    for alias in ['ces', 'cesaroni', 'cesaroni technology incorporated', 'cti',
+                  'cs', 'csr', 'pro38', 'abc', 'cesaroni technology', 
+                  'cesaroni technology inc.', 'cesaroni technology inc',
+                  'cesaroni_technology', 'cesaroni_technology_inc.',
+                  'cesaroni_technology_inc', 'cesароnitechnology']:
+        lookup[alias] = cesaroni
+    
+    # Contrail Rockets
+    contrail = ('Contrail Rockets', 'Contrail')
+    for alias in ['cr', 'contr', 'contrail', 'contrail rocket', 'contrail rockets']:
+        lookup[alias] = contrail
+    
+    # Estes
+    estes = ('Estes Industries', 'Estes')
+    for alias in ['e', 'es', 'estes', 'estes industries']:
+        lookup[alias] = estes
+    
+    # Ellis Mountain
+    ellis = ('Ellis Mountain', 'Ellis')
+    for alias in ['em', 'ellis', 'ellis mountain rocket', 'ellis mountain rockets',
+                  'ellis mountain']:
+        lookup[alias] = ellis
+    
+    # Gorilla Rocket Motors
+    gorilla = ('Gorilla Rocket Motors', 'Gorilla')
+    for alias in ['gr', 'gorilla', 'gorilla rocket', 'gorilla rockets', 
+                  'gorilla motor', 'gorilla motors', 'gorilla rocket motor',
+                  'gorilla rocket motors', 'gorilla_rocket_motors', 
+                  'gorilla_rocket_motors_', 'gorilla_motors', 'gorillarocketmotors']:
+        lookup[alias] = gorilla
+    
+    # Hypertek
+    hypertek = ('Hypertek', 'Hypertek')
+    for alias in ['h', 'ht', 'hyper', 'hypertek', 'hypertec']:
+        lookup[alias] = hypertek
+    
+    # Kosdon by AeroTech
+    kosdon = ('Kosdon by AeroTech', 'KBA')
+    for alias in ['k', 'kba', 'k-at', 'kos', 'kosdon', 'kosdon/at', 
+                  'kosdon/aerotech', 'kosdon by aerotech']:
+        lookup[alias] = kosdon
+    
+    # Kosdon TRM (separate from Kosdon by AeroTech)
+    kosdon_trm = ('Kosdon TRM', 'Kosdon')
+    lookup['kosdon trm'] = kosdon_trm
+    
+    # Loki Research
+    loki = ('Loki Research', 'Loki')
+    for alias in ['loki', 'lr', 'loki research']:
+        lookup[alias] = loki
+    
+    # Public Missiles Ltd
+    pml = ('Public Missiles, Ltd.', 'PML')
+    for alias in ['pm', 'pml', 'public missiles limited', 'public missiles',
+                  'public missiles, ltd.', 'public missiles ltd']:
+        lookup[alias] = pml
+    
+    # Propulsion Polymers
+    pp = ('Propulsion Polymers', 'PP')
+    for alias in ['pp', 'prop', 'propulsion', 'propulsion polymers',
+                  'propulsion-polymers']:
+        lookup[alias] = pp
+    
+    # Quest
+    quest = ('Quest Aerospace', 'Quest')
+    for alias in ['q', 'qu', 'quest', 'quest aerospace']:
+        lookup[alias] = quest
+    
+    # RATT Works
+    ratt = ('R.A.T.T. Works', 'RATT')
+    for alias in ['ratt', 'rt', 'rtw', 'ratt works', 'r.a.t.t. works',
+                  'ratt_works', 'rattworks']:
+        lookup[alias] = ratt
+    
+    # Roadrunner Rocketry
+    roadrunner = ('Roadrunner Rocketry', 'Roadrunner')
+    for alias in ['rr', 'roadrunner', 'roadrunner rocketry']:
+        lookup[alias] = roadrunner
+    
+    # Rocketvision
+    rocketvision = ('Rocketvision Flight-Star', 'RV')
+    for alias in ['rv', 'rocket vision', 'rocketvision', 'rocketvision flight-star']:
+        lookup[alias] = rocketvision
+    
+    # Sky Ripper Systems
+    skyripper = ('Sky Ripper Systems', 'SkyR')
+    for alias in ['sr', 'srs', 'skyr', 'skyripper', 'sky ripper', 
+                  'skyripper systems', 'sky ripper systems']:
+        lookup[alias] = skyripper
+    
+    # West Coast Hybrids
+    wch = ('West Coast Hybrids', 'WCH')
+    for alias in ['wch', 'wcr', 'west coast', 'west coast hybrid', 
+                  'west coast hybrids']:
+        lookup[alias] = wch
+    
+    # WECO Feuerwerk / Sachsen Feuerwerk
+    weco = ('Raketenmodellbau Klima', 'Klima')  # Map to Klima as closest match
+    for alias in ['weco', 'weco feuerwerk', 'weco feuerwerks', 'sf', 
+                  'sachsen', 'sachsen feuerwerk', 'sachsen feuerwerks']:
+        lookup[alias] = weco
+    
+    # Raketenmodellbau Klima
+    klima = ('Raketenmodellbau Klima', 'Klima')
+    for alias in ['klima', 'raketenmodellbau klima']:
+        lookup[alias] = klima
+    
+    # Southern Cross Rocketry
+    scr = ('Southern Cross Rocketry', 'SCR')
+    for alias in ['scr', 'southern cross', 'southern cross rocketry']:
+        lookup[alias] = scr
+    
+    # LOC/Precision
+    loc = ('LOC/Precision', 'LOC')
+    for alias in ['loc', 'loc precision', 'loc/precision']:
+        lookup[alias] = loc
+    
+    # Piotr Tendera / TSP
+    tsp = ('Piotr Tendera Rocket Motors', 'TSP')
+    for alias in ['tsp', 'tendera', 'piotr tendera', 'piotr tendera rocket motors']:
+        lookup[alias] = tsp
+    
+    return lookup
+
+
 def parse_rasp(filepath):
-    """ Parses standard RASP (.eng/.rasp) files """
+    """ Parses standard RASP (.eng/.rasp) files - only the FIRST motor if file contains multiple """
     header_parsed = False
     data_points = []
     metadata = {}
@@ -54,7 +290,8 @@ def parse_rasp(filepath):
                         'designation': parts[0],
                         'diameter': float(parts[1]),
                         'length': float(parts[2]),
-                        # parts[3] is delays, skipped for DB simple stats
+                        # parts[3] is delays
+                        'delays': parts[3] if parts[3] != '0' else None,
                         'prop_weight': float(parts[4]),
                         'total_weight': float(parts[5]),
                         'manufacturer': " ".join(parts[6:]),
@@ -71,8 +308,16 @@ def parse_rasp(filepath):
                         t = float(parts[0])
                         f_n = float(parts[1])
                         data_points.append((t, f_n))
+                        
+                        # If thrust is 0, we've reached the end of this motor's data
+                        # (RASP format ends with time thrust=0)
+                        if f_n == 0:
+                            break
                 except ValueError:
-                    pass
+                    # Non-numeric line after header = probably a new motor header
+                    # This handles multi-motor files like RASAero_Motors.eng
+                    if len(parts) >= 7:
+                        break  # Stop parsing, we hit a new motor header
 
     return metadata, data_points
 
@@ -90,22 +335,17 @@ def parse_rse(filepath):
 
         # Extract Metadata
         # attributes: code, mfg, len, dia, propWt, initWt
+        delays = engine.get('delays')
         metadata = {
             'designation': engine.get('code', 'Unknown'),
             'manufacturer': engine.get('mfg', 'Unknown'),
             'diameter': float(engine.get('dia', 0.0)),
             'length': float(engine.get('len', 0.0)),
-            'prop_weight': float(engine.get('propWt', 0.0)) / 1000.0,
-            # RSE is usually in grams? Check specific RSE spec. usually mm and g.
-            # However, OpenRocket/ThrustCurve usually normalize.
-            # Assuming standard RSE: dia/len in mm, mass in g.
-            # Our DB schema expects: dia/len in mm, mass in kg.
-            'total_weight': float(engine.get('initWt', 0.0)) / 1000.0,
+            'prop_weight': float(engine.get('propWt', 0.0)),
+            'total_weight': float(engine.get('initWt', 0.0)),
+            'delays': delays if delays and delays != '0' else None,
             'type': 'SU'
         }
-
-        # Fix mass units if they look too small (simple heuristic)
-        # (This depends on if your raw files are standardized. RSE is defined as mm/g usually).
 
         data_points = []
         data_node = engine.find("data")
@@ -121,82 +361,315 @@ def parse_rse(filepath):
         return None, None
 
 
+def calculate_thrust_stats(points):
+    """Calculate impulse, avg thrust, max thrust, and burn time from thrust data."""
+    if not points:
+        return 0, 0, 0, 0
+    
+    burn_time = points[-1][0] if points else 0
+    max_thrust = max(p[1] for p in points) if points else 0
+    
+    impulse = 0.0
+    if len(points) > 1:
+        for i in range(1, len(points)):
+            dt = points[i][0] - points[i - 1][0]
+            avg_f = (points[i][1] + points[i - 1][1]) / 2.0
+            impulse += avg_f * dt
+    
+    avg_thrust = impulse / burn_time if burn_time > 0 else 0
+    
+    return impulse, avg_thrust, max_thrust, burn_time
+
+
+def extract_simfile_info_from_filename(filename, simfile_mapping):
+    """
+    Extract simfile info from filename using simfile mapping.
+    
+    Filename format: {motorName}_{simfileId}.{ext}
+    
+    Returns: (simfile_id, simfile_info) tuple, or (None, None) if not found.
+    simfile_info contains: motorId, format, source, license, infoUrl, dataUrl
+    """
+    # Remove extension
+    base = os.path.splitext(filename)[0]
+    
+    # Look for 24-character hex strings (simfileId format)
+    hex_pattern = r'[a-f0-9]{24}'
+    matches = re.findall(hex_pattern, base, re.IGNORECASE)
+    
+    # Try each match as a simfileId and look up the info
+    for match in matches:
+        if match in simfile_mapping:
+            info = simfile_mapping[match]
+            # Handle both old format (just motorId string) and new format (dict)
+            if isinstance(info, str):
+                return match, {'motorId': info}
+            return match, info
+    
+    return None, None
+
+
 def build():
     print(f"Building database from '{DATA_DIR}'...")
     conn = init_db()
     cursor = conn.cursor()
 
+    # Load canonical manufacturers and insert them first
+    canonical_manufacturers = load_manufacturers()
+    print(f"Loaded {len(canonical_manufacturers)} canonical manufacturers")
+    
+    # Load simfileId -> motorId mapping
+    simfile_mapping = load_simfile_mapping()
+    print(f"Loaded {len(simfile_mapping)} simfile->motor mappings")
+    
+    mfr_name_to_id = {}  # name -> db id
+    for mfr in canonical_manufacturers:
+        name = mfr.get('name')
+        abbrev = mfr.get('abbrev')
+        if name:
+            cursor.execute("INSERT OR IGNORE INTO manufacturers (name, abbrev) VALUES (?, ?)",
+                           (name, abbrev))
+            cursor.execute("SELECT id FROM manufacturers WHERE name = ?", (name,))
+            mfr_name_to_id[name] = cursor.fetchone()[0]
+    
+    # Build lookup for normalizing manufacturer names from files
+    mfr_lookup = build_manufacturer_lookup(canonical_manufacturers)
+
+    # Load ThrustCurve motor metadata
+    tc_metadata = load_motors_metadata()
+    tc_motors = tc_metadata.get('motors', {})
+    print(f"Loaded metadata for {len(tc_motors)} motors from ThrustCurve")
+
+    # Build lookup by (manufacturer, designation) for matching
+    metadata_lookup = {}
+    for motor_id, motor_meta in tc_motors.items():
+        mfr_name = motor_meta.get('manufacturer', '').lower()
+        mfr_abbrev = motor_meta.get('manufacturerAbbrev', '').lower()
+        designation = motor_meta.get('designation', '').lower()
+        common_name = motor_meta.get('commonName', '').lower()
+        
+        for mfr_key in [mfr_name, mfr_abbrev]:
+            if mfr_key:
+                if designation:
+                    metadata_lookup[(mfr_key, designation)] = motor_meta
+                if common_name:
+                    metadata_lookup[(mfr_key, common_name)] = motor_meta
+
     motor_count = 0
+    curve_count = 0
     files_found = 0
 
+    # Track inserted motors: tc_motor_id -> db_motor_id
+    inserted_motors_by_tc_id = {}
+    # Fallback: (mfr_id, designation) -> db_motor_id  
+    inserted_motors_by_key = {}
+    # Track inserted curves to avoid duplicates: tc_simfile_id -> db_curve_id
+    inserted_curves = {}
+
     # Traverse directory
-    for root, dirs, files in os.walk(DATA_DIR):
+    for root_dir, dirs, files in os.walk(DATA_DIR):
         for file in files:
-            path = os.path.join(root, file)
+            path = os.path.join(root_dir, file)
             lower_file = file.lower()
 
-            meta = None
+            parsed_meta = None
             points = None
             file_fmt = None
 
             # 1. Determine parser based on extension
             if lower_file.endswith(".eng") or lower_file.endswith(".rasp"):
                 files_found += 1
-                meta, points = parse_rasp(path)
+                parsed_meta, points = parse_rasp(path)
                 file_fmt = 'RASP'
             elif lower_file.endswith(".rse"):
                 files_found += 1
-                meta, points = parse_rse(path)
+                parsed_meta, points = parse_rse(path)
                 file_fmt = 'RSE'
             else:
                 continue
 
-            if not meta or not points:
+            if not parsed_meta or not points:
                 print(f"  [Skipped] Unparseable: {file}")
                 continue
 
             try:
-                # 2. Handle Manufacturer
-                cursor.execute("INSERT OR IGNORE INTO manufacturers (name) VALUES (?)", (meta['manufacturer'],))
-                cursor.execute("SELECT id FROM manufacturers WHERE name = ?", (meta['manufacturer'],))
-                mfr_id = cursor.fetchone()[0]
+                # Get parsed values
+                parsed_mfr = parsed_meta['manufacturer'].lower().strip()
+                parsed_designation = parsed_meta['designation'].lower().strip()
+                
+                # Extract simfile info from filename
+                simfile_id, simfile_info = extract_simfile_info_from_filename(file, simfile_mapping)
+                
+                # Try to find ThrustCurve motor metadata
+                tc_meta = None
+                tc_motor_id = None
+                
+                if simfile_info and simfile_info.get('motorId'):
+                    tc_motor_id = simfile_info['motorId']
+                    if tc_motor_id in tc_motors:
+                        tc_meta = tc_motors[tc_motor_id]
+                
+                # Fallback: try manufacturer + designation lookup
+                if not tc_meta:
+                    normalized_mfr = parsed_mfr.replace('_', ' ').strip()
+                    for mfr_key in [parsed_mfr, normalized_mfr, parsed_mfr.split()[0], normalized_mfr.split()[0]]:
+                        lookup_key = (mfr_key, parsed_designation)
+                        if lookup_key in metadata_lookup:
+                            tc_meta = metadata_lookup[lookup_key]
+                            tc_motor_id = tc_meta.get('motorId')
+                            break
+                
+                # Normalize manufacturer name
+                normalized_mfr = parsed_mfr.replace('_', ' ').strip()
+                canonical = mfr_lookup.get(parsed_mfr)
+                if not canonical:
+                    canonical = mfr_lookup.get(normalized_mfr)
+                if not canonical:
+                    canonical = mfr_lookup.get(parsed_mfr.split()[0])
+                if not canonical:
+                    canonical = mfr_lookup.get(normalized_mfr.split()[0])
+                
+                # Get manufacturer info
+                if tc_meta and tc_meta.get('manufacturer'):
+                    mfr_name = tc_meta.get('manufacturer')
+                    mfr_abbrev = tc_meta.get('manufacturerAbbrev')
+                elif canonical:
+                    mfr_name, mfr_abbrev = canonical
+                else:
+                    print(f"  [Skipped] Unknown manufacturer '{parsed_meta['manufacturer']}' in {file}")
+                    continue
 
-                # 3. Calculate Stats
-                burn_time = points[-1][0] if points else 0
-                impulse = 0.0
-                if len(points) > 1:
-                    for i in range(1, len(points)):
-                        dt = points[i][0] - points[i - 1][0]
-                        avg_f = (points[i][1] + points[i - 1][1]) / 2.0
-                        impulse += avg_f * dt
+                # Get manufacturer ID
+                if mfr_name in mfr_name_to_id:
+                    mfr_id = mfr_name_to_id[mfr_name]
+                else:
+                    cursor.execute("INSERT OR IGNORE INTO manufacturers (name, abbrev) VALUES (?, ?)",
+                                   (mfr_name, mfr_abbrev))
+                    cursor.execute("SELECT id FROM manufacturers WHERE name = ?", (mfr_name,))
+                    result = cursor.fetchone()
+                    if result is None:
+                        print(f"  [Skipped] Failed to insert manufacturer '{mfr_name}' for {file}")
+                        continue
+                    mfr_id = result[0]
+                    mfr_name_to_id[mfr_name] = mfr_id
 
+                designation = tc_meta.get('designation', parsed_meta['designation']) if tc_meta else parsed_meta['designation']
+                motor_key = (mfr_id, designation)
+                
+                # Check if motor already exists
+                db_motor_id = None
+                if tc_motor_id and tc_motor_id in inserted_motors_by_tc_id:
+                    db_motor_id = inserted_motors_by_tc_id[tc_motor_id]
+                elif motor_key in inserted_motors_by_key:
+                    db_motor_id = inserted_motors_by_key[motor_key]
+                
+                # Insert motor if not exists
+                if db_motor_id is None:
+                    if tc_meta:
+                        cursor.execute("""
+                            INSERT INTO motors
+                            (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
+                             diameter, length, total_impulse, avg_thrust, max_thrust, burn_time,
+                             propellant_weight, total_weight, type, delays, case_info, prop_info,
+                             sparky, info_url, data_files, updated_on)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """, (
+                            mfr_id,
+                            tc_meta.get('motorId'),
+                            tc_meta.get('designation', parsed_meta['designation']),
+                            tc_meta.get('commonName'),
+                            tc_meta.get('impulseClass'),
+                            tc_meta.get('diameter', parsed_meta['diameter']),
+                            tc_meta.get('length', parsed_meta['length']),
+                            tc_meta.get('totImpulseNs'),
+                            tc_meta.get('avgThrustN'),
+                            tc_meta.get('maxThrustN'),
+                            tc_meta.get('burnTimeS'),
+                            tc_meta.get('propWeightG', parsed_meta.get('prop_weight')),
+                            tc_meta.get('totalWeightG', parsed_meta.get('total_weight')),
+                            tc_meta.get('type', parsed_meta.get('type', 'SU')),
+                            tc_meta.get('delays', parsed_meta.get('delays')),
+                            tc_meta.get('caseInfo'),
+                            tc_meta.get('propInfo'),
+                            1 if tc_meta.get('sparky') else 0,
+                            tc_meta.get('infoUrl'),
+                            tc_meta.get('dataFiles'),
+                            tc_meta.get('updatedOn'),
+                        ))
+                    else:
+                        # No TC metadata
+                        calc_impulse, calc_avg_thrust, calc_max_thrust, calc_burn_time = calculate_thrust_stats(points)
+                        cursor.execute("""
+                            INSERT INTO motors
+                            (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
+                             diameter, length, total_impulse, avg_thrust, max_thrust, burn_time,
+                             propellant_weight, total_weight, type, delays, case_info, prop_info,
+                             sparky, info_url, data_files, updated_on)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """, (
+                            mfr_id, None, parsed_meta['designation'], None, None,
+                            parsed_meta['diameter'], parsed_meta['length'],
+                            calc_impulse, calc_avg_thrust, calc_max_thrust, calc_burn_time,
+                            parsed_meta.get('prop_weight'), parsed_meta.get('total_weight'),
+                            parsed_meta.get('type', 'SU'), parsed_meta.get('delays'),
+                            None, None, 0, None, None, None,
+                        ))
+                    
+                    db_motor_id = cursor.lastrowid
+                    if tc_motor_id:
+                        inserted_motors_by_tc_id[tc_motor_id] = db_motor_id
+                    inserted_motors_by_key[motor_key] = db_motor_id
+                    motor_count += 1
+
+                # Skip if this simfile was already inserted
+                if simfile_id and simfile_id in inserted_curves:
+                    continue
+                
+                # Calculate curve-specific stats
+                calc_impulse, calc_avg_thrust, calc_max_thrust, calc_burn_time = calculate_thrust_stats(points)
+                
+                # Insert thrust curve
                 cursor.execute("""
-                               INSERT INTO motors
-                               (manufacturer_id, designation, diameter, length, propellant_weight, total_weight,
-                                impulse, burn_time, type, data_file_format)
-                               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                               """, (mfr_id, meta['designation'], meta['diameter'], meta['length'],
-                                     meta['prop_weight'], meta['total_weight'], impulse, burn_time, meta['type'],
-                                     file_fmt))
+                    INSERT INTO thrust_curves
+                    (motor_id, tc_simfile_id, source, format, license, info_url, data_url,
+                     total_impulse, avg_thrust, max_thrust, burn_time)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    db_motor_id,
+                    simfile_id,
+                    simfile_info.get('source') if simfile_info else None,
+                    simfile_info.get('format', file_fmt) if simfile_info else file_fmt,
+                    simfile_info.get('license') if simfile_info else None,
+                    simfile_info.get('infoUrl') if simfile_info else None,
+                    simfile_info.get('dataUrl') if simfile_info else None,
+                    calc_impulse,
+                    calc_avg_thrust,
+                    calc_max_thrust,
+                    calc_burn_time,
+                ))
+                
+                curve_id = cursor.lastrowid
+                if simfile_id:
+                    inserted_curves[simfile_id] = curve_id
+                curve_count += 1
 
-                motor_id = cursor.lastrowid
-
-                # 4. Insert Thrust Data
-                data_rows = [(motor_id, p[0], p[1]) for p in points]
-                cursor.executemany("INSERT INTO thrust_data (motor_id, time_seconds, force_newtons) VALUES (?,?,?)",
-                                   data_rows)
-
-                motor_count += 1
+                # Insert thrust data points
+                data_rows = [(curve_id, p[0], p[1]) for p in points]
+                cursor.executemany(
+                    "INSERT INTO thrust_data (curve_id, time_seconds, force_newtons) VALUES (?,?,?)",
+                    data_rows)
 
             except Exception as e:
+                import traceback
                 print(f"  [Error] Failed to insert {file}: {e}")
+                traceback.print_exc()
 
-    print(f"Scanned {files_found} files. Imported {motor_count} motors.")
+    print(f"Scanned {files_found} files. Imported {motor_count} motors with {curve_count} thrust curves.")
 
     if motor_count == 0:
         print("Warning: No motors imported. Check your data directory contents.")
 
-    schema_version = 1
+    schema_version = 2  # Bumped for new thrust_curves table
     database_version = int(datetime.now().strftime("%Y%m%d%H%M%S"))
     generated_at = datetime.now().isoformat()
 
@@ -207,6 +680,7 @@ def build():
             ("database_version", str(database_version)),
             ("generated_at", generated_at),
             ("motor_count", str(motor_count)),
+            ("curve_count", str(curve_count)),
         ],
     )
 
@@ -232,6 +706,7 @@ def build():
         "database_version": database_version,
         "generated_at": generated_at,
         "motor_count": motor_count,
+        "curve_count": curve_count,
         "sha256": sha256.hexdigest(),
         "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
     }
