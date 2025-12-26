@@ -196,10 +196,22 @@ def build():
     if motor_count == 0:
         print("Warning: No motors imported. Check your data directory contents.")
 
-    # --- FIX START ---
-    # You must commit the transaction before running VACUUM
+    schema_version = 1
+    database_version = int(datetime.now().strftime("%Y%m%d%H%M%S"))
+    generated_at = datetime.now().isoformat()
+
+    cursor.executemany(
+        "INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)",
+        [
+            ("schema_version", str(schema_version)),
+            ("database_version", str(database_version)),
+            ("generated_at", generated_at),
+            ("motor_count", str(motor_count)),
+        ],
+    )
+
+    # Commit the transaction before running VACUUM
     conn.commit()
-    # --- FIX END ---
 
     # Optimize
     conn.execute("VACUUM")
@@ -216,9 +228,9 @@ def build():
         sha256.update(f.read())
 
     meta = {
-        "schema_version": 1,
-        "database_version": int(datetime.now().strftime("%Y%m%d%H%M%S")),
-        "generated_at": datetime.now().isoformat(),
+        "schema_version": schema_version,
+        "database_version": database_version,
+        "generated_at": generated_at,
         "motor_count": motor_count,
         "sha256": sha256.hexdigest(),
         "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"

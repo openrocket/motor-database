@@ -53,6 +53,15 @@ The SQLite schema lives in `schema/V1__initial_schema.sql` and is optimized for 
 
 ### Tables and Columns
 
+**meta**
+
+| Column | Type | Notes |
+| :--- | :--- | :--- |
+| key | TEXT | Primary key |
+| value | TEXT | Required |
+
+Keys stored include `schema_version`, `database_version`, `generated_at`, and `motor_count`.
+
 **manufacturers**
 
 | Column | Type | Notes |

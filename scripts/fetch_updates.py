@@ -20,7 +20,7 @@ HEADERS = {
 
 
 def load_state():
-    # Fix: Handle empty or corrupt JSON files gracefully
+    # Handle empty or corrupt JSON files gracefully
     if os.path.exists(STATE_FILE):
         try:
             with open(STATE_FILE, 'r') as f:
