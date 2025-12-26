@@ -96,7 +96,11 @@ def get_manufacturers():
     """Fetch and save the canonical manufacturers list from ThrustCurve metadata API."""
     print("Fetching manufacturer list...")
     try:
-        resp = requests.get(TC_API_METADATA, headers=HEADERS)
+        payload = {
+            "availability": "all"
+        }
+
+        resp = requests.get(TC_API_METADATA, json=payload, headers=HEADERS)
         if resp.status_code == 200:
             data = resp.json()
             manufacturers = data.get('manufacturers', [])
@@ -213,7 +217,8 @@ def fetch_motors():
         # Search by manufacturer (Matches Java logic)
         search_payload = {
             "manufacturer": mfr,
-            "maxResults": 9999
+            "maxResults": 9999,
+            "availability": "all"
         }
 
         try:
