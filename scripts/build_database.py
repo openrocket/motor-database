@@ -265,7 +265,20 @@ def build_manufacturer_lookup(manufacturers):
 
 
 def parse_rasp(filepath):
-    """ Parses standard RASP (.eng/.rasp) files - only the FIRST motor if file contains multiple """
+    """
+    Parses standard RASP (.eng/.rasp) files - only the FIRST motor if file contains multiple.
+    
+    RASP header format (7+ fields, space-separated):
+      1. Common name (impulse class + avg thrust, e.g. "F32")
+      2. Casing diameter in mm
+      3. Casing length in mm  
+      4. Available delays (e.g. "5-10-15", "0" for none, "P" for plugged)
+      5. Propellant weight in kg
+      6. Total weight in kg
+      7+ Manufacturer name (may contain spaces)
+    
+    Note: Weights are converted from kg (RASP format) to grams (DB format).
+    """
     header_parsed = False
     data_points = []
     metadata = {}
@@ -286,14 +299,25 @@ def parse_rasp(filepath):
                     return None, None  # Invalid header
 
                 try:
+                    # Parse delays: "0" means no delay, "P" means plugged (no ejection)
+                    delays_raw = parts[3]
+                    if delays_raw == '0' or delays_raw.upper() == 'P':
+                        delays = None
+                    else:
+                        delays = delays_raw
+                    
+                    # RASP weights are in kg, convert to grams for DB consistency
+                    prop_weight_kg = float(parts[4])
+                    total_weight_kg = float(parts[5])
+                    
                     metadata = {
-                        'designation': parts[0],
-                        'diameter': float(parts[1]),
-                        'length': float(parts[2]),
-                        # parts[3] is delays
-                        'delays': parts[3] if parts[3] != '0' else None,
-                        'prop_weight': float(parts[4]),
-                        'total_weight': float(parts[5]),
+                        'common_name': parts[0],           # e.g. "F32" (impulse class + avg thrust)
+                        'designation': parts[0],           # Use common_name as fallback designation
+                        'diameter': float(parts[1]),       # mm
+                        'length': float(parts[2]),         # mm
+                        'delays': delays,                  # e.g. "5-10-15" or None
+                        'prop_weight': prop_weight_kg * 1000,   # Convert kg -> grams
+                        'total_weight': total_weight_kg * 1000, # Convert kg -> grams
                         'manufacturer': " ".join(parts[6:]),
                         'type': 'SU'  # Default
                     }
@@ -323,7 +347,20 @@ def parse_rasp(filepath):
 
 
 def parse_rse(filepath):
-    """ Parses RockSim (.rse) XML files """
+    """
+    Parses RockSim (.rse) XML files.
+    
+    RSE engine attributes:
+      - code: Motor designation (e.g. "H128W")
+      - mfg: Manufacturer name
+      - dia: Casing diameter in mm
+      - len: Casing length in mm
+      - propWt: Propellant weight in grams
+      - initWt: Total/initial weight in grams
+      - delays: Available delays (e.g. "6,10,14")
+    
+    Note: RSE weights are already in grams (unlike RASP which uses kg).
+    """
     try:
         tree = ET.parse(filepath)
         root = tree.getroot()
@@ -334,16 +371,28 @@ def parse_rse(filepath):
             return None, None
 
         # Extract Metadata
-        # attributes: code, mfg, len, dia, propWt, initWt
-        delays = engine.get('delays')
+        delays_raw = engine.get('delays', '')
+        if delays_raw == '0' or delays_raw.upper() == 'P' or not delays_raw:
+            delays = None
+        else:
+            delays = delays_raw
+        
+        designation = engine.get('code', 'Unknown')
+        # Extract common name from designation (strip propellant suffix letters)
+        # e.g. "H128W" -> "H128", "K550W-L" -> "K550"
+        common_name_match = re.match(r'^([A-Z][0-9]+)', designation)
+        common_name = common_name_match.group(1) if common_name_match else designation
+        
         metadata = {
-            'designation': engine.get('code', 'Unknown'),
+            'designation': designation,
+            'common_name': common_name,
             'manufacturer': engine.get('mfg', 'Unknown'),
             'diameter': float(engine.get('dia', 0.0)),
             'length': float(engine.get('len', 0.0)),
+            # RSE weights are already in grams
             'prop_weight': float(engine.get('propWt', 0.0)),
             'total_weight': float(engine.get('initWt', 0.0)),
-            'delays': delays if delays and delays != '0' else None,
+            'delays': delays,
             'type': 'SU'
         }
 
@@ -406,6 +455,7 @@ def extract_simfile_info_from_filename(filename, simfile_mapping):
                 return match, {'motorId': info}
             return match, info
     
+    # No simfileId found in filename
     return None, None
 
 
@@ -565,6 +615,11 @@ def build():
                 
                 # Insert motor if not exists
                 if db_motor_id is None:
+                    # RASP/RSE header values ALWAYS override API data for these fields:
+                    # - common_name, diameter, length, delays, propellant_weight, total_weight
+                    # This is because the API data can be missing or incorrect, while the
+                    # header line in the actual data file is authoritative.
+                    
                     if tc_meta:
                         cursor.execute("""
                             INSERT INTO motors
@@ -577,18 +632,23 @@ def build():
                             mfr_id,
                             tc_meta.get('motorId'),
                             tc_meta.get('designation', parsed_meta['designation']),
-                            tc_meta.get('commonName'),
+                            # Override from parsed header:
+                            parsed_meta.get('common_name') or tc_meta.get('commonName'),
                             tc_meta.get('impulseClass'),
-                            tc_meta.get('diameter', parsed_meta['diameter']),
-                            tc_meta.get('length', parsed_meta['length']),
+                            # Override from parsed header:
+                            parsed_meta['diameter'],
+                            parsed_meta['length'],
+                            # Impulse/thrust stats from API (calculated from official data)
                             tc_meta.get('totImpulseNs'),
                             tc_meta.get('avgThrustN'),
                             tc_meta.get('maxThrustN'),
                             tc_meta.get('burnTimeS'),
-                            tc_meta.get('propWeightG', parsed_meta.get('prop_weight')),
-                            tc_meta.get('totalWeightG', parsed_meta.get('total_weight')),
+                            # Override from parsed header:
+                            parsed_meta.get('prop_weight') or tc_meta.get('propWeightG'),
+                            parsed_meta.get('total_weight') or tc_meta.get('totalWeightG'),
                             tc_meta.get('type', parsed_meta.get('type', 'SU')),
-                            tc_meta.get('delays', parsed_meta.get('delays')),
+                            # Override from parsed header:
+                            parsed_meta.get('delays') or tc_meta.get('delays'),
                             tc_meta.get('caseInfo'),
                             tc_meta.get('propInfo'),
                             1 if tc_meta.get('sparky') else 0,
@@ -597,7 +657,7 @@ def build():
                             tc_meta.get('updatedOn'),
                         ))
                     else:
-                        # No TC metadata
+                        # No TC metadata - use all parsed values
                         calc_impulse, calc_avg_thrust, calc_max_thrust, calc_burn_time = calculate_thrust_stats(points)
                         cursor.execute("""
                             INSERT INTO motors
@@ -607,11 +667,17 @@ def build():
                              sparky, info_url, data_files, updated_on)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """, (
-                            mfr_id, None, parsed_meta['designation'], None, None,
-                            parsed_meta['diameter'], parsed_meta['length'],
+                            mfr_id, None,
+                            parsed_meta['designation'],
+                            parsed_meta.get('common_name'),
+                            None,
+                            parsed_meta['diameter'],
+                            parsed_meta['length'],
                             calc_impulse, calc_avg_thrust, calc_max_thrust, calc_burn_time,
-                            parsed_meta.get('prop_weight'), parsed_meta.get('total_weight'),
-                            parsed_meta.get('type', 'SU'), parsed_meta.get('delays'),
+                            parsed_meta.get('prop_weight'),
+                            parsed_meta.get('total_weight'),
+                            parsed_meta.get('type', 'SU'),
+                            parsed_meta.get('delays'),
                             None, None, 0, None, None, None,
                         ))
                     
@@ -657,7 +723,7 @@ def build():
                 data_rows = [(curve_id, p[0], p[1]) for p in points]
                 cursor.executemany(
                     "INSERT INTO thrust_data (curve_id, time_seconds, force_newtons) VALUES (?,?,?)",
-                    data_rows)
+                                   data_rows)
 
             except Exception as e:
                 import traceback
