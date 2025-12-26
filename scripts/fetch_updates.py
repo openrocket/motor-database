@@ -8,6 +8,7 @@ from datetime import datetime
 # Config
 DATA_DIR = "data/thrustcurve.org"
 STATE_FILE = "state/last_sync.json"
+MOTORS_METADATA_FILE = "data/thrustcurve.org/motors_metadata.json"
 TC_API_METADATA = "https://www.thrustcurve.org/api/v1/metadata.json"
 TC_API_SEARCH = "https://www.thrustcurve.org/api/v1/search.json"
 TC_API_DOWNLOAD = "https://www.thrustcurve.org/api/v1/download.json"
@@ -32,11 +33,31 @@ def load_state():
     return {"last_updated": "1970-01-01"}
 
 
+def load_motors_metadata():
+    """Load existing motors metadata from JSON file."""
+    if os.path.exists(MOTORS_METADATA_FILE):
+        try:
+            with open(MOTORS_METADATA_FILE, 'r') as f:
+                content = f.read().strip()
+                if content:
+                    return json.loads(content)
+        except (json.JSONDecodeError, IOError):
+            print("Warning: Motors metadata file corrupted or empty. Starting fresh.")
+    return {"motors": {}}
+
+
+def save_motors_metadata(metadata):
+    """Save motors metadata to JSON file."""
+    os.makedirs(os.path.dirname(MOTORS_METADATA_FILE), exist_ok=True)
+    with open(MOTORS_METADATA_FILE, 'w') as f:
+        json.dump(metadata, f, indent=2)
+
+
 def save_state():
     # Ensure directory exists before writing
     os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
     with open(STATE_FILE, 'w') as f:
-        json.dump({"last_updated": datetime.now().strftime("%Y-%m-%d")}, f)
+        json.dump({"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}, f)
 
 
 def ensure_dir(path):
@@ -116,14 +137,24 @@ def download_motor_data(motor_id, mfr_name, motor_name):
 def fetch_motors():
     state = load_state()
     last_updated_date = state['last_updated']
-    print(f"Checking for updates since {last_updated_date}...")
+    
+    # Load existing motor metadata
+    motors_metadata = load_motors_metadata()
+    
+    # If metadata file doesn't exist or is empty, force a full sync
+    if not motors_metadata['motors']:
+        print("No existing metadata found. Performing full sync...")
+        last_updated_date = "1970-01-01"
+    else:
+        print(f"Checking for updates since {last_updated_date}...")
 
     manufacturers = get_manufacturers()
     if not manufacturers:
         print("No manufacturers found. Exiting.")
         return
-
+    
     total_downloaded = 0
+    total_metadata_updated = 0
 
     for mfr in manufacturers:
         # Search by manufacturer (Matches Java logic)
@@ -157,7 +188,34 @@ def fetch_motors():
                 mid = motor.get('motorId')
                 common_name = motor.get('commonName', 'Unknown')
 
-                # Download data
+                # Store motor metadata (all fields from the search response)
+                motors_metadata['motors'][mid] = {
+                    'motorId': mid,
+                    'manufacturer': motor.get('manufacturer'),
+                    'manufacturerAbbrev': motor.get('manufacturerAbbrev'),
+                    'designation': motor.get('designation'),
+                    'commonName': common_name,
+                    'impulseClass': motor.get('impulseClass'),
+                    'diameter': motor.get('diameter'),
+                    'length': motor.get('length'),
+                    'type': motor.get('type'),
+                    'avgThrustN': motor.get('avgThrustN'),
+                    'maxThrustN': motor.get('maxThrustN'),
+                    'totImpulseNs': motor.get('totImpulseNs'),
+                    'burnTimeS': motor.get('burnTimeS'),
+                    'dataFiles': motor.get('dataFiles'),
+                    'infoUrl': motor.get('infoUrl'),
+                    'totalWeightG': motor.get('totalWeightG'),
+                    'propWeightG': motor.get('propWeightG'),
+                    'delays': motor.get('delays'),
+                    'caseInfo': motor.get('caseInfo'),
+                    'propInfo': motor.get('propInfo'),
+                    'sparky': motor.get('sparky'),
+                    'updatedOn': motor.get('updatedOn'),
+                }
+                total_metadata_updated += 1
+
+                # Download thrust curve data files
                 count = download_motor_data(mid, mfr, common_name)
                 total_downloaded += count
                 if count > 0:
@@ -169,8 +227,13 @@ def fetch_motors():
         except Exception as e:
             print(f"Error processing {mfr}: {e}")
 
-    print(f"Update complete. {total_downloaded} files downloaded.")
-    if total_downloaded > 0:
+    print(f"Update complete. {total_downloaded} files downloaded, {total_metadata_updated} motor metadata entries updated.")
+    
+    if total_metadata_updated > 0:
+        save_motors_metadata(motors_metadata)
+        print(f"Saved metadata for {len(motors_metadata['motors'])} total motors to {MOTORS_METADATA_FILE}")
+    
+    if total_downloaded > 0 or total_metadata_updated > 0:
         save_state()
 
 
