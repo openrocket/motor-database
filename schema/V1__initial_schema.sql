@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS motors (
     data_files INTEGER,            -- number of data files on ThrustCurve
     updated_on TEXT,               -- last update date from ThrustCurve
     description TEXT,              -- comments from RASP file (above header, newlines removed)
+    source TEXT,                   -- data source: 'thrustcurve.org', 'RASAero', 'manual', etc.
     FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(id)
 );
 

@@ -766,8 +766,8 @@ def build():
                                 (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
                                  diameter, length, total_impulse, avg_thrust, max_thrust, burn_time,
                                  propellant_weight, total_weight, type, delays, case_info, prop_info,
-                                 sparky, info_url, data_files, updated_on, description)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                 sparky, info_url, data_files, updated_on, description, source)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             """, (
                                 mfr_id, tc_meta.get('motorId'),
                                 tc_meta.get('designation', parsed_meta['designation']),
@@ -783,7 +783,7 @@ def build():
                                 tc_meta.get('caseInfo'), tc_meta.get('propInfo'),
                                 1 if tc_meta.get('sparky') else 0,
                                 tc_meta.get('infoUrl'), tc_meta.get('dataFiles'), tc_meta.get('updatedOn'),
-                                description,
+                                description, source_dir,
                             ))
                         else:
                             calc_impulse, calc_avg, calc_max, calc_burn = calculate_thrust_stats(points)
@@ -792,8 +792,8 @@ def build():
                                 (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
                                  diameter, length, total_impulse, avg_thrust, max_thrust, burn_time,
                                  propellant_weight, total_weight, type, delays, case_info, prop_info,
-                                 sparky, info_url, data_files, updated_on, description)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                 sparky, info_url, data_files, updated_on, description, source)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             """, (
                                 mfr_id, None, parsed_meta['designation'], parsed_meta.get('common_name'),
                                 None, parsed_meta['diameter'], parsed_meta['length'],
@@ -801,7 +801,7 @@ def build():
                                 parsed_meta.get('prop_weight'), parsed_meta.get('total_weight'),
                                 parsed_meta.get('type', 'SU'), parsed_meta.get('delays'),
                                 None, None, 0, None, None, None,
-                                description,
+                                description, source_dir,
                             ))
                         
                         db_motor_id = cursor.lastrowid
