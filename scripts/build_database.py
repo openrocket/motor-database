@@ -164,7 +164,7 @@ def build_manufacturer_lookup(manufacturers):
     
     # Gorilla Rocket Motors
     gorilla = ('Gorilla Rocket Motors', 'Gorilla')
-    for alias in ['gr', 'gorilla', 'gorilla rocket', 'gorilla rockets', 
+    for alias in ['gr', 'gm', 'gorilla', 'gorilla rocket', 'gorilla rockets', 
                   'gorilla motor', 'gorilla motors', 'gorilla rocket motor',
                   'gorilla rocket motors', 'gorilla_rocket_motors', 
                   'gorilla_rocket_motors_', 'gorilla_motors', 'gorillarocketmotors']:
@@ -187,8 +187,13 @@ def build_manufacturer_lookup(manufacturers):
     
     # Loki Research
     loki = ('Loki Research', 'Loki')
-    for alias in ['loki', 'lr', 'loki research']:
+    for alias in ['loki', 'lr', 'ct', 'loki research']:
         lookup[alias] = loki
+    
+    # Loki Research EX (experimental)
+    loki_ex = ('Loki Research', 'Loki')  # Map to standard Loki
+    for alias in ['lr-ex', 'loki ex', 'loki research ex']:
+        lookup[alias] = loki_ex
     
     # Public Missiles Ltd
     pml = ('Public Missiles, Ltd.', 'PML')
@@ -260,6 +265,26 @@ def build_manufacturer_lookup(manufacturers):
     tsp = ('Piotr Tendera Rocket Motors', 'TSP')
     for alias in ['tsp', 'tendera', 'piotr tendera', 'piotr tendera rocket motors']:
         lookup[alias] = tsp
+    
+    # AMW ProX (Animal Motor Works ProX line)
+    amw_prox = ('AMW ProX', 'AMW/ProX')
+    for alias in ['amw/prox', 'amw-prox', 'amw_prox', 'amw prox', 'prox']:
+        lookup[alias] = amw_prox
+    
+    # Historical motors (discontinued/legacy)
+    historical = ('Historical', 'Hist')
+    for alias in ['hist', 'historical']:
+        lookup[alias] = historical
+    
+    # NoThrust (test/dummy motors)
+    nothrust = ('NoThrust', 'NoThrust')
+    for alias in ['nothrust', 'no thrust', 'no-thrust']:
+        lookup[alias] = nothrust
+    
+    # Derek Deville DEAP EX (experimental)
+    deap_ex = ('Derek Deville DEAP EX', 'DEAP-EX')
+    for alias in ['deap-ex', 'deap ex', 'deap', 'derek deville', 'derek deville deap ex']:
+        lookup[alias] = deap_ex
     
     return lookup
 
@@ -456,7 +481,7 @@ def extract_simfile_info_from_filename(filename, simfile_mapping):
             return match, info
     
     # No simfileId found in filename
-    return None, None
+        return None, None
 
 
 def build():
@@ -586,8 +611,10 @@ def build():
                 elif canonical:
                     mfr_name, mfr_abbrev = canonical
                 else:
-                    print(f"  [Skipped] Unknown manufacturer '{parsed_meta['manufacturer']}' in {file}")
-                    continue
+                    # Unknown manufacturer - assign to "Unknown" category
+                    print(f"  [Warning] Unknown manufacturer '{parsed_meta['manufacturer']}' in {file} -> assigning to 'Unknown'")
+                    mfr_name = 'Unknown'
+                    mfr_abbrev = 'UNK'
 
                 # Get manufacturer ID
                 if mfr_name in mfr_name_to_id:
