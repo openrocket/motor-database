@@ -456,32 +456,16 @@ def calculate_thrust_stats(points):
 
 
 def extract_simfile_info_from_filename(filename, simfile_mapping):
-    """
-    Extract simfile info from filename using simfile mapping.
-    
-    Filename format: {motorName}_{simfileId}.{ext}
-    
-    Returns: (simfile_id, simfile_info) tuple, or (None, None) if not found.
-    simfile_info contains: motorId, format, source, license, infoUrl, dataUrl
-    """
-    # Remove extension
+    """Extract simfile info from filename using simfile mapping."""
     base = os.path.splitext(filename)[0]
-    
-    # Look for 24-character hex strings (simfileId format)
-    hex_pattern = r'[a-f0-9]{24}'
-    matches = re.findall(hex_pattern, base, re.IGNORECASE)
-    
-    # Try each match as a simfileId and look up the info
+    matches = re.findall(r'[a-f0-9]{24}', base, re.IGNORECASE)
     for match in matches:
         if match in simfile_mapping:
             info = simfile_mapping[match]
-            # Handle both old format (just motorId string) and new format (dict)
             if isinstance(info, str):
                 return match, {'motorId': info}
             return match, info
-    
-    # No simfileId found in filename
-        return None, None
+    return None, None
 
 
 def build():
@@ -540,12 +524,23 @@ def build():
     inserted_motors_by_key = {}
     # Track inserted curves to avoid duplicates: tc_simfile_id -> db_curve_id
     inserted_curves = {}
+    
+    # Track stats by source directory
+    source_stats = {}  # source_dir -> {'files': 0, 'motors': 0, 'curves': 0}
 
     # Traverse directory
     for root_dir, dirs, files in os.walk(DATA_DIR):
         for file in files:
             path = os.path.join(root_dir, file)
             lower_file = file.lower()
+
+            # Determine source directory (first subdirectory under DATA_DIR)
+            rel_path = os.path.relpath(root_dir, DATA_DIR)
+            source_dir = rel_path.split(os.sep)[0] if rel_path != '.' else 'root'
+            
+            # Initialize source stats if needed
+            if source_dir not in source_stats:
+                source_stats[source_dir] = {'files': 0, 'motors': 0, 'curves': 0}
 
             parsed_meta = None
             points = None
@@ -554,10 +549,12 @@ def build():
             # 1. Determine parser based on extension
             if lower_file.endswith(".eng") or lower_file.endswith(".rasp"):
                 files_found += 1
+                source_stats[source_dir]['files'] += 1
                 parsed_meta, points = parse_rasp(path)
                 file_fmt = 'RASP'
             elif lower_file.endswith(".rse"):
                 files_found += 1
+                source_stats[source_dir]['files'] += 1
                 parsed_meta, points = parse_rse(path)
                 file_fmt = 'RSE'
             else:
@@ -713,6 +710,7 @@ def build():
                         inserted_motors_by_tc_id[tc_motor_id] = db_motor_id
                     inserted_motors_by_key[motor_key] = db_motor_id
                     motor_count += 1
+                    source_stats[source_dir]['motors'] += 1
 
                 # Skip if this simfile was already inserted
                 if simfile_id and simfile_id in inserted_curves:
@@ -745,6 +743,7 @@ def build():
                 if simfile_id:
                     inserted_curves[simfile_id] = curve_id
                 curve_count += 1
+                source_stats[source_dir]['curves'] += 1
 
                 # Insert thrust data points
                 data_rows = [(curve_id, p[0], p[1]) for p in points]
@@ -757,7 +756,17 @@ def build():
                 print(f"  [Error] Failed to insert {file}: {e}")
                 traceback.print_exc()
 
-    print(f"Scanned {files_found} files. Imported {motor_count} motors with {curve_count} thrust curves.")
+    # Print summary
+    print(f"\n{'='*60}")
+    print(f"BUILD SUMMARY")
+    print(f"{'='*60}")
+    print(f"{'Source':<25} {'Files':>8} {'Motors':>8} {'Curves':>8}")
+    print(f"{'-'*60}")
+    for source, stats in sorted(source_stats.items()):
+        print(f"{source:<25} {stats['files']:>8} {stats['motors']:>8} {stats['curves']:>8}")
+    print(f"{'-'*60}")
+    print(f"{'TOTAL':<25} {files_found:>8} {motor_count:>8} {curve_count:>8}")
+    print(f"{'='*60}\n")
 
     if motor_count == 0:
         print("Warning: No motors imported. Check your data directory contents.")
