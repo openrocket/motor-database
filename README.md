@@ -38,12 +38,13 @@ The `metadata.json` structure is defined as follows:
 `database_version` is a sortable timestamp in `YYYYMMDDHHMMSS` format.
 ```json
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "database_version": 20251225140000,
   "generated_at": "2025-12-25T14:00:00.000000",
   "motor_count": 1033,
+  "curve_count": 1320,
   "sha256": "a1b2c3d4e5f6...",
-  "download_url": "https://openrocket.info/motor-database/motors.db.gz"
+  "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
 }
 ```
 
@@ -78,7 +79,7 @@ manufacturers          motors              thrust_curves           thrust_data
 | key | TEXT | Primary key |
 | value | TEXT | Required |
 
-Keys stored: `schema_version`, `database_version`, `generated_at`, `motor_count`.
+Keys stored: `schema_version`, `database_version`, `generated_at`, `motor_count`, `curve_count`.
 
 ---
 
@@ -118,6 +119,8 @@ Keys stored: `schema_version`, `database_version`, `generated_at`, `motor_count`
 | info_url | TEXT | URL to motor info page |
 | data_files | INTEGER | Number of data files on ThrustCurve |
 | updated_on | TEXT | Last update date from ThrustCurve |
+| description | TEXT | RASP file comments (header notes, newlines removed) |
+| source | TEXT | Data source (e.g. "thrustcurve.org", "manual") |
 
 ---
 
