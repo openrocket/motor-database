@@ -468,6 +468,89 @@ def extract_simfile_info_from_filename(filename, simfile_mapping):
     return None, None
 
 
+def parse_rasp_all(filepath):
+    """Parse ALL motors from a RASP file (handles multi-motor files)."""
+    motors = []
+    current_meta = None
+    current_points = []
+
+    def try_header(parts):
+        if len(parts) < 7:
+            return None
+        try:
+            delays = None if parts[3] in ('0', 'P', 'p') else parts[3]
+            return {
+                'common_name': parts[0], 'designation': parts[0],
+                'diameter': float(parts[1]), 'length': float(parts[2]),
+                'delays': delays, 'prop_weight': float(parts[4]) * 1000,
+                'total_weight': float(parts[5]) * 1000,
+                'manufacturer': " ".join(parts[6:]), 'type': 'SU'
+            }
+        except ValueError:
+            return None
+
+    with open(filepath, 'r', errors='ignore') as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith(';'):
+                continue
+            parts = line.split()
+            if current_meta is None:
+                current_meta = try_header(parts)
+                current_points = []
+            else:
+                try:
+                    if len(parts) >= 2:
+                        t, thrust = float(parts[0]), float(parts[1])
+                        current_points.append((t, thrust))
+                        if thrust == 0:
+                            motors.append((current_meta, current_points))
+                            current_meta = None
+                            current_points = []
+                except ValueError:
+                    hdr = try_header(parts)
+                    if hdr:
+                        if current_meta and current_points:
+                            motors.append((current_meta, current_points))
+                        current_meta = hdr
+                        current_points = []
+    if current_meta and current_points:
+        motors.append((current_meta, current_points))
+    return motors
+
+
+def parse_rse_all(filepath):
+    """Parse ALL engines from an RSE file (handles multi-engine files)."""
+    motors = []
+    try:
+        tree = ET.parse(filepath)
+        for engine in tree.getroot().findall(".//engine"):
+            delays = engine.get('delays', '')
+            delays = None if delays in ('0', 'P', 'p', '') else delays
+            designation = engine.get('code', 'Unknown')
+            cn_match = re.match(r'^([A-Z][0-9]+)', designation)
+            meta = {
+                'designation': designation,
+                'common_name': cn_match.group(1) if cn_match else designation,
+                'manufacturer': engine.get('mfg', 'Unknown'),
+                'diameter': float(engine.get('dia', 0.0)),
+                'length': float(engine.get('len', 0.0)),
+                'prop_weight': float(engine.get('propWt', 0.0)),
+                'total_weight': float(engine.get('initWt', 0.0)),
+                'delays': delays, 'type': 'SU'
+            }
+            pts = []
+            data = engine.find("data")
+            if data is not None:
+                for pt in data.findall("eng-data"):
+                    pts.append((float(pt.get('t', 0)), float(pt.get('f', 0))))
+            if pts:
+                motors.append((meta, pts))
+        return motors
+    except Exception:
+        return []
+
+
 def build():
     print(f"Building database from '{DATA_DIR}'...")
     conn = init_db()
@@ -542,219 +625,187 @@ def build():
             if source_dir not in source_stats:
                 source_stats[source_dir] = {'files': 0, 'motors': 0, 'curves': 0}
 
-            parsed_meta = None
-            points = None
-            file_fmt = None
-
-            # 1. Determine parser based on extension
+            # 1. Parse file (now returns list of all motors in file)
             if lower_file.endswith(".eng") or lower_file.endswith(".rasp"):
                 files_found += 1
                 source_stats[source_dir]['files'] += 1
-                parsed_meta, points = parse_rasp(path)
+                motors_list = parse_rasp_all(path)
                 file_fmt = 'RASP'
             elif lower_file.endswith(".rse"):
                 files_found += 1
                 source_stats[source_dir]['files'] += 1
-                parsed_meta, points = parse_rse(path)
+                motors_list = parse_rse_all(path)
                 file_fmt = 'RSE'
             else:
                 continue
 
-            if not parsed_meta or not points:
+            if not motors_list:
                 print(f"  [Skipped] Unparseable: {file}")
                 continue
 
-            try:
-                # Get parsed values
-                parsed_mfr = parsed_meta['manufacturer'].lower().strip()
-                parsed_designation = parsed_meta['designation'].lower().strip()
-                
-                # Extract simfile info from filename
-                simfile_id, simfile_info = extract_simfile_info_from_filename(file, simfile_mapping)
-                
-                # Try to find ThrustCurve motor metadata
-                tc_meta = None
-                tc_motor_id = None
-                
-                if simfile_info and simfile_info.get('motorId'):
-                    tc_motor_id = simfile_info['motorId']
-                    if tc_motor_id in tc_motors:
-                        tc_meta = tc_motors[tc_motor_id]
-                
-                # Fallback: try manufacturer + designation lookup
-                if not tc_meta:
-                    normalized_mfr = parsed_mfr.replace('_', ' ').strip()
-                    for mfr_key in [parsed_mfr, normalized_mfr, parsed_mfr.split()[0], normalized_mfr.split()[0]]:
-                        lookup_key = (mfr_key, parsed_designation)
-                        if lookup_key in metadata_lookup:
-                            tc_meta = metadata_lookup[lookup_key]
-                            tc_motor_id = tc_meta.get('motorId')
-                            break
-                
-                # Normalize manufacturer name
-                normalized_mfr = parsed_mfr.replace('_', ' ').strip()
-                canonical = mfr_lookup.get(parsed_mfr)
-                if not canonical:
-                    canonical = mfr_lookup.get(normalized_mfr)
-                if not canonical:
-                    canonical = mfr_lookup.get(parsed_mfr.split()[0])
-                if not canonical:
-                    canonical = mfr_lookup.get(normalized_mfr.split()[0])
-                
-                # Get manufacturer info
-                if tc_meta and tc_meta.get('manufacturer'):
-                    mfr_name = tc_meta.get('manufacturer')
-                    mfr_abbrev = tc_meta.get('manufacturerAbbrev')
-                elif canonical:
-                    mfr_name, mfr_abbrev = canonical
-                else:
-                    # Unknown manufacturer - assign to "Unknown" category
-                    print(f"  [Warning] Unknown manufacturer '{parsed_meta['manufacturer']}' in {file} -> assigning to 'Unknown'")
-                    mfr_name = 'Unknown'
-                    mfr_abbrev = 'UNK'
+            # simfile_id only valid for single-motor files from ThrustCurve
+            simfile_id, simfile_info = extract_simfile_info_from_filename(file, simfile_mapping)
+            is_single = len(motors_list) == 1
 
-                # Get manufacturer ID
-                if mfr_name in mfr_name_to_id:
-                    mfr_id = mfr_name_to_id[mfr_name]
-                else:
-                    cursor.execute("INSERT OR IGNORE INTO manufacturers (name, abbrev) VALUES (?, ?)",
-                                   (mfr_name, mfr_abbrev))
-                    cursor.execute("SELECT id FROM manufacturers WHERE name = ?", (mfr_name,))
-                    result = cursor.fetchone()
-                    if result is None:
-                        print(f"  [Skipped] Failed to insert manufacturer '{mfr_name}' for {file}")
-                        continue
-                    mfr_id = result[0]
-                    mfr_name_to_id[mfr_name] = mfr_id
-
-                designation = tc_meta.get('designation', parsed_meta['designation']) if tc_meta else parsed_meta['designation']
-                motor_key = (mfr_id, designation)
-                
-                # Check if motor already exists
-                db_motor_id = None
-                if tc_motor_id and tc_motor_id in inserted_motors_by_tc_id:
-                    db_motor_id = inserted_motors_by_tc_id[tc_motor_id]
-                elif motor_key in inserted_motors_by_key:
-                    db_motor_id = inserted_motors_by_key[motor_key]
-                
-                # Insert motor if not exists
-                if db_motor_id is None:
-                    # RASP/RSE header values ALWAYS override API data for these fields:
-                    # - common_name, diameter, length, delays, propellant_weight, total_weight
-                    # This is because the API data can be missing or incorrect, while the
-                    # header line in the actual data file is authoritative.
-                    
-                    if tc_meta:
-                        cursor.execute("""
-                            INSERT INTO motors
-                            (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
-                             diameter, length, total_impulse, avg_thrust, max_thrust, burn_time,
-                             propellant_weight, total_weight, type, delays, case_info, prop_info,
-                             sparky, info_url, data_files, updated_on)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                        """, (
-                            mfr_id,
-                            tc_meta.get('motorId'),
-                            tc_meta.get('designation', parsed_meta['designation']),
-                            # Override from parsed header:
-                            parsed_meta.get('common_name') or tc_meta.get('commonName'),
-                            tc_meta.get('impulseClass'),
-                            # Override from parsed header:
-                            parsed_meta['diameter'],
-                            parsed_meta['length'],
-                            # Impulse/thrust stats from API (calculated from official data)
-                            tc_meta.get('totImpulseNs'),
-                            tc_meta.get('avgThrustN'),
-                            tc_meta.get('maxThrustN'),
-                            tc_meta.get('burnTimeS'),
-                            # Override from parsed header:
-                            parsed_meta.get('prop_weight') or tc_meta.get('propWeightG'),
-                            parsed_meta.get('total_weight') or tc_meta.get('totalWeightG'),
-                            tc_meta.get('type', parsed_meta.get('type', 'SU')),
-                            # Override from parsed header:
-                            parsed_meta.get('delays') or tc_meta.get('delays'),
-                            tc_meta.get('caseInfo'),
-                            tc_meta.get('propInfo'),
-                            1 if tc_meta.get('sparky') else 0,
-                            tc_meta.get('infoUrl'),
-                            tc_meta.get('dataFiles'),
-                            tc_meta.get('updatedOn'),
-                        ))
-                    else:
-                        # No TC metadata - use all parsed values
-                        calc_impulse, calc_avg_thrust, calc_max_thrust, calc_burn_time = calculate_thrust_stats(points)
-                        cursor.execute("""
-                            INSERT INTO motors
-                            (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
-                             diameter, length, total_impulse, avg_thrust, max_thrust, burn_time,
-                             propellant_weight, total_weight, type, delays, case_info, prop_info,
-                             sparky, info_url, data_files, updated_on)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                        """, (
-                            mfr_id, None,
-                            parsed_meta['designation'],
-                            parsed_meta.get('common_name'),
-                            None,
-                            parsed_meta['diameter'],
-                            parsed_meta['length'],
-                            calc_impulse, calc_avg_thrust, calc_max_thrust, calc_burn_time,
-                            parsed_meta.get('prop_weight'),
-                            parsed_meta.get('total_weight'),
-                            parsed_meta.get('type', 'SU'),
-                            parsed_meta.get('delays'),
-                            None, None, 0, None, None, None,
-                        ))
-                    
-                    db_motor_id = cursor.lastrowid
-                    if tc_motor_id:
-                        inserted_motors_by_tc_id[tc_motor_id] = db_motor_id
-                    inserted_motors_by_key[motor_key] = db_motor_id
-                    motor_count += 1
-                    source_stats[source_dir]['motors'] += 1
-
-                # Skip if this simfile was already inserted
-                if simfile_id and simfile_id in inserted_curves:
+            for parsed_meta, points in motors_list:
+                if not parsed_meta or not points:
                     continue
-                
-                # Calculate curve-specific stats
-                calc_impulse, calc_avg_thrust, calc_max_thrust, calc_burn_time = calculate_thrust_stats(points)
-                
-                # Insert thrust curve
-                cursor.execute("""
-                    INSERT INTO thrust_curves
-                    (motor_id, tc_simfile_id, source, format, license, info_url, data_url,
-                     total_impulse, avg_thrust, max_thrust, burn_time)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """, (
-                    db_motor_id,
-                    simfile_id,
-                    simfile_info.get('source') if simfile_info else None,
-                    simfile_info.get('format', file_fmt) if simfile_info else file_fmt,
-                    simfile_info.get('license') if simfile_info else None,
-                    simfile_info.get('infoUrl') if simfile_info else None,
-                    simfile_info.get('dataUrl') if simfile_info else None,
-                    calc_impulse,
-                    calc_avg_thrust,
-                    calc_max_thrust,
-                    calc_burn_time,
-                ))
-                
-                curve_id = cursor.lastrowid
-                if simfile_id:
-                    inserted_curves[simfile_id] = curve_id
-                curve_count += 1
-                source_stats[source_dir]['curves'] += 1
+                try:
+                    parsed_mfr = parsed_meta['manufacturer'].lower().strip()
+                    parsed_designation = parsed_meta['designation'].lower().strip()
+                    
+                    # Try to find ThrustCurve motor metadata
+                    tc_meta = None
+                    tc_motor_id = None
+                    
+                    if is_single and simfile_info and simfile_info.get('motorId'):
+                        tc_motor_id = simfile_info['motorId']
+                        if tc_motor_id in tc_motors:
+                            tc_meta = tc_motors[tc_motor_id]
+                    
+                    # Fallback: try manufacturer + designation lookup
+                    if not tc_meta:
+                        normalized_mfr = parsed_mfr.replace('_', ' ').strip()
+                        for mfr_key in [parsed_mfr, normalized_mfr, parsed_mfr.split()[0], normalized_mfr.split()[0]]:
+                            lookup_key = (mfr_key, parsed_designation)
+                            if lookup_key in metadata_lookup:
+                                tc_meta = metadata_lookup[lookup_key]
+                                tc_motor_id = tc_meta.get('motorId')
+                                break
+                    
+                    # Normalize manufacturer name
+                    normalized_mfr = parsed_mfr.replace('_', ' ').strip()
+                    canonical = mfr_lookup.get(parsed_mfr)
+                    if not canonical:
+                        canonical = mfr_lookup.get(normalized_mfr)
+                    if not canonical:
+                        canonical = mfr_lookup.get(parsed_mfr.split()[0])
+                    if not canonical:
+                        canonical = mfr_lookup.get(normalized_mfr.split()[0])
+                    
+                    # Get manufacturer info
+                    if tc_meta and tc_meta.get('manufacturer'):
+                        mfr_name = tc_meta.get('manufacturer')
+                        mfr_abbrev = tc_meta.get('manufacturerAbbrev')
+                    elif canonical:
+                        mfr_name, mfr_abbrev = canonical
+                    else:
+                        print(f"  [Warning] Unknown mfr '{parsed_meta['manufacturer']}' in {file} -> 'Unknown'")
+                        mfr_name = 'Unknown'
+                        mfr_abbrev = 'UNK'
 
-                # Insert thrust data points
-                data_rows = [(curve_id, p[0], p[1]) for p in points]
-                cursor.executemany(
-                    "INSERT INTO thrust_data (curve_id, time_seconds, force_newtons) VALUES (?,?,?)",
-                                   data_rows)
+                    # Get manufacturer ID
+                    if mfr_name in mfr_name_to_id:
+                        mfr_id = mfr_name_to_id[mfr_name]
+                    else:
+                        cursor.execute("INSERT OR IGNORE INTO manufacturers (name, abbrev) VALUES (?, ?)",
+                                       (mfr_name, mfr_abbrev))
+                        cursor.execute("SELECT id FROM manufacturers WHERE name = ?", (mfr_name,))
+                        result = cursor.fetchone()
+                        if result is None:
+                            continue
+                        mfr_id = result[0]
+                        mfr_name_to_id[mfr_name] = mfr_id
 
-            except Exception as e:
-                import traceback
-                print(f"  [Error] Failed to insert {file}: {e}")
-                traceback.print_exc()
+                    designation = tc_meta.get('designation', parsed_meta['designation']) if tc_meta else parsed_meta['designation']
+                    motor_key = (mfr_id, designation)
+                    
+                    # Check if motor already exists
+                    db_motor_id = None
+                    if tc_motor_id and tc_motor_id in inserted_motors_by_tc_id:
+                        db_motor_id = inserted_motors_by_tc_id[tc_motor_id]
+                    elif motor_key in inserted_motors_by_key:
+                        db_motor_id = inserted_motors_by_key[motor_key]
+                    
+                    # Insert motor if not exists
+                    if db_motor_id is None:
+                        if tc_meta:
+                            cursor.execute("""
+                                INSERT INTO motors
+                                (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
+                                 diameter, length, total_impulse, avg_thrust, max_thrust, burn_time,
+                                 propellant_weight, total_weight, type, delays, case_info, prop_info,
+                                 sparky, info_url, data_files, updated_on)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            """, (
+                                mfr_id, tc_meta.get('motorId'),
+                                tc_meta.get('designation', parsed_meta['designation']),
+                                parsed_meta.get('common_name') or tc_meta.get('commonName'),
+                                tc_meta.get('impulseClass'),
+                                parsed_meta['diameter'], parsed_meta['length'],
+                                tc_meta.get('totImpulseNs'), tc_meta.get('avgThrustN'),
+                                tc_meta.get('maxThrustN'), tc_meta.get('burnTimeS'),
+                                parsed_meta.get('prop_weight') or tc_meta.get('propWeightG'),
+                                parsed_meta.get('total_weight') or tc_meta.get('totalWeightG'),
+                                tc_meta.get('type', parsed_meta.get('type', 'SU')),
+                                parsed_meta.get('delays') or tc_meta.get('delays'),
+                                tc_meta.get('caseInfo'), tc_meta.get('propInfo'),
+                                1 if tc_meta.get('sparky') else 0,
+                                tc_meta.get('infoUrl'), tc_meta.get('dataFiles'), tc_meta.get('updatedOn'),
+                            ))
+                        else:
+                            calc_impulse, calc_avg, calc_max, calc_burn = calculate_thrust_stats(points)
+                            cursor.execute("""
+                                INSERT INTO motors
+                                (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
+                                 diameter, length, total_impulse, avg_thrust, max_thrust, burn_time,
+                                 propellant_weight, total_weight, type, delays, case_info, prop_info,
+                                 sparky, info_url, data_files, updated_on)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            """, (
+                                mfr_id, None, parsed_meta['designation'], parsed_meta.get('common_name'),
+                                None, parsed_meta['diameter'], parsed_meta['length'],
+                                calc_impulse, calc_avg, calc_max, calc_burn,
+                                parsed_meta.get('prop_weight'), parsed_meta.get('total_weight'),
+                                parsed_meta.get('type', 'SU'), parsed_meta.get('delays'),
+                                None, None, 0, None, None, None,
+                            ))
+                        
+                        db_motor_id = cursor.lastrowid
+                        if tc_motor_id:
+                            inserted_motors_by_tc_id[tc_motor_id] = db_motor_id
+                        inserted_motors_by_key[motor_key] = db_motor_id
+                        motor_count += 1
+                        source_stats[source_dir]['motors'] += 1
+
+                    # For multi-motor files, don't use simfile_id
+                    cur_simfile = simfile_id if is_single else None
+                    
+                    if cur_simfile and cur_simfile in inserted_curves:
+                        continue
+                    
+                    calc_impulse, calc_avg, calc_max, calc_burn = calculate_thrust_stats(points)
+                    
+                    cursor.execute("""
+                        INSERT INTO thrust_curves
+                        (motor_id, tc_simfile_id, source, format, license, info_url, data_url,
+                         total_impulse, avg_thrust, max_thrust, burn_time)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """, (
+                        db_motor_id, cur_simfile,
+                        simfile_info.get('source') if simfile_info and cur_simfile else None,
+                        simfile_info.get('format', file_fmt) if simfile_info and cur_simfile else file_fmt,
+                        simfile_info.get('license') if simfile_info and cur_simfile else None,
+                        simfile_info.get('infoUrl') if simfile_info and cur_simfile else None,
+                        simfile_info.get('dataUrl') if simfile_info and cur_simfile else None,
+                        calc_impulse, calc_avg, calc_max, calc_burn,
+                    ))
+                    
+                    curve_id = cursor.lastrowid
+                    if cur_simfile:
+                        inserted_curves[cur_simfile] = curve_id
+                    curve_count += 1
+                    source_stats[source_dir]['curves'] += 1
+
+                    data_rows = [(curve_id, p[0], p[1]) for p in points]
+                    cursor.executemany(
+                        "INSERT INTO thrust_data (curve_id, time_seconds, force_newtons) VALUES (?,?,?)",
+                        data_rows)
+
+                except Exception as e:
+                    import traceback
+                    print(f"  [Error] {file} ({parsed_meta.get('designation', '?')}): {e}")
+                    traceback.print_exc()
 
     # Print summary
     print(f"\n{'='*60}")
