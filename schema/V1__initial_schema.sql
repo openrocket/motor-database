@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS motors (
     info_url TEXT,                 -- URL to more info (NAR, etc.)
     data_files INTEGER,            -- number of data files on ThrustCurve
     updated_on TEXT,               -- last update date from ThrustCurve
+    description TEXT,              -- comments from RASP file (above header, newlines removed)
     FOREIGN KEY (manufacturer_id) REFERENCES manufacturers(id)
 );
 

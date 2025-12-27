@@ -473,6 +473,7 @@ def parse_rasp_all(filepath):
     motors = []
     current_meta = None
     current_points = []
+    current_comments = []
 
     def try_header(parts):
         if len(parts) < 7:
@@ -489,33 +490,72 @@ def parse_rasp_all(filepath):
         except ValueError:
             return None
 
+    def save_current_motor():
+        nonlocal current_meta, current_points, current_comments
+        if current_meta and current_points:
+            # Join comments, remove semicolons and leading/trailing whitespace
+            description = None
+            if current_comments:
+                desc_lines = []
+                for comment in current_comments:
+                    # Remove leading semicolon and whitespace
+                    cleaned = comment.lstrip(';').strip()
+                    if cleaned:
+                        desc_lines.append(cleaned)
+                if desc_lines:
+                    # Join with spaces (newlines removed as requested)
+                    description = ' '.join(desc_lines)
+            if description:
+                current_meta['description'] = description
+            motors.append((current_meta, current_points))
+        current_meta = None
+        current_points = []
+        current_comments = []
+
     with open(filepath, 'r', errors='ignore') as f:
         for line in f:
-            line = line.strip()
-            if not line or line.startswith(';'):
+            stripped = line.strip()
+            if not stripped:
                 continue
-            parts = line.split()
+            
+            # Collect comment lines (before header)
+            if stripped.startswith(';'):
+                if current_meta is None:
+                    # Comments before header - collect them
+                    current_comments.append(stripped)
+                # Comments after data are ignored (they're between motors or at end)
+                continue
+            
+            parts = stripped.split()
+            
             if current_meta is None:
-                current_meta = try_header(parts)
-                current_points = []
+                # Try to parse as header
+                hdr = try_header(parts)
+                if hdr:
+                    current_meta = hdr
+                    current_points = []
+                # If not a header, skip this line
             else:
+                # We're in data section
                 try:
                     if len(parts) >= 2:
                         t, thrust = float(parts[0]), float(parts[1])
                         current_points.append((t, thrust))
                         if thrust == 0:
-                            motors.append((current_meta, current_points))
-                            current_meta = None
-                            current_points = []
+                            # End of motor data
+                            save_current_motor()
                 except ValueError:
+                    # Not a data line - might be a new header
                     hdr = try_header(parts)
                     if hdr:
-                        if current_meta and current_points:
-                            motors.append((current_meta, current_points))
+                        # Save previous motor and start new one
+                        save_current_motor()
                         current_meta = hdr
                         current_points = []
-    if current_meta and current_points:
-        motors.append((current_meta, current_points))
+                    # Otherwise skip this line
+    
+    # Don't forget the last motor
+    save_current_motor()
     return motors
 
 
@@ -719,14 +759,15 @@ def build():
                     
                     # Insert motor if not exists
                     if db_motor_id is None:
+                        description = parsed_meta.get('description')  # From RASP comments
                         if tc_meta:
                             cursor.execute("""
                                 INSERT INTO motors
                                 (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
                                  diameter, length, total_impulse, avg_thrust, max_thrust, burn_time,
                                  propellant_weight, total_weight, type, delays, case_info, prop_info,
-                                 sparky, info_url, data_files, updated_on)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                 sparky, info_url, data_files, updated_on, description)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             """, (
                                 mfr_id, tc_meta.get('motorId'),
                                 tc_meta.get('designation', parsed_meta['designation']),
@@ -742,6 +783,7 @@ def build():
                                 tc_meta.get('caseInfo'), tc_meta.get('propInfo'),
                                 1 if tc_meta.get('sparky') else 0,
                                 tc_meta.get('infoUrl'), tc_meta.get('dataFiles'), tc_meta.get('updatedOn'),
+                                description,
                             ))
                         else:
                             calc_impulse, calc_avg, calc_max, calc_burn = calculate_thrust_stats(points)
@@ -750,8 +792,8 @@ def build():
                                 (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
                                  diameter, length, total_impulse, avg_thrust, max_thrust, burn_time,
                                  propellant_weight, total_weight, type, delays, case_info, prop_info,
-                                 sparky, info_url, data_files, updated_on)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                 sparky, info_url, data_files, updated_on, description)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                             """, (
                                 mfr_id, None, parsed_meta['designation'], parsed_meta.get('common_name'),
                                 None, parsed_meta['diameter'], parsed_meta['length'],
@@ -759,6 +801,7 @@ def build():
                                 parsed_meta.get('prop_weight'), parsed_meta.get('total_weight'),
                                 parsed_meta.get('type', 'SU'), parsed_meta.get('delays'),
                                 None, None, 0, None, None, None,
+                                description,
                             ))
                         
                         db_motor_id = cursor.lastrowid
