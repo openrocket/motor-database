@@ -44,7 +44,7 @@ The `metadata.json` structure is defined as follows:
   "motor_count": 1033,
   "curve_count": 1320,
   "sha256": "a1b2c3d4e5f6...",
-  "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
+  "download_url": "https://openrocket.info/motor-database/motors.db.gz"
 }
 ```
 

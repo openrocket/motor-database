@@ -922,7 +922,7 @@ def build():
         "motor_count": motor_count,
         "curve_count": curve_count,
         "sha256": sha256.hexdigest(),
-        "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
+        "download_url": "https://openrocket.info/motor-database/motors.db.gz"
     }
 
     with open(METADATA_FILE, 'w') as f:
