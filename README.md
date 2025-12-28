@@ -193,7 +193,7 @@ Time/thrust data points for each thrust curve.
 
 ## Signing
 
-The build signs `motors.db.gz` after `metadata.json` is generated. Set the private key in:
+The GitHub workflow signs `motors.db.gz` after `metadata.json` is generated. Set the private key in:
 
 - `MOTOR_DB_PRIVATE_KEY_BASE64` (Ed25519 private key, DER or PEM encoded, then base64)
 - `MOTOR_DB_KEY_ID` (optional, for key rotation)

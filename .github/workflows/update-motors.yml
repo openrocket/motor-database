@@ -28,10 +28,16 @@ jobs:
         run: python scripts/fetch_updates.py
 
       - name: Build Database
+        run: python scripts/build_database.py
+
+      - name: Install Crypto Lib
+        run: pip install cryptography
+
+      - name: Sign Database Update
         env:
           MOTOR_DB_PRIVATE_KEY_BASE64: ${{ secrets.MOTOR_DB_PRIVATE_KEY_BASE64 }}
           MOTOR_DB_KEY_ID: ${{ secrets.MOTOR_DB_KEY_ID }}
-        run: python scripts/build_database.py
+        run: python scripts/sign_database.py motors.db.gz metadata.json
 
       - name: Commit Raw Data Changes
         # This saves the downloaded .eng files back to the repo

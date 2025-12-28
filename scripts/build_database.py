@@ -7,8 +7,6 @@ import json
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-import sign_database
-
 DB_NAME = "motors.db"
 GZ_NAME = "motors.db.gz"
 SCHEMA_FILE = "schema/V1__initial_schema.sql"
@@ -679,7 +677,6 @@ def build():
         and os.path.exists(GZ_NAME)
     ):
         print("No input changes detected. Skipping rebuild.")
-        sha256_gz = build_state.get("sha256_gz", build_state["sha256"])
         meta = {
             "schema_version": schema_version,
             "database_version": build_state["database_version"],
@@ -687,27 +684,11 @@ def build():
             "motor_count": build_state["motor_count"],
             "curve_count": build_state["curve_count"],
             "sha256": build_state["sha256"],
-            "sha256_gz": sha256_gz,
             "last_checked": last_checked,
             "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
         }
-        sig = build_state.get("sig")
-        if sig:
-            meta["sig"] = sig
-            if build_state.get("key_id"):
-                meta["key_id"] = build_state["key_id"]
         with open(METADATA_FILE, 'w') as f:
             json.dump(meta, f, indent=2)
-        if not sig:
-            try:
-                signing_info = sign_database.sign_metadata(GZ_NAME, METADATA_FILE)
-            except ValueError as e:
-                print(f"Error: {e}")
-                exit(1)
-            build_state["sig"] = signing_info.get("sig")
-            build_state["key_id"] = signing_info.get("key_id")
-            build_state["sha256_gz"] = sha256_gz
-            save_build_state(build_state)
         return
 
     conn = init_db()
@@ -1065,19 +1046,12 @@ def build():
         "motor_count": motor_count,
         "curve_count": curve_count,
         "sha256": sha256_hex,
-        "sha256_gz": sha256_hex,
         "last_checked": last_checked,
         "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
     }
 
     with open(METADATA_FILE, 'w') as f:
         json.dump(meta, f, indent=2)
-
-    try:
-        signing_info = sign_database.sign_metadata(GZ_NAME, METADATA_FILE)
-    except ValueError as e:
-        print(f"Error: {e}")
-        exit(1)
 
     save_build_state(
         {
@@ -1087,9 +1061,6 @@ def build():
             "motor_count": motor_count,
             "curve_count": curve_count,
             "sha256": sha256_hex,
-            "sha256_gz": sha256_hex,
-            "sig": signing_info.get("sig"),
-            "key_id": signing_info.get("key_id"),
         }
     )
 
