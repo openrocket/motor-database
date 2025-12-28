@@ -670,12 +670,8 @@ def build():
         key in build_state
         for key in ("source_hash", "database_version", "generated_at", "motor_count", "curve_count", "sha256")
     )
-    if (
-        state_has_required
-        and build_state["source_hash"] == source_hash
-        and os.path.exists(DB_NAME)
-        and os.path.exists(GZ_NAME)
-    ):
+    reuse_versions = state_has_required and build_state["source_hash"] == source_hash
+    if reuse_versions and os.path.exists(DB_NAME) and os.path.exists(GZ_NAME):
         print("No input changes detected. Skipping rebuild.")
         meta = {
             "schema_version": schema_version,
@@ -1007,8 +1003,15 @@ def build():
     if motor_count == 0:
         print("Warning: No motors imported. Check your data directory contents.")
 
-    database_version = int(now.strftime("%Y%m%d%H%M%S"))
-    generated_at = now.isoformat()
+    if reuse_versions:
+        try:
+            database_version = int(build_state["database_version"])
+        except (TypeError, ValueError):
+            database_version = int(now.strftime("%Y%m%d%H%M%S"))
+        generated_at = build_state.get("generated_at") or now.isoformat()
+    else:
+        database_version = int(now.strftime("%Y%m%d%H%M%S"))
+        generated_at = now.isoformat()
 
     cursor.executemany(
         "INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)",

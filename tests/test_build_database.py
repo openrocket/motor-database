@@ -15,6 +15,54 @@ build_db = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(build_db)
 
 
+def setup_sample_data(tmp_path):
+    data_dir = tmp_path / "data"
+    manual_dir = data_dir / "manual"
+    manual_dir.mkdir(parents=True)
+
+    rasp_content = (
+        "; First line\n"
+        "; Second line\n"
+        "F32 29 124 0 0.05 0.07 Test Motors\n"
+        "0 5\n"
+        "0.5 0\n"
+    )
+    (manual_dir / "test.eng").write_text(rasp_content)
+
+    rse_content = (
+        "<engine-database>"
+        "<engine-list>"
+        "<engine code=\"G64W\" mfg=\"RSE Co\" dia=\"29\" len=\"150\" "
+        "propWt=\"30\" initWt=\"60\" delays=\"0\">"
+        "<data>"
+        "<eng-data t=\"0.0\" f=\"0.0\" />"
+        "<eng-data t=\"0.2\" f=\"20.0\" />"
+        "<eng-data t=\"0.4\" f=\"0.0\" />"
+        "</data>"
+        "</engine>"
+        "</engine-list>"
+        "</engine-database>"
+    )
+    (manual_dir / "test.rse").write_text(rse_content)
+
+    tc_dir = data_dir / "thrustcurve.org"
+    tc_dir.mkdir(parents=True)
+    (tc_dir / "motors_metadata.json").write_text('{"motors": {}}')
+    (tc_dir / "simfile_to_motor.json").write_text("{}")
+    (tc_dir / "manufacturers.json").write_text(
+        json.dumps(
+            {
+                "manufacturers": [
+                    {"name": "Test Motors", "abbrev": "TM"},
+                    {"name": "RSE Co", "abbrev": "RSE"},
+                ]
+            }
+        )
+    )
+
+    return data_dir, tc_dir
+
+
 def test_parse_rasp_parses_header_and_data(tmp_path):
     content = (
         "; comment\n"
@@ -146,49 +194,7 @@ def test_extract_simfile_info_from_filename():
 
 
 def test_build_creates_database_and_metadata(tmp_path, monkeypatch):
-    data_dir = tmp_path / "data"
-    manual_dir = data_dir / "manual"
-    manual_dir.mkdir(parents=True)
-
-    rasp_content = (
-        "; First line\n"
-        "; Second line\n"
-        "F32 29 124 0 0.05 0.07 Test Motors\n"
-        "0 5\n"
-        "0.5 0\n"
-    )
-    (manual_dir / "test.eng").write_text(rasp_content)
-
-    rse_content = (
-        "<engine-database>"
-        "<engine-list>"
-        "<engine code=\"G64W\" mfg=\"RSE Co\" dia=\"29\" len=\"150\" "
-        "propWt=\"30\" initWt=\"60\" delays=\"0\">"
-        "<data>"
-        "<eng-data t=\"0.0\" f=\"0.0\" />"
-        "<eng-data t=\"0.2\" f=\"20.0\" />"
-        "<eng-data t=\"0.4\" f=\"0.0\" />"
-        "</data>"
-        "</engine>"
-        "</engine-list>"
-        "</engine-database>"
-    )
-    (manual_dir / "test.rse").write_text(rse_content)
-
-    tc_dir = data_dir / "thrustcurve.org"
-    tc_dir.mkdir(parents=True)
-    (tc_dir / "motors_metadata.json").write_text('{"motors": {}}')
-    (tc_dir / "simfile_to_motor.json").write_text("{}")
-    (tc_dir / "manufacturers.json").write_text(
-        json.dumps(
-            {
-                "manufacturers": [
-                    {"name": "Test Motors", "abbrev": "TM"},
-                    {"name": "RSE Co", "abbrev": "RSE"},
-                ]
-            }
-        )
-    )
+    data_dir, tc_dir = setup_sample_data(tmp_path)
 
     db_path = tmp_path / "motors.db"
     gz_path = tmp_path / "motors.db.gz"
@@ -230,3 +236,41 @@ def test_build_creates_database_and_metadata(tmp_path, monkeypatch):
         description, source = cursor.fetchone()
         assert description == "First line Second line"
         assert source == "manual"
+
+
+def test_build_reuses_version_when_state_matches(tmp_path, monkeypatch):
+    data_dir, tc_dir = setup_sample_data(tmp_path)
+
+    db_path = tmp_path / "motors.db"
+    gz_path = tmp_path / "motors.db.gz"
+    meta_path = tmp_path / "metadata.json"
+    build_state_path = tmp_path / "state" / "last_build.json"
+    schema_path = Path(__file__).resolve().parents[1] / "schema" / "V1__initial_schema.sql"
+
+    monkeypatch.setattr(build_db, "DATA_DIR", str(data_dir))
+    monkeypatch.setattr(build_db, "DB_NAME", str(db_path))
+    monkeypatch.setattr(build_db, "GZ_NAME", str(gz_path))
+    monkeypatch.setattr(build_db, "METADATA_FILE", str(meta_path))
+    monkeypatch.setattr(build_db, "BUILD_STATE_FILE", str(build_state_path))
+    monkeypatch.setattr(build_db, "SCHEMA_FILE", str(schema_path))
+    monkeypatch.setattr(build_db, "MOTORS_METADATA_FILE", str(tc_dir / "motors_metadata.json"))
+    monkeypatch.setattr(build_db, "MANUFACTURERS_FILE", str(tc_dir / "manufacturers.json"))
+    monkeypatch.setattr(build_db, "SIMFILE_MAPPING_FILE", str(tc_dir / "simfile_to_motor.json"))
+
+    source_hash = build_db.compute_source_hash()
+    build_state_path.parent.mkdir(parents=True, exist_ok=True)
+    build_state = {
+        "source_hash": source_hash,
+        "database_version": 20240102030405,
+        "generated_at": "2024-01-02T03:04:05",
+        "motor_count": 2,
+        "curve_count": 2,
+        "sha256": "deadbeef",
+    }
+    build_state_path.write_text(json.dumps(build_state))
+
+    build_db.build()
+
+    metadata = json.loads(meta_path.read_text())
+    assert metadata["database_version"] == build_state["database_version"]
+    assert metadata["generated_at"] == build_state["generated_at"]
