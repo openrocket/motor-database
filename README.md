@@ -177,6 +177,12 @@ Time/thrust data points for each thrust curve.
 2.  `python scripts/fetch_updates.py` (Downloads new files)
 3.  `python scripts/build_database.py` (Generates DB)
 
+## Unit Tests
+
+1.  `pip install -r scripts/requirements.txt`
+2.  `pip install pytest`
+3.  `pytest`
+
 ## Data Attribution & License
 The motor data in this repository is cached from [ThrustCurve.org](https://www.thrustcurve.org). 
 
