@@ -5,3 +5,5 @@
 metadata.json
 motors.db
 motors.db.gz
+
+.env
