@@ -455,6 +455,22 @@ def calculate_thrust_stats(points):
     return impulse, avg_thrust, max_thrust, burn_time
 
 
+def apply_legacy_defaults(impulse_class, common_name, case_info, motor_type, diameter, length):
+    """Apply OpenRocket legacy defaults for impulse class and case info."""
+    if impulse_class and impulse_class.lower() == "a" and common_name:
+        if common_name.startswith("1/2A"):
+            impulse_class = "1/2A"
+        elif common_name.startswith("1/4A"):
+            impulse_class = "1/4A"
+        elif common_name.startswith("Micro"):
+            impulse_class = "1/8A"
+
+    if case_info is None or (isinstance(case_info, str) and case_info.lower() == "single use"):
+        case_info = f"{motor_type} {diameter}x{length}"
+
+    return impulse_class, case_info
+
+
 def extract_simfile_info_from_filename(filename, simfile_mapping):
     """Extract simfile info from filename using simfile mapping."""
     base = os.path.splitext(filename)[0]
@@ -778,6 +794,19 @@ def build():
                 if db_motor_id is None:
                     description = parsed_meta.get('description')  # From RASP comments
                     if tc_meta:
+                        designation = tc_meta.get('designation', parsed_meta['designation'])
+                        common_name = parsed_meta.get('common_name') or tc_meta.get('commonName')
+                        impulse_class = tc_meta.get('impulseClass')
+                        motor_type = tc_meta.get('type', parsed_meta.get('type', 'SU'))
+                        case_info = tc_meta.get('caseInfo')
+                        impulse_class, case_info = apply_legacy_defaults(
+                            impulse_class,
+                            common_name,
+                            case_info,
+                            motor_type,
+                            parsed_meta['diameter'],
+                            parsed_meta['length'],
+                        )
                         cursor.execute("""
                             INSERT INTO motors
                             (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
@@ -787,23 +816,36 @@ def build():
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """, (
                             mfr_id, tc_meta.get('motorId'),
-                            tc_meta.get('designation', parsed_meta['designation']),
-                            parsed_meta.get('common_name') or tc_meta.get('commonName'),
-                            tc_meta.get('impulseClass'),
+                            designation,
+                            common_name,
+                            impulse_class,
                             parsed_meta['diameter'], parsed_meta['length'],
                             tc_meta.get('totImpulseNs'), tc_meta.get('avgThrustN'),
                             tc_meta.get('maxThrustN'), tc_meta.get('burnTimeS'),
                             parsed_meta.get('prop_weight') or tc_meta.get('propWeightG'),
                             parsed_meta.get('total_weight') or tc_meta.get('totalWeightG'),
-                            tc_meta.get('type', parsed_meta.get('type', 'SU')),
+                            motor_type,
                             parsed_meta.get('delays') or tc_meta.get('delays'),
-                            tc_meta.get('caseInfo'), tc_meta.get('propInfo'),
+                            case_info, tc_meta.get('propInfo'),
                             1 if tc_meta.get('sparky') else 0,
                             tc_meta.get('infoUrl'), tc_meta.get('dataFiles'), tc_meta.get('updatedOn'),
                             description, source_dir,
                         ))
                     else:
                         calc_impulse, calc_avg, calc_max, calc_burn = calculate_thrust_stats(points)
+                        designation = parsed_meta['designation']
+                        common_name = parsed_meta.get('common_name')
+                        impulse_class = None
+                        motor_type = parsed_meta.get('type', 'SU')
+                        case_info = None
+                        impulse_class, case_info = apply_legacy_defaults(
+                            impulse_class,
+                            common_name,
+                            case_info,
+                            motor_type,
+                            parsed_meta['diameter'],
+                            parsed_meta['length'],
+                        )
                         cursor.execute("""
                             INSERT INTO motors
                             (manufacturer_id, tc_motor_id, designation, common_name, impulse_class,
@@ -812,12 +854,12 @@ def build():
                              sparky, info_url, data_files, updated_on, description, source)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """, (
-                            mfr_id, None, parsed_meta['designation'], parsed_meta.get('common_name'),
-                            None, parsed_meta['diameter'], parsed_meta['length'],
+                            mfr_id, None, designation, common_name,
+                            impulse_class, parsed_meta['diameter'], parsed_meta['length'],
                             calc_impulse, calc_avg, calc_max, calc_burn,
                             parsed_meta.get('prop_weight'), parsed_meta.get('total_weight'),
-                            parsed_meta.get('type', 'SU'), parsed_meta.get('delays'),
-                            None, None, 0, None, None, None,
+                            motor_type, parsed_meta.get('delays'),
+                            case_info, None, 0, None, None, None,
                             description, source_dir,
                         ))
                     
