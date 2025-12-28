@@ -193,7 +193,23 @@ Time/thrust data points for each thrust curve.
 
 ## Signing
 
-The GitHub workflow signs `motors.db.gz` after `metadata.json` is generated. Set the private key in:
+Signing is done in CI after the database build completes.
+
+What is signed:
+- Canonical message: `openrocket-motordb-v1\n{database_version}\n{sha256_gz}\n`
+- `sha256_gz` is the SHA-256 of `motors.db.gz` (the compressed DB)
+
+What gets added to `metadata.json` by the signing step:
+- `sha256_gz`: SHA-256 of `motors.db.gz` (currently matches `sha256`)
+- `sig`: base64-encoded Ed25519 signature of the canonical message
+- `key_id` (optional): identifier for key rotation
+
+How CI handles it:
+- `.github/workflows/update-motors.yml` installs `cryptography`
+- It runs `python scripts/sign_database.py motors.db.gz metadata.json`
+- The private key is provided via secrets
+
+Set the private key in:
 
 - `MOTOR_DB_PRIVATE_KEY_BASE64` (Ed25519 private key, DER or PEM encoded, then base64)
 - `MOTOR_DB_KEY_ID` (optional, for key rotation)
