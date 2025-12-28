@@ -203,7 +203,7 @@ Manual signing: `python scripts/sign_database.py motors.db.gz metadata.json`
 ## Unit Tests
 
 1.  `pip install -r scripts/requirements.txt`
-2.  `pip install pytest`
+2.  `pip install pytest cryptography`
 3.  `pytest`
 
 ## Data Attribution & License
