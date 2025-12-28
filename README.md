@@ -30,7 +30,7 @@ The OpenRocket client (and other interested 3rd parties) can access the live dat
 
 | File | URL | Description |
 | :--- | :--- | :--- |
-| **Manifest** | `https://openrocket.github.io/motor-database/metadata.json` | Lightweight JSON file. Contains the `database_version`, `generated_at`, `last_checked`, and `sha256` checksum. Checked by the client on startup. |
+| **Manifest** | `https://openrocket.github.io/motor-database/metadata.json` | Lightweight JSON file. Contains `database_version`, `generated_at`, `last_checked`, `sha256`, and the signature fields for verification. Checked by the client on startup. |
 | **Database** | `https://openrocket.github.io/motor-database/motors.db.gz` | GZipped SQLite database. Downloaded by the client *only* if the manifest version differs from the local cache. |
 
 ### Manifest Format
@@ -45,9 +45,16 @@ The `metadata.json` structure is defined as follows:
   "motor_count": 1033,
   "curve_count": 1320,
   "sha256": "a1b2c3d4e5f6...",
+  "sha256_gz": "a1b2c3d4e5f6...",
+  "sig": "base64-signature...",
   "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
 }
 ```
+
+Signature notes:
+- `sig` is an Ed25519 signature over `openrocket-motordb-v1\n{database_version}\n{sha256_gz}\n`.
+- `sha256_gz` is the SHA-256 of the gzipped database; `sha256` is kept for backward compatibility.
+- `key_id` is optional for key rotation.
 
 ## Database Schema
 
@@ -80,7 +87,7 @@ manufacturers          motors              thrust_curves           thrust_data
 | key | TEXT | Primary key |
 | value | TEXT | Required |
 
-Keys stored: `schema_version`, `database_version`, `generated_at`, `last_checked`, `motor_count`, `curve_count`.
+Keys stored: `schema_version`, `database_version`, `generated_at`, `motor_count`, `curve_count`.
 
 ---
 
@@ -183,6 +190,15 @@ Time/thrust data points for each thrust curve.
 - `state/last_update.json`: timestamp of the most recent data/metadata change detected by `scripts/fetch_updates.py`.
 - `state/last_check.json`: timestamp of the most recent update check, even if no changes were found.
 - `state/last_build.json`: input hash + build outputs used by `scripts/build_database.py` to skip rebuilding when the schema/data inputs are unchanged.
+
+## Signing
+
+The build signs `motors.db.gz` after `metadata.json` is generated. Set the private key in:
+
+- `MOTOR_DB_PRIVATE_KEY_BASE64` (Ed25519 private key, DER or PEM encoded, then base64)
+- `MOTOR_DB_KEY_ID` (optional, for key rotation)
+
+Manual signing: `python scripts/sign_database.py motors.db.gz metadata.json`
 
 ## Unit Tests
 

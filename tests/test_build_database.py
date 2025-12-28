@@ -1,13 +1,19 @@
+import base64
 import hashlib
 import importlib.util
 import json
 import sqlite3
+import sys
 from pathlib import Path
 
 import pytest
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import ed25519
 
 
-MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "build_database.py"
+SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "scripts"
+sys.path.insert(0, str(SCRIPTS_DIR))
+MODULE_PATH = SCRIPTS_DIR / "build_database.py"
 spec = importlib.util.spec_from_file_location("build_database", MODULE_PATH)
 if spec is None or spec.loader is None:
     raise RuntimeError("Unable to load build_database module")
@@ -205,6 +211,14 @@ def test_build_creates_database_and_metadata(tmp_path, monkeypatch):
     monkeypatch.setattr(build_db, "MOTORS_METADATA_FILE", str(tc_dir / "motors_metadata.json"))
     monkeypatch.setattr(build_db, "MANUFACTURERS_FILE", str(tc_dir / "manufacturers.json"))
     monkeypatch.setattr(build_db, "SIMFILE_MAPPING_FILE", str(tc_dir / "simfile_to_motor.json"))
+    private_key = ed25519.Ed25519PrivateKey.generate()
+    private_key_bytes = private_key.private_bytes(
+        encoding=serialization.Encoding.DER,
+        format=serialization.PrivateFormat.PKCS8,
+        encryption_algorithm=serialization.NoEncryption(),
+    )
+    key_b64 = base64.b64encode(private_key_bytes).decode("utf-8")
+    monkeypatch.setenv("MOTOR_DB_PRIVATE_KEY_BASE64", key_b64)
 
     build_db.build()
 
@@ -216,9 +230,12 @@ def test_build_creates_database_and_metadata(tmp_path, monkeypatch):
     assert metadata["motor_count"] == 2
     assert metadata["curve_count"] == 2
     assert "last_checked" in metadata
+    assert "sha256_gz" in metadata
+    assert "sig" in metadata
 
     sha = hashlib.sha256(gz_path.read_bytes()).hexdigest()
     assert metadata["sha256"] == sha
+    assert metadata["sha256_gz"] == sha
 
     with sqlite3.connect(db_path) as conn:
         cursor = conn.cursor()

@@ -28,6 +28,9 @@ jobs:
         run: python scripts/fetch_updates.py
 
       - name: Build Database
+        env:
+          MOTOR_DB_PRIVATE_KEY_BASE64: ${{ secrets.MOTOR_DB_PRIVATE_KEY_BASE64 }}
+          MOTOR_DB_KEY_ID: ${{ secrets.MOTOR_DB_KEY_ID }}
         run: python scripts/build_database.py
 
       - name: Commit Raw Data Changes
