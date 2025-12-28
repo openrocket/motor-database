@@ -23,7 +23,7 @@ class DummyResponse:
 
 def test_load_state_handles_missing_and_corrupt(tmp_path, monkeypatch):
     state_file = tmp_path / "state.json"
-    monkeypatch.setattr(fetch_updates, "STATE_FILE", str(state_file))
+    monkeypatch.setattr(fetch_updates, "STATE_LAST_UPDATE_FILE", str(state_file))
 
     state = fetch_updates.load_state()
     assert state["last_updated"] == "1970-01-01"
@@ -110,7 +110,8 @@ def test_fetch_motors_saves_metadata_mapping_and_state(tmp_path, monkeypatch):
     state_dir.mkdir(parents=True)
 
     monkeypatch.setattr(fetch_updates, "DATA_DIR", str(data_dir))
-    monkeypatch.setattr(fetch_updates, "STATE_FILE", str(state_dir / "last_sync.json"))
+    monkeypatch.setattr(fetch_updates, "STATE_LAST_UPDATE_FILE", str(state_dir / "last_update.json"))
+    monkeypatch.setattr(fetch_updates, "STATE_LAST_CHECK_FILE", str(state_dir / "last_check.json"))
     monkeypatch.setattr(
         fetch_updates,
         "MOTORS_METADATA_FILE",
@@ -201,4 +202,5 @@ def test_fetch_motors_saves_metadata_mapping_and_state(tmp_path, monkeypatch):
     saved_path = data_dir / "Acme" / "G64_abcdef123456abcdef123456.rasp"
     assert saved_path.exists()
 
-    assert (state_dir / "last_sync.json").exists()
+    assert (state_dir / "last_update.json").exists()
+    assert (state_dir / "last_check.json").exists()

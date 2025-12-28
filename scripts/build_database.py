@@ -15,6 +15,7 @@ MOTORS_METADATA_FILE = "data/thrustcurve.org/motors_metadata.json"
 MANUFACTURERS_FILE = "data/thrustcurve.org/manufacturers.json"
 SIMFILE_MAPPING_FILE = "data/thrustcurve.org/simfile_to_motor.json"
 METADATA_FILE = "metadata.json"
+BUILD_STATE_FILE = "state/last_build.json"
 
 
 def init_db():
@@ -455,6 +456,56 @@ def calculate_thrust_stats(points):
     return impulse, avg_thrust, max_thrust, burn_time
 
 
+def load_build_state():
+    """Load build state for change detection."""
+    if os.path.exists(BUILD_STATE_FILE):
+        try:
+            with open(BUILD_STATE_FILE, 'r') as f:
+                content = f.read().strip()
+                if content:
+                    return json.loads(content)
+        except (json.JSONDecodeError, IOError) as e:
+            print(f"Warning: Failed to load build state: {e}")
+    return {}
+
+
+def save_build_state(state):
+    """Persist build state for future runs."""
+    os.makedirs(os.path.dirname(BUILD_STATE_FILE), exist_ok=True)
+    with open(BUILD_STATE_FILE, 'w') as f:
+        json.dump(state, f, indent=2)
+
+
+def compute_source_hash():
+    """Compute a stable hash of schema + data inputs."""
+    sha256 = hashlib.sha256()
+
+    def hash_file(path, label):
+        sha256.update(label.encode('utf-8'))
+        sha256.update(b'\n')
+        with open(path, 'rb') as f:
+            while True:
+                chunk = f.read(1024 * 1024)
+                if not chunk:
+                    break
+                sha256.update(chunk)
+        sha256.update(b'\n')
+
+    if os.path.exists(SCHEMA_FILE):
+        hash_file(SCHEMA_FILE, f"schema:{SCHEMA_FILE}")
+
+    if os.path.exists(DATA_DIR):
+        for root_dir, dirs, files in os.walk(DATA_DIR):
+            dirs.sort()
+            files.sort()
+            for file in files:
+                path = os.path.join(root_dir, file)
+                rel_path = os.path.relpath(path, DATA_DIR)
+                hash_file(path, f"data:{rel_path}")
+
+    return sha256.hexdigest()
+
+
 def apply_legacy_defaults(impulse_class, common_name, case_info, motor_type, diameter, length):
     """Apply OpenRocket legacy defaults for impulse class and case info."""
     if impulse_class and impulse_class.lower() == "a" and common_name:
@@ -609,6 +660,37 @@ def parse_rse_all(filepath):
 
 def build():
     print(f"Building database from '{DATA_DIR}'...")
+    build_state = load_build_state()
+    source_hash = compute_source_hash()
+    now = datetime.now()
+    last_checked = now.isoformat()
+    schema_version = 2  # Bumped for new thrust_curves table
+
+    state_has_required = all(
+        key in build_state
+        for key in ("source_hash", "database_version", "generated_at", "motor_count", "curve_count", "sha256")
+    )
+    if (
+        state_has_required
+        and build_state["source_hash"] == source_hash
+        and os.path.exists(DB_NAME)
+        and os.path.exists(GZ_NAME)
+    ):
+        print("No input changes detected. Skipping rebuild.")
+        meta = {
+            "schema_version": schema_version,
+            "database_version": build_state["database_version"],
+            "generated_at": build_state["generated_at"],
+            "motor_count": build_state["motor_count"],
+            "curve_count": build_state["curve_count"],
+            "sha256": build_state["sha256"],
+            "last_checked": last_checked,
+            "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
+        }
+        with open(METADATA_FILE, 'w') as f:
+            json.dump(meta, f, indent=2)
+        return
+
     conn = init_db()
     cursor = conn.cursor()
 
@@ -925,9 +1007,8 @@ def build():
     if motor_count == 0:
         print("Warning: No motors imported. Check your data directory contents.")
 
-    schema_version = 2  # Bumped for new thrust_curves table
-    database_version = int(datetime.now().strftime("%Y%m%d%H%M%S"))
-    generated_at = datetime.now().isoformat()
+    database_version = int(now.strftime("%Y%m%d%H%M%S"))
+    generated_at = now.isoformat()
 
     cursor.executemany(
         "INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)",
@@ -956,6 +1037,7 @@ def build():
     sha256 = hashlib.sha256()
     with open(GZ_NAME, 'rb') as f:
         sha256.update(f.read())
+    sha256_hex = sha256.hexdigest()
 
     meta = {
         "schema_version": schema_version,
@@ -963,12 +1045,24 @@ def build():
         "generated_at": generated_at,
         "motor_count": motor_count,
         "curve_count": curve_count,
-        "sha256": sha256.hexdigest(),
-        "download_url": "https://openrocket.info/motor-database/motors.db.gz"
+        "sha256": sha256_hex,
+        "last_checked": last_checked,
+        "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
     }
 
     with open(METADATA_FILE, 'w') as f:
         json.dump(meta, f, indent=2)
+
+    save_build_state(
+        {
+            "source_hash": source_hash,
+            "database_version": database_version,
+            "generated_at": generated_at,
+            "motor_count": motor_count,
+            "curve_count": curve_count,
+            "sha256": sha256_hex,
+        }
+    )
 
     print(f"Build complete: {GZ_NAME}")
 

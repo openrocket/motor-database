@@ -30,8 +30,8 @@ The OpenRocket client (and other interested 3rd parties) can access the live dat
 
 | File | URL | Description |
 | :--- | :--- | :--- |
-| **Manifest** | `https://openrocket.info/motor-database/metadata.json` | Lightweight JSON file. Contains the `database_version`, `timestamp`, and `sha256` checksum. Checked by the client on startup. |
-| **Database** | `https://openrocket.info/motor-database/motors.db.gz` | GZipped SQLite database. Downloaded by the client *only* if the manifest version differs from the local cache. |
+| **Manifest** | `https://openrocket.github.io/motor-database/metadata.json` | Lightweight JSON file. Contains the `database_version`, `generated_at`, `last_checked`, and `sha256` checksum. Checked by the client on startup. |
+| **Database** | `https://openrocket.github.io/motor-database/motors.db.gz` | GZipped SQLite database. Downloaded by the client *only* if the manifest version differs from the local cache. |
 
 ### Manifest Format
 The `metadata.json` structure is defined as follows:
@@ -41,10 +41,11 @@ The `metadata.json` structure is defined as follows:
   "schema_version": 2,
   "database_version": 20251225140000,
   "generated_at": "2025-12-25T14:00:00.000000",
+  "last_checked": "2025-12-27T14:00:00.000000",
   "motor_count": 1033,
   "curve_count": 1320,
   "sha256": "a1b2c3d4e5f6...",
-  "download_url": "https://openrocket.info/motor-database/motors.db.gz"
+  "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
 }
 ```
 
@@ -79,7 +80,7 @@ manufacturers          motors              thrust_curves           thrust_data
 | key | TEXT | Primary key |
 | value | TEXT | Required |
 
-Keys stored: `schema_version`, `database_version`, `generated_at`, `motor_count`, `curve_count`.
+Keys stored: `schema_version`, `database_version`, `generated_at`, `last_checked`, `motor_count`, `curve_count`.
 
 ---
 
@@ -176,6 +177,12 @@ Time/thrust data points for each thrust curve.
 1.  `pip install -r scripts/requirements.txt`
 2.  `python scripts/fetch_updates.py` (Downloads new files)
 3.  `python scripts/build_database.py` (Generates DB)
+
+## State Files
+
+- `state/last_update.json`: timestamp of the most recent data/metadata change detected by `scripts/fetch_updates.py`.
+- `state/last_check.json`: timestamp of the most recent update check, even if no changes were found.
+- `state/last_build.json`: input hash + build outputs used by `scripts/build_database.py` to skip rebuilding when the schema/data inputs are unchanged.
 
 ## Unit Tests
 

@@ -7,7 +7,8 @@ from datetime import datetime
 
 # Config
 DATA_DIR = "data/thrustcurve.org"
-STATE_FILE = "state/last_sync.json"
+STATE_LAST_UPDATE_FILE = "state/last_update.json"
+STATE_LAST_CHECK_FILE = "state/last_check.json"
 MOTORS_METADATA_FILE = "data/thrustcurve.org/motors_metadata.json"
 MANUFACTURERS_FILE = "data/thrustcurve.org/manufacturers.json"
 SIMFILE_MAPPING_FILE = "data/thrustcurve.org/simfile_to_motor.json"
@@ -24,12 +25,14 @@ HEADERS = {
 
 def load_state():
     # Handle empty or corrupt JSON files gracefully
-    if os.path.exists(STATE_FILE):
+    if os.path.exists(STATE_LAST_UPDATE_FILE):
         try:
-            with open(STATE_FILE, 'r') as f:
+            with open(STATE_LAST_UPDATE_FILE, 'r') as f:
                 content = f.read().strip()
                 if content:
-                    return json.loads(content)
+                    data = json.loads(content)
+                    if isinstance(data, dict) and data.get("last_updated"):
+                        return data
         except (json.JSONDecodeError, IOError):
             print("Warning: State file corrupted or empty. Resetting to full download.")
     return {"last_updated": "1970-01-01"}
@@ -75,11 +78,18 @@ def save_simfile_mapping(mapping):
         json.dump(mapping, f, indent=2)
 
 
-def save_state():
+def save_last_update():
     # Ensure directory exists before writing
-    os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
-    with open(STATE_FILE, 'w') as f:
+    os.makedirs(os.path.dirname(STATE_LAST_UPDATE_FILE), exist_ok=True)
+    with open(STATE_LAST_UPDATE_FILE, 'w') as f:
         json.dump({"last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}, f)
+
+
+def save_last_check():
+    # Ensure directory exists before writing
+    os.makedirs(os.path.dirname(STATE_LAST_CHECK_FILE), exist_ok=True)
+    with open(STATE_LAST_CHECK_FILE, 'w') as f:
+        json.dump({"last_checked": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}, f)
 
 
 def ensure_dir(path):
@@ -296,7 +306,8 @@ def fetch_motors():
         print(f"Saved {len(simfile_mapping)} simfile->motor mappings to {SIMFILE_MAPPING_FILE}")
     
     if total_downloaded > 0 or total_metadata_updated > 0:
-        save_state()
+        save_last_update()
+    save_last_check()
 
 
 def rebuild_simfile_mapping():

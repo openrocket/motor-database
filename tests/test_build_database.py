@@ -193,12 +193,14 @@ def test_build_creates_database_and_metadata(tmp_path, monkeypatch):
     db_path = tmp_path / "motors.db"
     gz_path = tmp_path / "motors.db.gz"
     meta_path = tmp_path / "metadata.json"
+    build_state_path = tmp_path / "state" / "last_build.json"
     schema_path = Path(__file__).resolve().parents[1] / "schema" / "V1__initial_schema.sql"
 
     monkeypatch.setattr(build_db, "DATA_DIR", str(data_dir))
     monkeypatch.setattr(build_db, "DB_NAME", str(db_path))
     monkeypatch.setattr(build_db, "GZ_NAME", str(gz_path))
     monkeypatch.setattr(build_db, "METADATA_FILE", str(meta_path))
+    monkeypatch.setattr(build_db, "BUILD_STATE_FILE", str(build_state_path))
     monkeypatch.setattr(build_db, "SCHEMA_FILE", str(schema_path))
     monkeypatch.setattr(build_db, "MOTORS_METADATA_FILE", str(tc_dir / "motors_metadata.json"))
     monkeypatch.setattr(build_db, "MANUFACTURERS_FILE", str(tc_dir / "manufacturers.json"))
@@ -213,6 +215,7 @@ def test_build_creates_database_and_metadata(tmp_path, monkeypatch):
     metadata = json.loads(meta_path.read_text())
     assert metadata["motor_count"] == 2
     assert metadata["curve_count"] == 2
+    assert "last_checked" in metadata
 
     sha = hashlib.sha256(gz_path.read_bytes()).hexdigest()
     assert metadata["sha256"] == sha
