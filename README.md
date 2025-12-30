@@ -8,7 +8,7 @@ This repository utilizes **GitHub Pages** to act as a static Content Delivery Ne
 
 ## Architecture
 
-1.  **Source:** [ThrustCurve.org](https://www.thrustcurve.org/) API (thanks a lot for this incredible resource!).
+1.  **Source:** John Coker's [ThrustCurve.org](https://www.thrustcurve.org/) API (thanks a lot for this incredible resource!).
 2.  **Automation:** GitHub Actions runs weekly.
 3.  **Process:**
     *   Checks for new motors.
