@@ -1,8 +1,8 @@
 {
-  "source_hash": "4130d1c230536025d4da83583c34220ac4a31a35aba6f99f28dd5167ec435795",
-  "database_version": 20251228231524,
-  "generated_at": "2025-12-28T23:15:24.006069",
+  "source_hash": "fb8e7d9e1bc95ae1a961d4bf3fa8b114e8c50e96e02e75079da8517b669a27a6",
+  "database_version": 20260301040958,
+  "generated_at": "2026-03-01T04:09:58.567070",
   "motor_count": 1504,
   "curve_count": 1933,
-  "sha256": "ee7abc52a323d8a0b5c6bec593278f8a502343545a6fabae00a90bfe15fa8da1"
+  "sha256": "f37727d122b0e3f5ee691ad416fa85678f0074832cc864c93dd3acb68fe901de"
 }

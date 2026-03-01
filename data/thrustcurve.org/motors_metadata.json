@@ -2452,7 +2452,7 @@
       "motorId": "5f4294d20002310000000455",
       "manufacturer": "AeroTech",
       "manufacturerAbbrev": "AeroTech",
-      "designation": "H283ST",
+      "designation": "H283ST-15A",
       "commonName": "H283",
       "impulseClass": "H",
       "diameter": 38,
@@ -2463,14 +2463,14 @@
       "totImpulseNs": 201,
       "burnTimeS": 0.7,
       "dataFiles": 2,
-      "infoUrl": null,
-      "totalWeightG": null,
-      "propWeightG": null,
+      "infoUrl": "https://aerotech-rocketry.com/products/product_3b93c88c-21ab-ae24-dc14-a061c82ff2e1",
+      "totalWeightG": 247,
+      "propWeightG": 97,
       "delays": "7,9,11,13,15",
       "caseInfo": "DMS",
       "propInfo": "Super Thunder",
       "sparky": false,
-      "updatedOn": "2025-08-10"
+      "updatedOn": "2026-02-24"
     },
     "5f4294d20002310000000087": {
       "motorId": "5f4294d20002310000000087",
