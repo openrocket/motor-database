@@ -185,6 +185,12 @@ Time/thrust data points for each thrust curve.
 2.  `python scripts/fetch_updates.py` (Downloads new files)
 3.  `python scripts/build_database.py` (Generates DB)
 
+The build database does not rebuild if no changes are detected.
+However, in some case, a forced rebuild may be necessary, e.g. if you
+made changes to the build script. In which case, add a `--force` command line
+argument:
+`python scripts/build_database.py --force` (Forces a rebuild even when inputs are unchanged)
+
 ## State Files
 
 - `state/last_update.json`: timestamp of the most recent data/metadata change detected by `scripts/fetch_updates.py`.

@@ -1,3 +1,4 @@
+import argparse
 import os
 import re
 import sqlite3
@@ -699,7 +700,7 @@ def parse_rse_all(filepath):
         return []
 
 
-def build():
+def build(force=False):
     print(f"Building database from '{DATA_DIR}'...")
     build_state = load_build_state()
     source_hash = compute_source_hash()
@@ -711,8 +712,8 @@ def build():
         key in build_state
         for key in ("source_hash", "database_version", "generated_at", "motor_count", "curve_count", "sha256")
     )
-    reuse_versions = state_has_required and build_state["source_hash"] == source_hash
-    if reuse_versions and os.path.exists(DB_NAME) and os.path.exists(GZ_NAME):
+    reuse_versions = (not force) and state_has_required and build_state["source_hash"] == source_hash
+    if not force and reuse_versions and os.path.exists(DB_NAME) and os.path.exists(GZ_NAME):
         print("No input changes detected. Skipping rebuild.")
         meta = {
             "schema_version": schema_version,
@@ -1111,5 +1112,16 @@ def build():
     print(f"Build complete: {GZ_NAME}")
 
 
+def main():
+    parser = argparse.ArgumentParser(description="Build the motor database from local source files.")
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="always rebuild the database instead of skipping when inputs are unchanged",
+    )
+    args = parser.parse_args()
+    build(force=args.force)
+
+
 if __name__ == "__main__":
-    build()
+    main()

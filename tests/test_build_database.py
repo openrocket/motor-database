@@ -328,3 +328,53 @@ def test_build_reuses_version_when_state_matches(tmp_path, monkeypatch):
     metadata = json.loads(meta_path.read_text())
     assert metadata["database_version"] == build_state["database_version"]
     assert metadata["generated_at"] == build_state["generated_at"]
+
+
+def test_build_force_rebuilds_when_state_matches(tmp_path, monkeypatch):
+    data_dir, tc_dir = setup_sample_data(tmp_path)
+
+    db_path = tmp_path / "motors.db"
+    gz_path = tmp_path / "motors.db.gz"
+    meta_path = tmp_path / "metadata.json"
+    build_state_path = tmp_path / "state" / "last_build.json"
+    schema_path = Path(__file__).resolve().parents[1] / "schema" / "V1__initial_schema.sql"
+
+    monkeypatch.setattr(build_db, "DATA_DIR", str(data_dir))
+    monkeypatch.setattr(build_db, "DB_NAME", str(db_path))
+    monkeypatch.setattr(build_db, "GZ_NAME", str(gz_path))
+    monkeypatch.setattr(build_db, "METADATA_FILE", str(meta_path))
+    monkeypatch.setattr(build_db, "BUILD_STATE_FILE", str(build_state_path))
+    monkeypatch.setattr(build_db, "SCHEMA_FILE", str(schema_path))
+    monkeypatch.setattr(build_db, "MOTORS_METADATA_FILE", str(tc_dir / "motors_metadata.json"))
+    monkeypatch.setattr(build_db, "MANUFACTURERS_FILE", str(tc_dir / "manufacturers.json"))
+    monkeypatch.setattr(build_db, "SIMFILE_MAPPING_FILE", str(tc_dir / "simfile_to_motor.json"))
+
+    source_hash = build_db.compute_source_hash()
+    build_state_path.parent.mkdir(parents=True, exist_ok=True)
+    build_state_path.write_text(
+        json.dumps(
+            {
+                "source_hash": source_hash,
+                "database_version": 20240102030405,
+                "generated_at": "2024-01-02T03:04:05",
+                "motor_count": 2,
+                "curve_count": 2,
+                "sha256": "deadbeef",
+            }
+        )
+    )
+
+    db_path.write_text("not a sqlite database")
+    gz_path.write_text("not a gzip file")
+
+    build_db.build(force=True)
+
+    metadata = json.loads(meta_path.read_text())
+    assert metadata["database_version"] != 20240102030405
+    assert metadata["generated_at"] != "2024-01-02T03:04:05"
+    assert metadata["sha256"] != "deadbeef"
+
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM motors")
+        assert cursor.fetchone()[0] == 2
