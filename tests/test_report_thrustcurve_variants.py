@@ -257,6 +257,7 @@ def test_generate_report_writes_html(tmp_path, monkeypatch):
     assert "Curve" in content
     assert "Thrust curve comparison" in content
     assert "curve-plot" in content
+    assert 'button.textContent = nextExpanded ? "Hide details" : "More details";' in content
     assert "F32.eng" in content
     assert "F32.rse" in content
 

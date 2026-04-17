@@ -787,8 +787,10 @@ def render_html_report(entries, output_path):
       button.addEventListener("click", () => {{
         const detailRow = document.getElementById(button.getAttribute("aria-controls"));
         const expanded = button.getAttribute("aria-expanded") === "true";
-        button.setAttribute("aria-expanded", expanded ? "false" : "true");
-        detailRow.hidden = expanded;
+        const nextExpanded = !expanded;
+        button.setAttribute("aria-expanded", nextExpanded ? "true" : "false");
+        button.textContent = nextExpanded ? "Hide details" : "More details";
+        detailRow.hidden = !nextExpanded;
       }});
     }}
   </script>
