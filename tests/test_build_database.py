@@ -81,7 +81,21 @@ def test_parse_rasp_parses_header_and_data(tmp_path):
     assert meta["prop_weight"] == pytest.approx(53.0)
     assert meta["total_weight"] == pytest.approx(68.0)
     assert meta["manufacturer"] == "Test Motors"
-    assert points == [(0.0, 5.0), (0.5, 0.0)]
+    assert points == [(0.0, 0.0), (0.0, 5.0), (0.5, 0.0)]
+
+
+def test_parse_rasp_prepends_zero_point_when_missing(tmp_path):
+    content = (
+        "F32 29 124 5-10-15 0.053 0.068 Test Motors\n"
+        "0.05 5\n"
+        "0.5 0\n"
+    )
+    path = tmp_path / "motor.eng"
+    path.write_text(content)
+
+    _, points = build_db.parse_rasp(str(path))
+
+    assert points == [(0.0, 0.0), (0.05, 5.0), (0.5, 0.0)]
 
 
 def test_parse_rasp_all_handles_multiple_motors_and_comments(tmp_path):
@@ -108,6 +122,8 @@ def test_parse_rasp_all_handles_multiple_motors_and_comments(tmp_path):
     assert meta0["delays"] == "0"
     assert meta1["description"] == "Next motor"
     assert meta1["delays"] == "P"
+    assert motors[0][1][0] == (0.0, 0.0)
+    assert motors[1][1][0] == (0.0, 0.0)
 
 
 def test_parse_rse_parses_single_engine(tmp_path):

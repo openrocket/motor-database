@@ -22,6 +22,16 @@ _DELAY_SUFFIX_RE = re.compile(r'-(\d+|[pP])$')
 _SIMPLIFY_CN_RE = re.compile(r'^[0-9]*[ -]*([A-Z][0-9]+)')
 
 
+def ensure_curve_starts_at_zero(points):
+    """Prepend an explicit ignition origin when the curve does not start at 0,0."""
+    if not points:
+        return points
+    first_time, first_thrust = points[0]
+    if first_time == 0.0 and first_thrust == 0.0:
+        return points
+    return [(0.0, 0.0), *points]
+
+
 def normalize_designation(designation):
     """Strip trailing delay suffix from a motor designation (e.g. 'B6-0' -> 'B6')."""
     if designation:
@@ -394,7 +404,7 @@ def parse_rasp(filepath):
                     if len(parts) >= 7:
                         break  # Stop parsing, we hit a new motor header
 
-    return metadata, data_points
+    return metadata, ensure_curve_starts_at_zero(data_points)
 
 
 def parse_rse(filepath):
@@ -458,7 +468,7 @@ def parse_rse(filepath):
                 f = float(pt.get('f', 0.0))
                 data_points.append((t, f))
 
-        return metadata, data_points
+        return metadata, ensure_curve_starts_at_zero(data_points)
 
     except Exception:
         return None, None
@@ -610,7 +620,7 @@ def parse_rasp_all(filepath):
                     description = ' '.join(desc_lines)
             if description:
                 current_meta['description'] = description
-            motors.append((current_meta, current_points))
+            motors.append((current_meta, ensure_curve_starts_at_zero(current_points)))
         current_meta = None
         current_points = []
         current_comments = []
@@ -694,7 +704,7 @@ def parse_rse_all(filepath):
                 for pt in data.findall("eng-data"):
                     pts.append((float(pt.get('t', 0)), float(pt.get('f', 0))))
             if pts:
-                motors.append((meta, pts))
+                motors.append((meta, ensure_curve_starts_at_zero(pts)))
         return motors
     except Exception:
         return []

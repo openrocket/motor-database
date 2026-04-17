@@ -27,6 +27,16 @@ DOWNLOAD_RETRY_ATTEMPTS = 4
 DOWNLOAD_RETRY_BASE_DELAY_SECONDS = 1.0
 
 
+def ensure_curve_starts_at_zero(points):
+    """Prepend an explicit ignition origin when the curve does not start at 0,0."""
+    if not points:
+        return points
+    first_time, first_thrust = points[0]
+    if first_time == 0.0 and first_thrust == 0.0:
+        return points
+    return [(0.0, 0.0), *points]
+
+
 def load_motors_metadata():
     if os.path.exists(MOTORS_METADATA_FILE):
         with open(MOTORS_METADATA_FILE, "r") as f:
@@ -85,7 +95,7 @@ def parse_rasp_text(content):
             if thrust_n == 0:
                 break
 
-    return metadata, points
+    return metadata, ensure_curve_starts_at_zero(points)
 
 
 def parse_rse_text(content):
@@ -116,7 +126,7 @@ def parse_rse_text(content):
     if data is not None:
         for point in data.findall("eng-data"):
             points.append((float(point.get("t", 0.0)), float(point.get("f", 0.0))))
-    return metadata, points
+    return metadata, ensure_curve_starts_at_zero(points)
 
 
 def calculate_curve_stats(points):
@@ -139,7 +149,7 @@ def calculate_curve_stats(points):
         total_impulse_ns += dt * avg_force
 
     avg_thrust_n = total_impulse_ns / burn_time_s if burn_time_s else None
-    fingerprint_source = "|".join(f"{time_s:.4f}:{thrust_n:.4f}" for time_s, thrust_n in points)
+    fingerprint_source = "|".join(f"{time_s:.3f}:{thrust_n:.2f}" for time_s, thrust_n in points)
     curve_fingerprint = hashlib.sha256(fingerprint_source.encode("utf-8")).hexdigest()[:12]
     return {
         "point_count": len(points),
@@ -194,6 +204,7 @@ def build_variant_summary(result, motor_meta):
     if not points:
         samples = result.get("samples") or []
         points = [(float(sample["time"]), float(sample["thrust"])) for sample in samples]
+    points = ensure_curve_starts_at_zero(points)
 
     stats = calculate_curve_stats(points)
     parsed_meta = parsed_meta or {}
@@ -415,6 +426,7 @@ def render_curve_plot(variants, motor_id):
         return padding_top + plot_height - (force_n / max_force) * plot_height
 
     paths = []
+    markers = []
     legends = []
     for index, variant in enumerate(variants):
         points = variant.get("points", [])
@@ -425,6 +437,11 @@ def render_curve_plot(variants, motor_id):
         paths.append(
             f"<polyline fill='none' stroke='{color}' stroke-width='2.2' points='{path}' />"
         )
+        circles = "".join(
+            f"<circle cx='{scale_x(time_s):.2f}' cy='{scale_y(force_n):.2f}' r='3' fill='{color}' opacity='0.75' />"
+            for time_s, force_n in points
+        )
+        markers.append(circles)
         legends.append(
             "<span class='plot-legend-item'>"
             f"<span class='plot-swatch' style='background:{color}'></span>"
@@ -458,6 +475,7 @@ def render_curve_plot(variants, motor_id):
         f"<line x1='{padding_left}' y1='{height - padding_bottom}' x2='{width - padding_right}' y2='{height - padding_bottom}' class='plot-axis' />"
         f"<line x1='{padding_left}' y1='{padding_top}' x2='{padding_left}' y2='{height - padding_bottom}' class='plot-axis' />"
         f"{''.join(paths)}"
+        f"{''.join(markers)}"
         f"<text x='{width / 2:.2f}' y='{height - 4}' text-anchor='middle' class='plot-axis-title'>Time (s)</text>"
         f"<text x='16' y='{height / 2:.2f}' text-anchor='middle' transform='rotate(-90 16 {height / 2:.2f})' class='plot-axis-title'>Force (N)</text>"
         "</svg>"

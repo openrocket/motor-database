@@ -51,10 +51,30 @@ def test_build_variant_summary_uses_file_delays_and_curve_stats():
 
     assert summary["delays"] == "0,5"
     assert summary["filename"] == "Test_F32.eng"
-    assert summary["point_count"] == 2
+    assert summary["point_count"] == 3
     assert summary["burn_time_s"] == 0.5
     assert summary["total_impulse_ns"] == 1.25
     assert summary["curve_fingerprint"] is not None
+
+
+def test_build_variant_summary_prepends_zero_point_when_missing():
+    motor_meta = {
+        "designation": "F32",
+        "commonName": "F32",
+        "manufacturer": "Test Motors",
+    }
+    result = {
+        "simfileId": "sim-1",
+        "format": "RASP",
+        "dataUrl": "https://example.com/download/Test_F32.eng",
+        "data": encode_text("F32 29 124 0-5 0.05 0.07 Test Motors\n0.05 5\n0.5 0\n"),
+    }
+
+    summary = report_variants.build_variant_summary(result, motor_meta)
+
+    assert summary["points"] == [(0.0, 0.0), (0.05, 5.0), (0.5, 0.0)]
+    assert summary["point_count"] == 3
+    assert summary["total_impulse_ns"] == 1.25
 
 
 def test_build_variant_summary_absolutizes_thrustcurve_urls():
@@ -75,6 +95,24 @@ def test_build_variant_summary_absolutizes_thrustcurve_urls():
 
     assert summary["info_url"] == "https://www.thrustcurve.org/simfiles/sim-1/"
     assert summary["data_url"] == "https://www.thrustcurve.org/simfiles/sim-1/download/data.eng"
+
+
+def test_build_variant_summary_normalizes_sample_only_curves():
+    motor_meta = {
+        "designation": "F32",
+        "commonName": "F32",
+        "manufacturer": "Test Motors",
+    }
+    result = {
+        "simfileId": "sim-1",
+        "format": "Unknown",
+        "samples": [{"time": 0.05, "thrust": 5.0}, {"time": 0.5, "thrust": 0.0}],
+    }
+
+    summary = report_variants.build_variant_summary(result, motor_meta)
+
+    assert summary["points"] == [(0.0, 0.0), (0.05, 5.0), (0.5, 0.0)]
+    assert summary["point_count"] == 3
 
 
 def test_collect_variant_differences_flags_only_focused_fields():
