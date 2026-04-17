@@ -184,12 +184,18 @@ Time/thrust data points for each thrust curve.
 1.  `pip install -r scripts/requirements.txt`
 2.  `python scripts/fetch_updates.py` (Downloads new files)
 3.  `python scripts/build_database.py` (Generates DB)
+4.  `python scripts/report_thrustcurve_variants.py` (Generates an HTML comparison report for motors with multiple downloadable ThrustCurve simfiles)
 
 The build database does not rebuild if no changes are detected.
 However, in some case, a forced rebuild may be necessary, e.g. if you
 made changes to the build script. In which case, add a `--force` command line
 argument:
 `python scripts/build_database.py --force` (Forces a rebuild even when inputs are unchanged)
+
+Variant report filters:
+- `python scripts/report_thrustcurve_variants.py --designation F32`
+- `python scripts/report_thrustcurve_variants.py --manufacturer AeroTech --limit 25`
+- `python scripts/report_thrustcurve_variants.py --motor-id 5f4294d20002310000000015`
 
 ## State Files
 

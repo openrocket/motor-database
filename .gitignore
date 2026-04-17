@@ -7,3 +7,6 @@ motors.db
 motors.db.gz
 
 .env
+
+# Report output
+reports
