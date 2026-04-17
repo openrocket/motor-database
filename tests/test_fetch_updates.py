@@ -103,6 +103,54 @@ def test_download_motor_data_writes_files_and_mapping(tmp_path, monkeypatch):
     assert saved_path.read_text() == content
 
 
+def test_download_motor_data_writes_multiple_formats(tmp_path, monkeypatch):
+    data_dir = tmp_path / "data"
+    monkeypatch.setattr(fetch_updates, "DATA_DIR", str(data_dir))
+
+    rasp_content = "F32 29 124 0 0.05 0.07 Test Motors\n0 5\n0.5 0\n"
+    rse_content = (
+        "<engine-database><engine-list><engine code=\"F32W\" mfg=\"Test Motors\" dia=\"29\" len=\"124\" "
+        "propWt=\"50\" initWt=\"70\" delays=\"0,5\"><data><eng-data t=\"0.0\" f=\"5.0\" />"
+        "<eng-data t=\"0.5\" f=\"0.0\" /></data></engine></engine-list></engine-database>"
+    )
+
+    def fake_post(url, json=None, headers=None):
+        assert url == fetch_updates.TC_API_DOWNLOAD
+        assert "format" not in json
+        return DummyResponse(
+            200,
+            {
+                "results": [
+                    {
+                        "data": base64.b64encode(rasp_content.encode("utf-8")).decode("utf-8"),
+                        "simfileId": "abcdef123456abcdef123456",
+                        "format": "RASP",
+                        "dataUrl": "https://example.com/data.eng",
+                    },
+                    {
+                        "data": base64.b64encode(rse_content.encode("utf-8")).decode("utf-8"),
+                        "simfileId": "fedcba654321fedcba654321",
+                        "format": "RockSim",
+                        "dataUrl": "https://example.com/data.rse",
+                    },
+                ]
+            },
+        )
+
+    monkeypatch.setattr(fetch_updates.requests, "post", fake_post)
+
+    mapping = {}
+    saved_count, simfile_ids = fetch_updates.download_motor_data(
+        "motor-1", "Test Motors", "F32", mapping
+    )
+
+    assert saved_count == 2
+    assert simfile_ids == ["abcdef123456abcdef123456", "fedcba654321fedcba654321"]
+    assert (data_dir / "Test Motors" / "F32_abcdef123456abcdef123456.eng").exists()
+    assert (data_dir / "Test Motors" / "F32_fedcba654321fedcba654321.rse").exists()
+    assert mapping["fedcba654321fedcba654321"]["format"] == "RockSim"
+
+
 def test_fetch_motors_saves_metadata_mapping_and_state(tmp_path, monkeypatch):
     data_dir = tmp_path / "data" / "thrustcurve.org"
     state_dir = tmp_path / "state"
@@ -169,6 +217,7 @@ def test_fetch_motors_saves_metadata_mapping_and_state(tmp_path, monkeypatch):
                 },
             )
         if url == fetch_updates.TC_API_DOWNLOAD:
+            assert "format" not in json
             return DummyResponse(
                 200,
                 {

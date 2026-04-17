@@ -32,6 +32,63 @@ def ensure_curve_starts_at_zero(points):
     return [(0.0, 0.0), *points]
 
 
+def curve_signature(points):
+    """Build a stable signature for a thrust curve for deduplication."""
+    return tuple((round(time_s, 6), round(thrust_n, 6)) for time_s, thrust_n in points)
+
+
+def parse_delays(delays):
+    """Normalize delay representations into a unique ordered list."""
+    if delays is None:
+        return []
+    if isinstance(delays, (list, tuple, set)):
+        tokens = []
+        for value in delays:
+            tokens.extend(parse_delays(value))
+        return tokens
+
+    value = str(delays).strip()
+    if not value:
+        return []
+    if value.upper() == 'P':
+        return ['P']
+
+    tokens = []
+    seen = set()
+    for part in re.split(r'[-,]+', value):
+        token = part.strip()
+        if not token:
+            continue
+        normalized = 'P' if token.upper() == 'P' else token
+        if normalized not in seen:
+            tokens.append(normalized)
+            seen.add(normalized)
+    return tokens
+
+
+def merge_delays(*delay_values):
+    """Merge multiple delay fields into a single canonical comma-separated string."""
+    merged = []
+    seen = set()
+    for value in delay_values:
+        for token in parse_delays(value):
+            if token in seen:
+                continue
+            merged.append(token)
+            seen.add(token)
+
+    if not merged:
+        return None
+
+    numeric = sorted(
+        (token for token in merged if token != 'P'),
+        key=lambda token: (float(token), token),
+    )
+    if 'P' in seen:
+        numeric.append('P')
+    return ','.join(numeric)
+
+
 def normalize_designation(designation):
     """Strip trailing delay suffix from a motor designation (e.g. 'B6-0' -> 'B6')."""
     if designation:
@@ -531,6 +588,7 @@ def compute_source_hash():
 
     if os.path.exists(SCHEMA_FILE):
         hash_file(SCHEMA_FILE, f"schema:{SCHEMA_FILE}")
+    hash_file(__file__, "script:build_database.py")
 
     if os.path.exists(DATA_DIR):
         for root_dir, dirs, files in os.walk(DATA_DIR):
@@ -793,6 +851,7 @@ def build(force=False):
     inserted_motors_by_key = {}
     # Track inserted curves to avoid duplicates: tc_simfile_id -> db_curve_id
     inserted_curves = {}
+    inserted_curve_signatures = {}
     
     # Track stats by source directory
     source_stats = {}  # source_dir -> {'files': 0, 'motors': 0, 'curves': 0}
@@ -955,7 +1014,7 @@ def build(force=False):
                             parsed_meta.get('prop_weight') or tc_meta.get('propWeightG'),
                             parsed_meta.get('total_weight') or tc_meta.get('totalWeightG'),
                             motor_type,
-                            parsed_meta.get('delays') or tc_meta.get('delays'),
+                            merge_delays(tc_meta.get('delays'), parsed_meta.get('delays')),
                             case_info, tc_meta.get('propInfo'),
                             1 if tc_meta.get('sparky') else 0,
                             tc_meta.get('infoUrl'), tc_meta.get('dataFiles'), tc_meta.get('updatedOn'),
@@ -988,7 +1047,7 @@ def build(force=False):
                             impulse_class, parsed_meta['diameter'], parsed_meta['length'],
                             calc_impulse, calc_avg, calc_max, calc_burn,
                             parsed_meta.get('prop_weight'), parsed_meta.get('total_weight'),
-                            motor_type, parsed_meta.get('delays'),
+                            motor_type, merge_delays(parsed_meta.get('delays')),
                             case_info, None, 0, None, None, None,
                             description, source_dir,
                         ))
@@ -999,11 +1058,30 @@ def build(force=False):
                     inserted_motors_by_key[motor_key] = db_motor_id
                     motor_count += 1
                     source_stats[source_dir]['motors'] += 1
+                else:
+                    cursor.execute("SELECT delays FROM motors WHERE id = ?", (db_motor_id,))
+                    current_delays_row = cursor.fetchone()
+                    current_delays = current_delays_row[0] if current_delays_row else None
+                    merged_delays = merge_delays(
+                        current_delays,
+                        tc_meta.get('delays') if tc_meta else None,
+                        parsed_meta.get('delays'),
+                    )
+                    if merged_delays != current_delays:
+                        cursor.execute(
+                            "UPDATE motors SET delays = ? WHERE id = ?",
+                            (merged_delays, db_motor_id),
+                        )
 
                 # For multi-motor files, don't use simfile_id
                 cur_simfile = simfile_id if is_single else None
                 
                 if cur_simfile and cur_simfile in inserted_curves:
+                    continue
+
+                signature = curve_signature(points)
+                motor_signatures = inserted_curve_signatures.setdefault(db_motor_id, set())
+                if signature in motor_signatures:
                     continue
                 
                 calc_impulse, calc_avg, calc_max, calc_burn = calculate_thrust_stats(points)
@@ -1026,6 +1104,7 @@ def build(force=False):
                 curve_id = cursor.lastrowid
                 if cur_simfile:
                     inserted_curves[cur_simfile] = curve_id
+                motor_signatures.add(signature)
                 curve_count += 1
                 source_stats[source_dir]['curves'] += 1
 

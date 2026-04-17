@@ -102,6 +102,18 @@ def sanitize_filename(name):
     return "".join([c for c in name if c.isalpha() or c.isdigit() or c in (' ', '-', '_')]).strip()
 
 
+def infer_file_extension(file_format, data_url=None):
+    """Choose a file extension that build_database.py knows how to parse."""
+    if data_url:
+        candidate = os.path.splitext(data_url.split('?', 1)[0])[1].lower()
+        if candidate in ('.eng', '.rasp', '.rse'):
+            return candidate.lstrip('.')
+
+    if (file_format or '').lower() == 'rocksim':
+        return 'rse'
+    return 'rasp'
+
+
 def get_manufacturers():
     """Fetch and save the canonical manufacturers list from ThrustCurve metadata API."""
     print("Fetching manufacturer list...")
@@ -136,7 +148,6 @@ def download_motor_data(motor_id, mfr_name, motor_name, simfile_mapping):
     # Matches Java: info.openrocket.core.thrustcurve.ThrustCurveAPI.postDownload
     payload = {
         "motorIds": [motor_id],
-        "format": "RASP"  # Or loop ["RASP", "RockSim"] if you want both
     }
 
     try:
@@ -181,7 +192,8 @@ def download_motor_data(motor_id, mfr_name, motor_name, simfile_mapping):
 
                 # Keep original filename format for backward compatibility
                 # The simfile_mapping.json provides the motorId lookup
-                filename = f"{sanitize_filename(motor_name)}_{simfile_id}.{fmt.lower()}"
+                extension = infer_file_extension(fmt, res.get('dataUrl'))
+                filename = f"{sanitize_filename(motor_name)}_{simfile_id}.{extension}"
                 filepath = os.path.join(mfr_dir, filename)
 
                 with open(filepath, 'w') as f:
@@ -341,7 +353,6 @@ def rebuild_simfile_mapping():
         # Query download API (but don't save the files)
         payload = {
             "motorIds": [motor_id],
-            "format": "RASP"
         }
         
         try:

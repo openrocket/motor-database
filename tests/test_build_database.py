@@ -254,6 +254,12 @@ def test_calculate_thrust_stats():
     assert burn_time == pytest.approx(2.0)
 
 
+def test_merge_delays_combines_unique_values():
+    assert build_db.merge_delays("0,5", "5-10", "P") == "0,5,10,P"
+    assert build_db.merge_delays(None, "", "0") == "0"
+    assert build_db.merge_delays(None, "") is None
+
+
 def test_extract_simfile_info_from_filename():
     mapping = {"abcdef123456abcdef123456": "motor-1"}
     sim_id, info = build_db.extract_simfile_info_from_filename(
@@ -394,3 +400,259 @@ def test_build_force_rebuilds_when_state_matches(tmp_path, monkeypatch):
         cursor = conn.cursor()
         cursor.execute("SELECT COUNT(*) FROM motors")
         assert cursor.fetchone()[0] == 2
+
+
+def test_build_merges_delays_and_keeps_distinct_tc_curves(tmp_path, monkeypatch):
+    data_dir = tmp_path / "data"
+    tc_dir = data_dir / "thrustcurve.org" / "Acme"
+    tc_dir.mkdir(parents=True)
+
+    (data_dir / "thrustcurve.org" / "motors_metadata.json").write_text(
+        json.dumps(
+            {
+                "motors": {
+                    "motor-1": {
+                        "motorId": "motor-1",
+                        "manufacturer": "Acme",
+                        "manufacturerAbbrev": "AC",
+                        "designation": "G64W",
+                        "commonName": "G64",
+                        "impulseClass": "G",
+                        "diameter": 29,
+                        "length": 150,
+                        "type": "SU",
+                        "avgThrustN": 64,
+                        "maxThrustN": 100,
+                        "totImpulseNs": 120,
+                        "burnTimeS": 1.9,
+                        "dataFiles": 2,
+                        "delays": "0",
+                        "updatedOn": "2025-01-01",
+                    }
+                }
+            }
+        )
+    )
+    (data_dir / "thrustcurve.org" / "manufacturers.json").write_text(
+        json.dumps({"manufacturers": [{"name": "Acme", "abbrev": "AC"}]})
+    )
+    (data_dir / "thrustcurve.org" / "simfile_to_motor.json").write_text(
+        json.dumps(
+            {
+                "abcdef123456abcdef123456": {
+                    "motorId": "motor-1",
+                    "format": "RASP",
+                    "source": "cert",
+                },
+                "fedcba654321fedcba654321": {
+                    "motorId": "motor-1",
+                    "format": "RockSim",
+                    "source": "mfr",
+                },
+            }
+        )
+    )
+    (tc_dir / "G64_abcdef123456abcdef123456.eng").write_text(
+        "G64 29 150 0 0.08 0.10 Acme\n0.0 10\n0.6 0\n"
+    )
+    (tc_dir / "G64_fedcba654321fedcba654321.rse").write_text(
+        "<engine-database><engine-list><engine code=\"G64W\" mfg=\"Acme\" dia=\"29\" len=\"150\" "
+        "propWt=\"80\" initWt=\"100\" delays=\"4,7\"><data>"
+        "<eng-data t=\"0.0\" f=\"12.0\" /><eng-data t=\"0.7\" f=\"0.0\" />"
+        "</data></engine></engine-list></engine-database>"
+    )
+
+    db_path = tmp_path / "motors.db"
+    gz_path = tmp_path / "motors.db.gz"
+    meta_path = tmp_path / "metadata.json"
+    build_state_path = tmp_path / "state" / "last_build.json"
+    schema_path = Path(__file__).resolve().parents[1] / "schema" / "V1__initial_schema.sql"
+
+    monkeypatch.setattr(build_db, "DATA_DIR", str(data_dir))
+    monkeypatch.setattr(build_db, "DB_NAME", str(db_path))
+    monkeypatch.setattr(build_db, "GZ_NAME", str(gz_path))
+    monkeypatch.setattr(build_db, "METADATA_FILE", str(meta_path))
+    monkeypatch.setattr(build_db, "BUILD_STATE_FILE", str(build_state_path))
+    monkeypatch.setattr(build_db, "SCHEMA_FILE", str(schema_path))
+    monkeypatch.setattr(build_db, "MOTORS_METADATA_FILE", str(data_dir / "thrustcurve.org" / "motors_metadata.json"))
+    monkeypatch.setattr(build_db, "MANUFACTURERS_FILE", str(data_dir / "thrustcurve.org" / "manufacturers.json"))
+    monkeypatch.setattr(build_db, "SIMFILE_MAPPING_FILE", str(data_dir / "thrustcurve.org" / "simfile_to_motor.json"))
+
+    build_db.build()
+
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT delays FROM motors WHERE tc_motor_id = 'motor-1'")
+        assert cursor.fetchone()[0] == "0,4,7"
+        cursor.execute("SELECT COUNT(*) FROM thrust_curves WHERE motor_id = (SELECT id FROM motors WHERE tc_motor_id = 'motor-1')")
+        assert cursor.fetchone()[0] == 2
+
+
+def test_build_deduplicates_identical_tc_curves(tmp_path, monkeypatch):
+    data_dir = tmp_path / "data"
+    tc_dir = data_dir / "thrustcurve.org" / "Acme"
+    tc_dir.mkdir(parents=True)
+
+    (data_dir / "thrustcurve.org" / "motors_metadata.json").write_text(
+        json.dumps(
+            {
+                "motors": {
+                    "motor-1": {
+                        "motorId": "motor-1",
+                        "manufacturer": "Acme",
+                        "manufacturerAbbrev": "AC",
+                        "designation": "G64W",
+                        "commonName": "G64",
+                        "dataFiles": 2,
+                        "delays": "0",
+                    }
+                }
+            }
+        )
+    )
+    (data_dir / "thrustcurve.org" / "manufacturers.json").write_text(
+        json.dumps({"manufacturers": [{"name": "Acme", "abbrev": "AC"}]})
+    )
+    (data_dir / "thrustcurve.org" / "simfile_to_motor.json").write_text(
+        json.dumps(
+            {
+                "abcdef123456abcdef123456": {"motorId": "motor-1", "format": "RASP"},
+                "fedcba654321fedcba654321": {"motorId": "motor-1", "format": "RockSim"},
+            }
+        )
+    )
+    curve_points = "0.0 10\n0.6 0\n"
+    (tc_dir / "G64_abcdef123456abcdef123456.eng").write_text(
+        "G64 29 150 0 0.08 0.10 Acme\n" + curve_points
+    )
+    (tc_dir / "G64_fedcba654321fedcba654321.rse").write_text(
+        "<engine-database><engine-list><engine code=\"G64W\" mfg=\"Acme\" dia=\"29\" len=\"150\" "
+        "propWt=\"80\" initWt=\"100\" delays=\"7\"><data>"
+        "<eng-data t=\"0.0\" f=\"10.0\" /><eng-data t=\"0.6\" f=\"0.0\" />"
+        "</data></engine></engine-list></engine-database>"
+    )
+
+    db_path = tmp_path / "motors.db"
+    gz_path = tmp_path / "motors.db.gz"
+    meta_path = tmp_path / "metadata.json"
+    build_state_path = tmp_path / "state" / "last_build.json"
+    schema_path = Path(__file__).resolve().parents[1] / "schema" / "V1__initial_schema.sql"
+
+    monkeypatch.setattr(build_db, "DATA_DIR", str(data_dir))
+    monkeypatch.setattr(build_db, "DB_NAME", str(db_path))
+    monkeypatch.setattr(build_db, "GZ_NAME", str(gz_path))
+    monkeypatch.setattr(build_db, "METADATA_FILE", str(meta_path))
+    monkeypatch.setattr(build_db, "BUILD_STATE_FILE", str(build_state_path))
+    monkeypatch.setattr(build_db, "SCHEMA_FILE", str(schema_path))
+    monkeypatch.setattr(build_db, "MOTORS_METADATA_FILE", str(data_dir / "thrustcurve.org" / "motors_metadata.json"))
+    monkeypatch.setattr(build_db, "MANUFACTURERS_FILE", str(data_dir / "thrustcurve.org" / "manufacturers.json"))
+    monkeypatch.setattr(build_db, "SIMFILE_MAPPING_FILE", str(data_dir / "thrustcurve.org" / "simfile_to_motor.json"))
+
+    build_db.build()
+
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT delays FROM motors WHERE tc_motor_id = 'motor-1'")
+        assert cursor.fetchone()[0] == "0,7"
+        cursor.execute("SELECT COUNT(*) FROM thrust_curves WHERE motor_id = (SELECT id FROM motors WHERE tc_motor_id = 'motor-1')")
+        assert cursor.fetchone()[0] == 1
+
+
+def test_build_estes_e6_merges_delays_and_keeps_two_distinct_curves(tmp_path, monkeypatch):
+    data_dir = tmp_path / "data"
+    tc_dir = data_dir / "thrustcurve.org" / "Estes Industries"
+    tc_dir.mkdir(parents=True)
+
+    (data_dir / "thrustcurve.org" / "motors_metadata.json").write_text(
+        json.dumps(
+            {
+                "motors": {
+                    "estes-e6": {
+                        "motorId": "estes-e6",
+                        "manufacturer": "Estes Industries",
+                        "manufacturerAbbrev": "Estes",
+                        "designation": "E6",
+                        "commonName": "E6",
+                        "impulseClass": "E",
+                        "diameter": 24,
+                        "length": 95,
+                        "type": "SU",
+                        "avgThrustN": 6,
+                        "maxThrustN": 13,
+                        "totImpulseNs": 28,
+                        "burnTimeS": 4.5,
+                        "dataFiles": 2,
+                        "delays": "P",
+                        "updatedOn": "2026-04-18",
+                    }
+                }
+            }
+        )
+    )
+    (data_dir / "thrustcurve.org" / "manufacturers.json").write_text(
+        json.dumps({"manufacturers": [{"name": "Estes Industries", "abbrev": "Estes"}]})
+    )
+    (data_dir / "thrustcurve.org" / "simfile_to_motor.json").write_text(
+        json.dumps(
+            {
+                "abcdef123456abcdef123456": {
+                    "motorId": "estes-e6",
+                    "format": "RASP",
+                    "source": "cert",
+                },
+                "fedcba654321fedcba654321": {
+                    "motorId": "estes-e6",
+                    "format": "RockSim",
+                    "source": "mfr",
+                },
+            }
+        )
+    )
+    (tc_dir / "E6_abcdef123456abcdef123456.eng").write_text(
+        "E6 24 95 0-3-5-7 0.021 0.043 Estes\n"
+        "0.0 8.0\n"
+        "0.8 12.0\n"
+        "4.0 0.0\n"
+    )
+    (tc_dir / "E6_fedcba654321fedcba654321.rse").write_text(
+        "<engine-database><engine-list><engine code=\"E6\" mfg=\"Estes\" dia=\"24\" len=\"95\" "
+        "propWt=\"21\" initWt=\"43\" delays=\"P\"><data>"
+        "<eng-data t=\"0.0\" f=\"6.5\" />"
+        "<eng-data t=\"1.0\" f=\"10.5\" />"
+        "<eng-data t=\"4.6\" f=\"0.0\" />"
+        "</data></engine></engine-list></engine-database>"
+    )
+
+    db_path = tmp_path / "motors.db"
+    gz_path = tmp_path / "motors.db.gz"
+    meta_path = tmp_path / "metadata.json"
+    build_state_path = tmp_path / "state" / "last_build.json"
+    schema_path = Path(__file__).resolve().parents[1] / "schema" / "V1__initial_schema.sql"
+
+    monkeypatch.setattr(build_db, "DATA_DIR", str(data_dir))
+    monkeypatch.setattr(build_db, "DB_NAME", str(db_path))
+    monkeypatch.setattr(build_db, "GZ_NAME", str(gz_path))
+    monkeypatch.setattr(build_db, "METADATA_FILE", str(meta_path))
+    monkeypatch.setattr(build_db, "BUILD_STATE_FILE", str(build_state_path))
+    monkeypatch.setattr(build_db, "SCHEMA_FILE", str(schema_path))
+    monkeypatch.setattr(build_db, "MOTORS_METADATA_FILE", str(data_dir / "thrustcurve.org" / "motors_metadata.json"))
+    monkeypatch.setattr(build_db, "MANUFACTURERS_FILE", str(data_dir / "thrustcurve.org" / "manufacturers.json"))
+    monkeypatch.setattr(build_db, "SIMFILE_MAPPING_FILE", str(data_dir / "thrustcurve.org" / "simfile_to_motor.json"))
+
+    build_db.build()
+
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            SELECT m.delays, COUNT(tc.id)
+            FROM motors m
+            JOIN thrust_curves tc ON tc.motor_id = m.id
+            WHERE m.tc_motor_id = 'estes-e6'
+            GROUP BY m.id
+            """
+        )
+        delays, curve_count = cursor.fetchone()
+
+    assert delays == "0,3,5,7,P"
+    assert curve_count == 2
