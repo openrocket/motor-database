@@ -174,6 +174,17 @@ def test_parse_rse_all_parses_multiple_engines(tmp_path):
     assert motors[1][0]["designation"] == "H128W"
 
 
+def test_simplify_common_name():
+    assert build_db.simplify_common_name("B6-0") == "B6"
+    assert build_db.simplify_common_name("B6W") == "B6"
+    assert build_db.simplify_common_name("H128W") == "H128"
+    assert build_db.simplify_common_name("B6") == "B6"
+    assert build_db.simplify_common_name("C6") == "C6"
+    assert build_db.simplify_common_name("RCS 18/20") == "RCS 18/20"
+    assert build_db.simplify_common_name(None) is None
+    assert build_db.simplify_common_name("") == ""
+
+
 def test_normalize_designation_strips_delay_suffix():
     assert build_db.normalize_designation("B6-0") == "B6"
     assert build_db.normalize_designation("C6-3") == "C6"

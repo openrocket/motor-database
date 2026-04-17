@@ -18,6 +18,7 @@ METADATA_FILE = "metadata.json"
 BUILD_STATE_FILE = "state/last_build.json"
 
 _DELAY_SUFFIX_RE = re.compile(r'-(\d+|[pP])$')
+_SIMPLIFY_CN_RE = re.compile(r'^[0-9]*[ -]*([A-Z][0-9]+)')
 
 
 def normalize_designation(designation):
@@ -25,6 +26,18 @@ def normalize_designation(designation):
     if designation:
         return _DELAY_SUFFIX_RE.sub('', designation)
     return designation
+
+
+def simplify_common_name(name):
+    """Reduce a common name to the letter+digits impulse class.
+
+    Examples: 'B6-0' -> 'B6', 'B6W' -> 'B6', 'H128W' -> 'H128'.
+    Names that don't match the standard pattern are returned unchanged.
+    """
+    if not name:
+        return name
+    m = _SIMPLIFY_CN_RE.match(name)
+    return m.group(1) if m else name
 
 
 def init_db():
@@ -901,7 +914,7 @@ def build():
                     description = parsed_meta.get('description')  # From RASP comments
                     if tc_meta:
                         designation = normalize_designation(tc_meta.get('designation', parsed_meta['designation']))
-                        common_name = parsed_meta.get('common_name') or tc_meta.get('commonName')
+                        common_name = simplify_common_name(tc_meta.get('commonName') or parsed_meta.get('common_name'))
                         impulse_class = tc_meta.get('impulseClass')
                         motor_type = tc_meta.get('type', parsed_meta.get('type', 'SU'))
                         case_info = tc_meta.get('caseInfo')
@@ -940,7 +953,7 @@ def build():
                     else:
                         calc_impulse, calc_avg, calc_max, calc_burn = calculate_thrust_stats(points)
                         designation = normalize_designation(parsed_meta['designation'])
-                        common_name = parsed_meta.get('common_name')
+                        common_name = simplify_common_name(parsed_meta.get('common_name'))
                         impulse_class = None
                         motor_type = parsed_meta.get('type', 'SU')
                         case_info = None
