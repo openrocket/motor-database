@@ -77,7 +77,7 @@ def test_parse_rasp_parses_header_and_data(tmp_path):
 
     assert meta["common_name"] == "F32"
     assert meta["diameter"] == 29.0
-    assert meta["delays"] == "5-10-15"
+    assert meta["delays"] == "5,10,15"
     assert meta["prop_weight"] == pytest.approx(53.0)
     assert meta["total_weight"] == pytest.approx(68.0)
     assert meta["manufacturer"] == "Test Motors"
@@ -105,9 +105,9 @@ def test_parse_rasp_all_handles_multiple_motors_and_comments(tmp_path):
     meta0 = motors[0][0]
     meta1 = motors[1][0]
     assert meta0["description"] == "First line Second line"
-    assert meta0["delays"] is None
+    assert meta0["delays"] == "0"
     assert meta1["description"] == "Next motor"
-    assert meta1["delays"] is None
+    assert meta1["delays"] == "P"
 
 
 def test_parse_rse_parses_single_engine(tmp_path):
@@ -172,6 +172,49 @@ def test_parse_rse_all_parses_multiple_engines(tmp_path):
     assert len(motors) == 2
     assert motors[0][0]["designation"] == "G64W"
     assert motors[1][0]["designation"] == "H128W"
+
+
+def test_normalize_designation_strips_delay_suffix():
+    assert build_db.normalize_designation("B6-0") == "B6"
+    assert build_db.normalize_designation("C6-3") == "C6"
+    assert build_db.normalize_designation("B6-P") == "B6"
+    assert build_db.normalize_designation("B6") == "B6"
+    assert build_db.normalize_designation("RCS 18/20") == "RCS 18/20"
+    assert build_db.normalize_designation(None) is None
+
+
+def test_parse_rasp_delays_normalized(tmp_path):
+    cases = [
+        ("5-10-15", "5,10,15"),
+        ("0", "0"),
+        ("P", "P"),
+        ("p", "P"),
+        ("3", "3"),
+    ]
+    for raw, expected in cases:
+        content = f"F32 29 124 {raw} 0.05 0.07 Test Motors\n0 5\n0.5 0\n"
+        path = tmp_path / f"motor_{raw}.eng"
+        path.write_text(content)
+        meta, _ = build_db.parse_rasp(str(path))
+        assert meta["delays"] == expected, f"Expected {expected!r} for input {raw!r}, got {meta['delays']!r}"
+
+
+def test_parse_rse_delays_normalized(tmp_path):
+    def make_rse(delays_attr):
+        return (
+            "<engine-database><engine-list>"
+            f"<engine code=\"G64W\" mfg=\"RSE Co\" dia=\"29\" len=\"150\" "
+            f"propWt=\"30\" initWt=\"60\" delays=\"{delays_attr}\">"
+            "<data><eng-data t=\"0.0\" f=\"0.0\" /><eng-data t=\"0.2\" f=\"20.0\" />"
+            "<eng-data t=\"0.4\" f=\"0.0\" /></data></engine>"
+            "</engine-list></engine-database>"
+        )
+    cases = [("5-10-15", "5,10,15"), ("0", "0"), ("P", "P"), ("6,10", "6,10")]
+    for raw, expected in cases:
+        path = tmp_path / f"motor_{raw}.rse"
+        path.write_text(make_rse(raw))
+        meta, _ = build_db.parse_rse(str(path))
+        assert meta["delays"] == expected, f"Expected {expected!r} for input {raw!r}, got {meta['delays']!r}"
 
 
 def test_calculate_thrust_stats():

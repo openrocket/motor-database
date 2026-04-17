@@ -17,6 +17,15 @@ SIMFILE_MAPPING_FILE = "data/thrustcurve.org/simfile_to_motor.json"
 METADATA_FILE = "metadata.json"
 BUILD_STATE_FILE = "state/last_build.json"
 
+_DELAY_SUFFIX_RE = re.compile(r'-(\d+|[pP])$')
+
+
+def normalize_designation(designation):
+    """Strip trailing delay suffix from a motor designation (e.g. 'B6-0' -> 'B6')."""
+    if designation:
+        return _DELAY_SUFFIX_RE.sub('', designation)
+    return designation
+
 
 def init_db():
     if os.path.exists(DB_NAME):
@@ -325,12 +334,14 @@ def parse_rasp(filepath):
                     return None, None  # Invalid header
 
                 try:
-                    # Parse delays: "0" means no delay, "P" means plugged (no ejection)
                     delays_raw = parts[3]
-                    if delays_raw == '0' or delays_raw.upper() == 'P':
+                    if delays_raw.upper() == 'P':
+                        delays = 'P'
+                    elif delays_raw.strip() == '':
                         delays = None
                     else:
-                        delays = delays_raw
+                        delay_parts = [d.strip() for d in re.split(r'[-,]+', delays_raw) if d.strip()]
+                        delays = ','.join(delay_parts) if delay_parts else None
                     
                     # RASP weights are in kg, convert to grams for DB consistency
                     prop_weight_kg = float(parts[4])
@@ -398,10 +409,13 @@ def parse_rse(filepath):
 
         # Extract Metadata
         delays_raw = engine.get('delays', '')
-        if delays_raw == '0' or delays_raw.upper() == 'P' or not delays_raw:
+        if delays_raw.upper() == 'P':
+            delays = 'P'
+        elif not delays_raw.strip():
             delays = None
         else:
-            delays = delays_raw
+            delay_parts = [d.strip() for d in re.split(r'[-,]+', delays_raw) if d.strip()]
+            delays = ','.join(delay_parts) if delay_parts else None
         
         designation = engine.get('code', 'Unknown')
         # Extract common name from designation (strip propellant suffix letters)
@@ -546,7 +560,15 @@ def parse_rasp_all(filepath):
         if len(parts) < 7:
             return None
         try:
-            delays = None if parts[3] in ('0', 'P', 'p') else parts[3]
+            raw_delays = parts[3]
+            if raw_delays.upper() == 'P':
+                delays = 'P'
+            elif raw_delays.strip() == '':
+                delays = None
+            else:
+                # Normalize dash-separated to comma-separated
+                delay_parts = [d.strip() for d in re.split(r'[-,]+', raw_delays) if d.strip()]
+                delays = ','.join(delay_parts) if delay_parts else None
             return {
                 'common_name': parts[0], 'designation': parts[0],
                 'diameter': float(parts[1]), 'length': float(parts[2]),
@@ -632,8 +654,14 @@ def parse_rse_all(filepath):
     try:
         tree = ET.parse(filepath)
         for engine in tree.getroot().findall(".//engine"):
-            delays = engine.get('delays', '')
-            delays = None if delays in ('0', 'P', 'p', '') else delays
+            raw_delays = engine.get('delays', '')
+            if raw_delays.upper() == 'P':
+                delays = 'P'
+            elif raw_delays.strip() == '':
+                delays = None
+            else:
+                delay_parts = [d.strip() for d in re.split(r'[-,]+', raw_delays) if d.strip()]
+                delays = ','.join(delay_parts) if delay_parts else None
             designation = engine.get('code', 'Unknown')
             cn_match = re.match(r'^([A-Z][0-9]+)', designation)
             meta = {
@@ -858,7 +886,7 @@ def build():
                     mfr_id = result[0]
                     mfr_name_to_id[mfr_name] = mfr_id
 
-                designation = tc_meta.get('designation', parsed_meta['designation']) if tc_meta else parsed_meta['designation']
+                designation = normalize_designation(tc_meta.get('designation', parsed_meta['designation']) if tc_meta else parsed_meta['designation'])
                 motor_key = (mfr_id, designation)
                 
                 # Check if motor already exists
@@ -872,7 +900,7 @@ def build():
                 if db_motor_id is None:
                     description = parsed_meta.get('description')  # From RASP comments
                     if tc_meta:
-                        designation = tc_meta.get('designation', parsed_meta['designation'])
+                        designation = normalize_designation(tc_meta.get('designation', parsed_meta['designation']))
                         common_name = parsed_meta.get('common_name') or tc_meta.get('commonName')
                         impulse_class = tc_meta.get('impulseClass')
                         motor_type = tc_meta.get('type', parsed_meta.get('type', 'SU'))
@@ -911,7 +939,7 @@ def build():
                         ))
                     else:
                         calc_impulse, calc_avg, calc_max, calc_burn = calculate_thrust_stats(points)
-                        designation = parsed_meta['designation']
+                        designation = normalize_designation(parsed_meta['designation'])
                         common_name = parsed_meta.get('common_name')
                         impulse_class = None
                         motor_type = parsed_meta.get('type', 'SU')
