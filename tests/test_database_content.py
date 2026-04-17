@@ -71,3 +71,37 @@ def test_quest_b6w_common_name(db_conn):
         assert common_name == "B6", (
             f"Quest B6W common_name should be 'B6', got '{common_name}'"
         )
+
+
+def test_estes_c6_has_two_curves_and_merged_delays(db_conn):
+    """
+    The built database should contain an Estes C6 motor with merged delays from
+    all imported ThrustCurve simfiles and two distinct thrust curves.
+    """
+    cursor = db_conn.cursor()
+    cursor.execute("""
+        SELECT m.id, m.delays
+        FROM motors m
+        JOIN manufacturers mfr ON m.manufacturer_id = mfr.id
+        WHERE (mfr.abbrev = 'Estes' OR mfr.name LIKE '%Estes%')
+          AND m.designation = 'C6'
+    """)
+    rows = cursor.fetchall()
+
+    assert len(rows) == 1, (
+        f"Expected exactly one Estes motor with designation 'C6', found {len(rows)}: {rows}"
+    )
+
+    motor_id, delays = rows[0]
+    assert delays == "0,3,5,7,P", (
+        f"Estes C6 delays should be '0,3,5,7,P', got '{delays}'"
+    )
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM thrust_curves WHERE motor_id = ?",
+        (motor_id,),
+    )
+    curve_count = cursor.fetchone()[0]
+    assert curve_count == 2, (
+        f"Estes C6 should have 2 thrust curves, found {curve_count}"
+    )
