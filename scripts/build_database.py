@@ -20,6 +20,11 @@ BUILD_STATE_FILE = "state/last_build.json"
 
 _DELAY_SUFFIX_RE = re.compile(r'-(\d+|[pP])$')
 _SIMPLIFY_CN_RE = re.compile(r'^[0-9]*[ -]*([A-Z][0-9]+)')
+_TEXTUAL_DELAY_VALUE_MAP = {
+    'S': 6.0,
+    'M': 10.0,
+    'L': 14.0,
+}
 
 
 def ensure_curve_starts_at_zero(points):
@@ -35,6 +40,28 @@ def ensure_curve_starts_at_zero(points):
 def curve_signature(points):
     """Build a stable signature for a thrust curve for deduplication."""
     return tuple((round(time_s, 6), round(thrust_n, 6)) for time_s, thrust_n in points)
+
+
+def normalize_delay_token(token):
+    """Canonicalize known textual delay tokens."""
+    normalized = str(token).strip()
+    upper = normalized.upper()
+    if upper in ('P', 'PLUGGED', 'NE'):
+        return 'P'
+    return upper
+
+
+def delay_token_to_seconds(token):
+    """Map known textual delay tokens to representative numeric values."""
+    normalized = normalize_delay_token(token)
+    if normalized in _TEXTUAL_DELAY_VALUE_MAP:
+        return _TEXTUAL_DELAY_VALUE_MAP[normalized]
+    return float(normalized)
+
+
+def normalize_delay_field(raw_value):
+    """Convert a raw delay field into canonical comma-separated form."""
+    return merge_delays(raw_value)
 
 
 def parse_delays(delays):
@@ -59,7 +86,7 @@ def parse_delays(delays):
         token = part.strip()
         if not token:
             continue
-        normalized = 'P' if token.upper() == 'P' else token
+        normalized = normalize_delay_token(token)
         if normalized not in seen:
             tokens.append(normalized)
             seen.add(normalized)
@@ -80,13 +107,16 @@ def merge_delays(*delay_values):
     if not merged:
         return None
 
-    numeric = sorted(
-        (token for token in merged if token != 'P'),
-        key=lambda token: (float(token), token),
-    )
-    if 'P' in seen:
-        numeric.append('P')
-    return ','.join(numeric)
+    numeric = []
+    textual = []
+    for token in merged:
+        try:
+            numeric.append((delay_token_to_seconds(token), token))
+        except ValueError:
+            textual.append(token)
+
+    ordered_numeric = [token for _, token in sorted(numeric, key=lambda item: (item[0], item[1]))]
+    return ','.join(ordered_numeric + textual)
 
 
 def normalize_designation(designation):
@@ -416,13 +446,7 @@ def parse_rasp(filepath):
 
                 try:
                     delays_raw = parts[3]
-                    if delays_raw.upper() == 'P':
-                        delays = 'P'
-                    elif delays_raw.strip() == '':
-                        delays = None
-                    else:
-                        delay_parts = [d.strip() for d in re.split(r'[-,]+', delays_raw) if d.strip()]
-                        delays = ','.join(delay_parts) if delay_parts else None
+                    delays = normalize_delay_field(delays_raw)
                     
                     # RASP weights are in kg, convert to grams for DB consistency
                     prop_weight_kg = float(parts[4])
@@ -490,13 +514,7 @@ def parse_rse(filepath):
 
         # Extract Metadata
         delays_raw = engine.get('delays', '')
-        if delays_raw.upper() == 'P':
-            delays = 'P'
-        elif not delays_raw.strip():
-            delays = None
-        else:
-            delay_parts = [d.strip() for d in re.split(r'[-,]+', delays_raw) if d.strip()]
-            delays = ','.join(delay_parts) if delay_parts else None
+        delays = normalize_delay_field(delays_raw)
         
         designation = engine.get('code', 'Unknown')
         # Extract common name from designation (strip propellant suffix letters)
@@ -643,14 +661,7 @@ def parse_rasp_all(filepath):
             return None
         try:
             raw_delays = parts[3]
-            if raw_delays.upper() == 'P':
-                delays = 'P'
-            elif raw_delays.strip() == '':
-                delays = None
-            else:
-                # Normalize dash-separated to comma-separated
-                delay_parts = [d.strip() for d in re.split(r'[-,]+', raw_delays) if d.strip()]
-                delays = ','.join(delay_parts) if delay_parts else None
+            delays = normalize_delay_field(raw_delays)
             return {
                 'common_name': parts[0], 'designation': parts[0],
                 'diameter': float(parts[1]), 'length': float(parts[2]),
@@ -737,13 +748,7 @@ def parse_rse_all(filepath):
         tree = ET.parse(filepath)
         for engine in tree.getroot().findall(".//engine"):
             raw_delays = engine.get('delays', '')
-            if raw_delays.upper() == 'P':
-                delays = 'P'
-            elif raw_delays.strip() == '':
-                delays = None
-            else:
-                delay_parts = [d.strip() for d in re.split(r'[-,]+', raw_delays) if d.strip()]
-                delays = ','.join(delay_parts) if delay_parts else None
+            delays = normalize_delay_field(raw_delays)
             designation = engine.get('code', 'Unknown')
             cn_match = re.match(r'^([A-Z][0-9]+)', designation)
             meta = {

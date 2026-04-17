@@ -215,6 +215,7 @@ def test_parse_rasp_delays_normalized(tmp_path):
         ("5-10-15", "5,10,15"),
         ("0", "0"),
         ("P", "P"),
+        ("NE", "P"),
         ("p", "P"),
         ("3", "3"),
     ]
@@ -236,7 +237,7 @@ def test_parse_rse_delays_normalized(tmp_path):
             "<eng-data t=\"0.4\" f=\"0.0\" /></data></engine>"
             "</engine-list></engine-database>"
         )
-    cases = [("5-10-15", "5,10,15"), ("0", "0"), ("P", "P"), ("6,10", "6,10")]
+    cases = [("5-10-15", "5,10,15"), ("0", "0"), ("P", "P"), ("NE", "P"), ("6,10", "6,10")]
     for raw, expected in cases:
         path = tmp_path / f"motor_{raw}.rse"
         path.write_text(make_rse(raw))
@@ -256,8 +257,18 @@ def test_calculate_thrust_stats():
 
 def test_merge_delays_combines_unique_values():
     assert build_db.merge_delays("0,5", "5-10", "P") == "0,5,10,P"
+    assert build_db.merge_delays("Plugged", "0-3-5-7") == "0,3,5,7,P"
+    assert build_db.merge_delays("S,M", "L", "P") == "S,M,L,P"
+    assert build_db.merge_delays("NE", "P") == "P"
     assert build_db.merge_delays(None, "", "0") == "0"
     assert build_db.merge_delays(None, "") is None
+
+
+def test_delay_token_to_seconds_maps_textual_delays():
+    assert build_db.delay_token_to_seconds("S") == pytest.approx(6.0)
+    assert build_db.delay_token_to_seconds("M") == pytest.approx(10.0)
+    assert build_db.delay_token_to_seconds("L") == pytest.approx(14.0)
+    assert build_db.delay_token_to_seconds("7") == pytest.approx(7.0)
 
 
 def test_extract_simfile_info_from_filename():
