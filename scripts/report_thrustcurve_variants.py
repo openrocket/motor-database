@@ -5,6 +5,7 @@ import html
 import json
 import os
 import re
+import time
 import xml.etree.ElementTree as ET
 
 import requests
@@ -21,6 +22,9 @@ HEADERS = {
 }
 
 _DELAY_SPLIT_RE = re.compile(r"[-,]+")
+REQUEST_TIMEOUT_SECONDS = 30
+DOWNLOAD_RETRY_ATTEMPTS = 4
+DOWNLOAD_RETRY_BASE_DELAY_SECONDS = 1.0
 
 
 def load_motors_metadata():
@@ -216,6 +220,7 @@ def build_variant_summary(result, motor_meta):
         "avg_thrust_n": stats["avg_thrust_n"],
         "max_thrust_n": stats["max_thrust_n"],
         "curve_fingerprint": stats["curve_fingerprint"],
+        "points": points,
     }
 
 
@@ -256,6 +261,10 @@ def summarize_focused_differences(variants):
     if impulse_spread > 0.01:
         focused.append({"label": "Impulse", "key": "total_impulse_ns", "spread": impulse_spread})
 
+    curve_fingerprints = {normalize_comparison_value(variant.get("curve_fingerprint")) for variant in variants}
+    if len(curve_fingerprints) > 1:
+        focused.append({"label": "Curve", "key": "curve_fingerprint"})
+
     return focused
 
 
@@ -284,13 +293,35 @@ def fetch_motor_variants(motor_id, max_results):
         "data": "both",
         "maxResults": max_results,
     }
-    response = requests.post(TC_API_DOWNLOAD, json=payload, headers=HEADERS)
-    if response.status_code != 200:
-        raise RuntimeError(f"download failed with status {response.status_code}")
-    body = response.json()
-    if body.get("error"):
-        raise RuntimeError(body["error"])
-    return body.get("results", [])
+    last_error = None
+
+    for attempt in range(1, DOWNLOAD_RETRY_ATTEMPTS + 1):
+        try:
+            response = requests.post(
+                TC_API_DOWNLOAD,
+                json=payload,
+                headers=HEADERS,
+                timeout=REQUEST_TIMEOUT_SECONDS,
+            )
+            if response.status_code != 200:
+                raise RuntimeError(f"download failed with status {response.status_code}")
+
+            body = response.json()
+            if body.get("error"):
+                raise RuntimeError(body["error"])
+            return body.get("results", [])
+        except (requests.RequestException, ValueError, RuntimeError) as error:
+            last_error = error
+            if attempt == DOWNLOAD_RETRY_ATTEMPTS:
+                break
+            delay_seconds = DOWNLOAD_RETRY_BASE_DELAY_SECONDS * attempt
+            print(
+                f"  [Retry {attempt}/{DOWNLOAD_RETRY_ATTEMPTS - 1}] download failed for {motor_id}: {error}. "
+                f"Retrying in {delay_seconds:.1f}s..."
+            )
+            time.sleep(delay_seconds)
+
+    raise RuntimeError(f"download failed for {motor_id}: {last_error}")
 
 
 def select_motors(metadata, manufacturer=None, designation=None, motor_ids=None, limit=None, include_single=False):
@@ -359,6 +390,82 @@ def build_summary(entries):
     }
 
 
+def render_curve_plot(variants, motor_id):
+    width = 960
+    height = 260
+    padding_left = 52
+    padding_right = 18
+    padding_top = 18
+    padding_bottom = 34
+    plot_width = width - padding_left - padding_right
+    plot_height = height - padding_top - padding_bottom
+
+    all_points = [point for variant in variants for point in variant.get("points", [])]
+    if not all_points:
+        return "<p class='plot-note'>No thrust curve samples available for plotting.</p>"
+
+    max_time = max(point[0] for point in all_points) or 1.0
+    max_force = max(point[1] for point in all_points) or 1.0
+    colors = ["#8b3d2e", "#2c7a7b", "#d97706", "#5b21b6", "#be185d", "#1d4ed8"]
+
+    def scale_x(time_s):
+        return padding_left + (time_s / max_time) * plot_width
+
+    def scale_y(force_n):
+        return padding_top + plot_height - (force_n / max_force) * plot_height
+
+    paths = []
+    legends = []
+    for index, variant in enumerate(variants):
+        points = variant.get("points", [])
+        if not points:
+            continue
+        color = colors[index % len(colors)]
+        path = " ".join(f"{scale_x(time_s):.2f},{scale_y(force_n):.2f}" for time_s, force_n in points)
+        paths.append(
+            f"<polyline fill='none' stroke='{color}' stroke-width='2.2' points='{path}' />"
+        )
+        legends.append(
+            "<span class='plot-legend-item'>"
+            f"<span class='plot-swatch' style='background:{color}'></span>"
+            f"{html.escape(variant['filename'])}"
+            "</span>"
+        )
+
+    y_ticks = []
+    for step in range(5):
+        value = (max_force / 4.0) * step
+        y = scale_y(value)
+        y_ticks.append(
+            f"<line x1='{padding_left}' y1='{y:.2f}' x2='{width - padding_right}' y2='{y:.2f}' class='plot-grid' />"
+            f"<text x='{padding_left - 8}' y='{y + 4:.2f}' text-anchor='end' class='plot-axis-label'>{value:.0f}</text>"
+        )
+
+    x_ticks = []
+    for step in range(5):
+        value = (max_time / 4.0) * step
+        x = scale_x(value)
+        x_ticks.append(
+            f"<line x1='{x:.2f}' y1='{padding_top}' x2='{x:.2f}' y2='{height - padding_bottom}' class='plot-grid' />"
+            f"<text x='{x:.2f}' y='{height - 10}' text-anchor='middle' class='plot-axis-label'>{value:.2f}</text>"
+        )
+
+    return (
+        f"<div class='curve-plot-block' id='curve-plot-{html.escape(motor_id)}'>"
+        "<div class='plot-header'>Thrust curve comparison</div>"
+        f"<svg viewBox='0 0 {width} {height}' class='curve-plot' role='img' aria-label='Thrust curve comparison plot'>"
+        f"{''.join(y_ticks)}{''.join(x_ticks)}"
+        f"<line x1='{padding_left}' y1='{height - padding_bottom}' x2='{width - padding_right}' y2='{height - padding_bottom}' class='plot-axis' />"
+        f"<line x1='{padding_left}' y1='{padding_top}' x2='{padding_left}' y2='{height - padding_bottom}' class='plot-axis' />"
+        f"{''.join(paths)}"
+        f"<text x='{width / 2:.2f}' y='{height - 4}' text-anchor='middle' class='plot-axis-title'>Time (s)</text>"
+        f"<text x='16' y='{height / 2:.2f}' text-anchor='middle' transform='rotate(-90 16 {height / 2:.2f})' class='plot-axis-title'>Force (N)</text>"
+        "</svg>"
+        f"<div class='plot-legend'>{''.join(legends)}</div>"
+        "</div>"
+    )
+
+
 def render_html_report(entries, output_path):
     summary = build_summary(entries)
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -368,6 +475,7 @@ def render_html_report(entries, output_path):
         motor_meta = entry["motor_meta"]
         subtitle = f"{motor_meta.get('commonName', '')} | motorId: {entry['motor_id']}"
         detail_row_id = f"details-{entry['motor_id']}"
+        plot_html = render_curve_plot(entry["variants"], entry["motor_id"])
         row_class = "motor-row"
         summary_class = "diff-summary"
         if not entry["has_differences"]:
@@ -410,6 +518,7 @@ def render_html_report(entries, output_path):
             f"<tr id='{html.escape(detail_row_id)}' class='detail-row' hidden>"
             "<td colspan='4'>"
             f"<div class='detail-panel'><p class='subtitle'>{html.escape(subtitle)}</p>"
+            f"{plot_html}"
             "<table class='detail-table'>"
             f"<thead>{header_row}</thead>"
             f"<tbody>{''.join(body_rows)}</tbody>"
@@ -549,6 +658,66 @@ def render_html_report(entries, output_path):
     .detail-panel {{
       padding: 18px 18px 20px;
     }}
+    .curve-plot-block {{
+      margin: 6px 0 16px;
+      padding: 14px 14px 10px;
+      background: #fffdf9;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }}
+    .plot-header {{
+      font-weight: 600;
+      margin-bottom: 8px;
+    }}
+    .curve-plot {{
+      width: 100%;
+      height: auto;
+      display: block;
+      background: linear-gradient(180deg, #fff 0%, #fffaf4 100%);
+      border-radius: 10px;
+    }}
+    .plot-axis {{
+      stroke: #52606d;
+      stroke-width: 1.2;
+    }}
+    .plot-grid {{
+      stroke: #e7ddd2;
+      stroke-width: 1;
+    }}
+    .plot-axis-label {{
+      fill: #52606d;
+      font-size: 11px;
+      font-family: Georgia, "Iowan Old Style", serif;
+    }}
+    .plot-axis-title {{
+      fill: #1f2933;
+      font-size: 12px;
+      font-family: Georgia, "Iowan Old Style", serif;
+    }}
+    .plot-legend {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }}
+    .plot-legend-item {{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }}
+    .plot-swatch {{
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      display: inline-block;
+    }}
+    .plot-note {{
+      color: var(--muted);
+      font-style: italic;
+      margin: 6px 0 2px;
+    }}
     .detail-table {{
       margin-top: 10px;
     }}
@@ -627,11 +796,28 @@ def generate_report(output_path, manufacturer=None, designation=None, motor_ids=
         raise RuntimeError("no motors matched the selection criteria")
 
     entries = []
+    failed_motors = []
     for motor_id, motor_meta in selected:
         print(f"Analyzing {motor_meta.get('manufacturer', 'Unknown')} {motor_meta.get('designation', motor_id)}...")
-        entries.append(analyze_motor(motor_id, motor_meta, max_results=max_results))
+        try:
+            entries.append(analyze_motor(motor_id, motor_meta, max_results=max_results))
+        except Exception as error:
+            print(f"  [Error] Skipping {motor_meta.get('manufacturer', 'Unknown')} {motor_meta.get('designation', motor_id)} ({motor_id}): {error}")
+            failed_motors.append(
+                {
+                    "motor_id": motor_id,
+                    "manufacturer": motor_meta.get("manufacturer", "Unknown"),
+                    "designation": motor_meta.get("designation", motor_id),
+                    "error": str(error),
+                }
+            )
+
+    if not entries:
+        raise RuntimeError("all selected motors failed to analyze")
 
     render_html_report(entries, output_path)
+    if failed_motors:
+        print(f"Completed with {len(failed_motors)} skipped motor(s) due to download errors.")
     return entries
 
 

@@ -2,6 +2,8 @@ import base64
 import importlib.util
 from pathlib import Path
 
+import requests
+
 
 MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "report_thrustcurve_variants.py"
 spec = importlib.util.spec_from_file_location("report_thrustcurve_variants", MODULE_PATH)
@@ -124,6 +126,7 @@ def test_collect_variant_differences_flags_only_focused_fields():
     assert "designation" not in differences
     assert "burn_time_s" in differences
     assert "total_impulse_ns" in differences
+    assert "curve_fingerprint" in differences
 
 
 def test_collect_variant_differences_ignores_sub_percent_burn_and_impulse_changes():
@@ -164,7 +167,7 @@ def test_generate_report_writes_html(tmp_path, monkeypatch):
         """
     )
 
-    def fake_post(url, json=None, headers=None):
+    def fake_post(url, json=None, headers=None, timeout=None):
         assert url == report_variants.TC_API_DOWNLOAD
         assert json["motorIds"] == ["motor-1"]
         return DummyResponse(
@@ -213,5 +216,75 @@ def test_generate_report_writes_html(tmp_path, monkeypatch):
     assert "Test Motors" in content
     assert "F32" in content
     assert "Delays" in content
+    assert "Curve" in content
+    assert "Thrust curve comparison" in content
+    assert "curve-plot" in content
     assert "F32.eng" in content
     assert "F32.rse" in content
+
+
+def test_fetch_motor_variants_retries_transient_request_failures(monkeypatch):
+    calls = {"count": 0}
+
+    def fake_post(url, json=None, headers=None, timeout=None):
+        calls["count"] += 1
+        if calls["count"] < 3:
+            raise requests.exceptions.SSLError("EOF occurred in violation of protocol")
+        return DummyResponse(200, {"results": [{"simfileId": "ok"}]})
+
+    monkeypatch.setattr(report_variants.requests, "post", fake_post)
+    monkeypatch.setattr(report_variants.time, "sleep", lambda _: None)
+
+    results = report_variants.fetch_motor_variants("motor-1", max_results=5)
+
+    assert calls["count"] == 3
+    assert results == [{"simfileId": "ok"}]
+
+
+def test_generate_report_skips_failed_motors(tmp_path, monkeypatch):
+    metadata_path = tmp_path / "motors_metadata.json"
+    output_path = tmp_path / "report.html"
+    metadata_path.write_text(
+        """
+        {
+          "motors": {
+            "motor-1": {
+              "motorId": "motor-1",
+              "manufacturer": "Test Motors",
+              "designation": "F32",
+              "commonName": "F32",
+              "dataFiles": 2
+            },
+            "motor-2": {
+              "motorId": "motor-2",
+              "manufacturer": "Bad Motors",
+              "designation": "X1",
+              "commonName": "X1",
+              "dataFiles": 2
+            }
+          }
+        }
+        """
+    )
+
+    def fake_analyze_motor(motor_id, motor_meta, max_results):
+        if motor_id == "motor-2":
+            raise RuntimeError("TLS failure")
+        return {
+            "motor_id": motor_id,
+            "motor_meta": motor_meta,
+            "variants": [],
+            "differences": [],
+            "focused_differences": [],
+            "difference_summary": "No differences",
+            "has_differences": False,
+        }
+
+    monkeypatch.setattr(report_variants, "MOTORS_METADATA_FILE", str(metadata_path))
+    monkeypatch.setattr(report_variants, "analyze_motor", fake_analyze_motor)
+
+    entries = report_variants.generate_report(str(output_path))
+
+    assert len(entries) == 1
+    assert entries[0]["motor_id"] == "motor-1"
+    assert output_path.exists()
