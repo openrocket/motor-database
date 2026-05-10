@@ -1,0 +1,30 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Quest" code="B6W" Type="single-use" dia="18." len="79." initWt="18.3"
+propWt="2.8" delays="4,6" auto-calc-mass="1" auto-calc-cg="1" avgThrust="4.165"
+peakThrust="9.296" throatDia="0." exitDia="0." Itot="5.044" burn-time="1.21"
+massFrac="15.3" Isp="183.69" tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1."
+FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>data from TMT certification, tested April 12, 2021</comments>
+    <data>
+      <eng-data  t="0." f="0." m="2.8" cg="39.5"/>
+      <eng-data  t="0.01" f="0.157" m="2.79956" cg="39.5"/>
+      <eng-data  t="0.029" f="0.677" m="2.79517" cg="39.5"/>
+      <eng-data  t="0.045" f="2.643" m="2.78042" cg="39.5"/>
+      <eng-data  t="0.058" f="0.966" m="2.7674" cg="39.5"/>
+      <eng-data  t="0.09" f="2.048" m="2.74063" cg="39.5"/>
+      <eng-data  t="0.127" f="6.545" m="2.65238" cg="39.5"/>
+      <eng-data  t="0.174" f="9.296" m="2.44573" cg="39.5"/>
+      <eng-data  t="0.214" f="9.045" m="2.2421" cg="39.5"/>
+      <eng-data  t="0.269" f="9.01" m="1.96648" cg="39.5"/>
+      <eng-data  t="0.324" f="8.039" m="1.70621" cg="39.5"/>
+      <eng-data  t="0.47" f="6.334" m="1.12376" cg="39.5"/>
+      <eng-data  t="0.615" f="4.492" m="0.688054" cg="39.5"/>
+      <eng-data  t="0.795" f="2.904" m="0.318543" cg="39.5"/>
+      <eng-data  t="0.975" f="1.412" m="0.102912" cg="39.5"/>
+      <eng-data  t="1.148" f="0.536" m="0.00937266" cg="39.5"/>
+      <eng-data  t="1.211" f="0." m="0." cg="39.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

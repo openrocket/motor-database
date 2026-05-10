@@ -1,0 +1,38 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="F44W" Type="single-use" dia="24." len="70." initWt="48."
+propWt="19.7" delays="4,8" auto-calc-mass="1" auto-calc-cg="1" avgThrust="42.263"
+peakThrust="65.218" throatDia="0." exitDia="0." Itot="42.178" burn-time="1."
+massFrac="41.04" Isp="218.32" tDiv="10" tStep="-1." tFix="1" FDiv="10"
+FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1."
+cgFix="1">
+    <comments>F44W Economax</comments>
+    <data>
+      <eng-data  t="0." f="0." m="19.7" cg="35."/>
+      <eng-data  t="0.02" f="2.676" m="19.6875" cg="35."/>
+      <eng-data  t="0.026" f="6.02" m="19.6753" cg="35."/>
+      <eng-data  t="0.034" f="11.204" m="19.6431" cg="35."/>
+      <eng-data  t="0.063" f="24.917" m="19.3985" cg="35."/>
+      <eng-data  t="0.135" f="59.031" m="17.987" cg="35."/>
+      <eng-data  t="0.15" f="61.372" m="17.5652" cg="35."/>
+      <eng-data  t="0.2" f="63.212" m="16.1105" cg="35."/>
+      <eng-data  t="0.299" f="65.218" m="13.1412" cg="35."/>
+      <eng-data  t="0.4" f="65.051" m="10.0686" cg="35."/>
+      <eng-data  t="0.5" f="63.379" m="7.06935" cg="35."/>
+      <eng-data  t="0.6" f="58.529" m="4.22241" cg="35."/>
+      <eng-data  t="0.668" f="55.017" m="2.41928" cg="35."/>
+      <eng-data  t="0.686" f="53.68" m="1.96236" cg="35."/>
+      <eng-data  t="0.687" f="54.014" m="1.93721" cg="35."/>
+      <eng-data  t="0.7" f="49.165" m="1.62397" cg="35."/>
+      <eng-data  t="0.719" f="43.813" m="1.21141" cg="35."/>
+      <eng-data  t="0.774" f="22.074" m="0.365144" cg="35."/>
+      <eng-data  t="0.795" f="13.211" m="0.1921" cg="35."/>
+      <eng-data  t="0.812" f="7.86" m="0.108447" cg="35."/>
+      <eng-data  t="0.825" f="4.515" m="0.0708773" cg="35."/>
+      <eng-data  t="0.854" f="2.007" m="0.0267074" cg="35."/>
+      <eng-data  t="0.899" f="0.167" m="0.00386099" cg="35."/>
+      <eng-data  t="0.998" f="0." m="0." cg="35."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

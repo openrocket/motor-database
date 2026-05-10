@@ -1,0 +1,46 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Quest" code="B4" Type="single-use" dia="18." len="80." initWt="19.8"
+propWt="3.6" delays="4,6" auto-calc-mass="1" auto-calc-cg="1" avgThrust="4.132"
+peakThrust="7.2" throatDia="0." exitDia="0." Itot="4.892" burn-time="1.18"
+massFrac="18.18" Isp="138.57" tDiv="10" tStep="-1." tFix="1" FDiv="10"
+FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1."
+cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="3.6" cg="40."/>
+      <eng-data  t="0.011" f="0.102" m="3.59959" cg="40."/>
+      <eng-data  t="0.024" f="0.622" m="3.59612" cg="40."/>
+      <eng-data  t="0.036" f="3.81" m="3.57656" cg="40."/>
+      <eng-data  t="0.043" f="3.886" m="3.55673" cg="40."/>
+      <eng-data  t="0.074" f="5.93" m="3.44477" cg="40."/>
+      <eng-data  t="0.099" f="7.061" m="3.32528" cg="40."/>
+      <eng-data  t="0.138" f="6.819" m="3.1261" cg="40."/>
+      <eng-data  t="0.204" f="6.883" m="2.79337" cg="40."/>
+      <eng-data  t="0.236" f="7.099" m="2.62874" cg="40."/>
+      <eng-data  t="0.263" f="7.035" m="2.48833" cg="40."/>
+      <eng-data  t="0.273" f="6.883" m="2.43712" cg="40."/>
+      <eng-data  t="0.298" f="7.2" m="2.30758" cg="40."/>
+      <eng-data  t="0.348" f="6.667" m="2.05247" cg="40."/>
+      <eng-data  t="0.404" f="5.994" m="1.7916" cg="40."/>
+      <eng-data  t="0.452" f="5.867" m="1.58212" cg="40."/>
+      <eng-data  t="0.472" f="5.651" m="1.49736" cg="40."/>
+      <eng-data  t="0.493" f="5.321" m="1.41259" cg="40."/>
+      <eng-data  t="0.533" f="5.168" m="1.25821" cg="40."/>
+      <eng-data  t="0.579" f="4.762" m="1.09015" cg="40."/>
+      <eng-data  t="0.606" f="4.686" m="0.996289" cg="40."/>
+      <eng-data  t="0.651" f="4.381" m="0.846166" cg="40."/>
+      <eng-data  t="0.771" f="3.251" m="0.509194" cg="40."/>
+      <eng-data  t="0.79" f="3.289" m="0.463474" cg="40."/>
+      <eng-data  t="0.822" f="2.921" m="0.390358" cg="40."/>
+      <eng-data  t="0.852" f="2.857" m="0.32658" cg="40."/>
+      <eng-data  t="0.894" f="2.451" m="0.244553" cg="40."/>
+      <eng-data  t="0.952" f="2.095" m="0.14754" cg="40."/>
+      <eng-data  t="0.981" f="1.676" m="0.107303" cg="40."/>
+      <eng-data  t="1.041" f="0.965" m="0.0489996" cg="40."/>
+      <eng-data  t="1.089" f="0.559" m="0.0220843" cg="40."/>
+      <eng-data  t="1.177" f="0.114" m="0.000293614" cg="40."/>
+      <eng-data  t="1.184" f="0." m="0." cg="40."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

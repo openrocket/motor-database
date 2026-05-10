@@ -1,0 +1,37 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Quest" code="A3" Type="single-use" dia="18." len="80." initWt="17.9"
+propWt="2.1" delays="4,6" auto-calc-mass="1" auto-calc-cg="1" avgThrust="2.667"
+peakThrust="7.11" throatDia="0." exitDia="0." Itot="2.446" burn-time="0.92"
+massFrac="11.73" Isp="118.76" tDiv="10" tStep="-1." tFix="1" FDiv="10"
+FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1."
+cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="2.1" cg="40."/>
+      <eng-data  t="0.006" f="0.153" m="2.09961" cg="40."/>
+      <eng-data  t="0.024" f="0.429" m="2.09511" cg="40."/>
+      <eng-data  t="0.03" f="0.889" m="2.09171" cg="40."/>
+      <eng-data  t="0.04" f="2.574" m="2.07685" cg="40."/>
+      <eng-data  t="0.049" f="5.854" m="2.04428" cg="40."/>
+      <eng-data  t="0.053" f="7.11" m="2.02202" cg="40."/>
+      <eng-data  t="0.062" f="6.528" m="1.96932" cg="40."/>
+      <eng-data  t="0.082" f="6.16" m="1.86038" cg="40."/>
+      <eng-data  t="0.129" f="6.129" m="1.6124" cg="40."/>
+      <eng-data  t="0.159" f="5.302" m="1.46517" cg="40."/>
+      <eng-data  t="0.177" f="5.087" m="1.38489" cg="40."/>
+      <eng-data  t="0.237" f="4.474" m="1.1386" cg="40."/>
+      <eng-data  t="0.274" f="4.352" m="0.998401" cg="40."/>
+      <eng-data  t="0.313" f="3.892" m="0.860366" cg="40."/>
+      <eng-data  t="0.337" f="3.586" m="0.783314" cg="40."/>
+      <eng-data  t="0.368" f="3.494" m="0.689085" cg="40."/>
+      <eng-data  t="0.499" f="2.329" m="0.36159" cg="40."/>
+      <eng-data  t="0.577" f="1.655" m="0.228176" cg="40."/>
+      <eng-data  t="0.666" f="1.103" m="0.122792" cg="40."/>
+      <eng-data  t="0.742" f="0.736" m="0.0627881" cg="40."/>
+      <eng-data  t="0.835" f="0.398" m="0.0175105" cg="40."/>
+      <eng-data  t="0.887" f="0.245" m="0.00315555" cg="40."/>
+      <eng-data  t="0.917" f="0." m="0." cg="40."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

@@ -1,0 +1,34 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="K535" Type="single-use" dia="54." len="358.1"
+initWt="1264." propWt="745." delays="14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="483.947" peakThrust="642.221" throatDia="0." exitDia="0."
+Itot="1428.61" burn-time="2.95" massFrac="58.94" Isp="195.54" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>revised per AT post on TRF 5/19/14</comments>
+    <data>
+      <eng-data  t="0." f="0." m="745." cg="179.05"/>
+      <eng-data  t="0.015" f="467.288" m="743.172" cg="179.05"/>
+      <eng-data  t="0.063" f="642.221" m="729.286" cg="179.05"/>
+      <eng-data  t="0.104" f="613.465" m="715.862" cg="179.05"/>
+      <eng-data  t="0.23" f="627.843" m="675.081" cg="179.05"/>
+      <eng-data  t="0.419" f="620.654" m="613.554" cg="179.05"/>
+      <eng-data  t="0.883" f="623.05" m="463.085" cg="179.05"/>
+      <eng-data  t="1.335" f="599.087" m="319.049" cg="179.05"/>
+      <eng-data  t="1.646" f="555.953" m="225.386" cg="179.05"/>
+      <eng-data  t="1.843" f="500.837" m="171.102" cg="179.05"/>
+      <eng-data  t="2.017" f="450.513" m="127.94" cg="179.05"/>
+      <eng-data  t="2.258" f="404.983" m="74.1818" cg="179.05"/>
+      <eng-data  t="2.488" f="366.641" m="27.9068" cg="179.05"/>
+      <eng-data  t="2.6" f="230.049" m="10.4815" cg="179.05"/>
+      <eng-data  t="2.611" f="172.537" m="9.32684" cg="179.05"/>
+      <eng-data  t="2.648" f="124.61" m="6.46012" cg="179.05"/>
+      <eng-data  t="2.696" f="81.476" m="3.88081" cg="179.05"/>
+      <eng-data  t="2.789" f="40.738" m="0.917236" cg="179.05"/>
+      <eng-data  t="2.837" f="9.585" m="0.28741" cg="179.05"/>
+      <eng-data  t="2.952" f="0." m="0." cg="179.05"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

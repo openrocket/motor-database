@@ -1,0 +1,38 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Loki" code="L840-CT" Type="reloadable" dia="75." len="498." initWt="3748."
+propWt="2074." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="810.043" peakThrust="1189.9" throatDia="0." exitDia="0."
+Itot="3888.21" burn-time="4.8" massFrac="55.34" Isp="191.17" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="2074." cg="249."/>
+      <eng-data  t="0.021" f="889.644" m="2069.02" cg="249."/>
+      <eng-data  t="0.046" f="1182.48" m="2055.2" cg="249."/>
+      <eng-data  t="0.077" f="1082.4" m="2036.48" cg="249."/>
+      <eng-data  t="0.139" f="978.608" m="2002.4" cg="249."/>
+      <eng-data  t="0.303" f="971.195" m="1917.11" cg="249."/>
+      <eng-data  t="0.662" f="1015.68" m="1726.88" cg="249."/>
+      <eng-data  t="1.011" f="1108.35" m="1529.17" cg="249."/>
+      <eng-data  t="1.33" f="1149.12" m="1337.11" cg="249."/>
+      <eng-data  t="1.689" f="1189.9" m="1113.16" cg="249."/>
+      <eng-data  t="1.971" f="1163.95" m="936.121" cg="249."/>
+      <eng-data  t="2.089" f="1145.42" m="863.443" cg="249."/>
+      <eng-data  t="2.3" f="1034.21" m="740.786" cg="249."/>
+      <eng-data  t="2.633" f="893.351" m="569.594" cg="249."/>
+      <eng-data  t="2.823" f="822.921" m="482.624" cg="249."/>
+      <eng-data  t="3.455" f="656.112" m="233.323" cg="249."/>
+      <eng-data  t="3.737" f="596.803" m="139.091" cg="249."/>
+      <eng-data  t="3.891" f="585.682" m="90.523" cg="249."/>
+      <eng-data  t="3.984" f="385.512" m="66.434" cg="249."/>
+      <eng-data  t="4.112" f="355.858" m="41.1251" cg="249."/>
+      <eng-data  t="4.215" f="203.877" m="25.7489" cg="249."/>
+      <eng-data  t="4.292" f="140.86" m="18.6693" cg="249."/>
+      <eng-data  t="4.384" f="103.792" m="12.6663" cg="249."/>
+      <eng-data  t="4.589" f="63.016" m="3.5462" cg="249."/>
+      <eng-data  t="4.8" f="0." m="0." cg="249."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

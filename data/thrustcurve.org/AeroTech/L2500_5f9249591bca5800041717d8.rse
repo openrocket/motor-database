@@ -1,0 +1,41 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="L2500ST" Type="reloadable" dia="98." len="443."
+initWt="4989.49" propWt="2313.31" delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="2429.51" peakThrust="2822.15" throatDia="0." exitDia="0."
+Itot="4671.95" burn-time="1.92" massFrac="46.36" Isp="205.94" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="2313.31" cg="221.5"/>
+      <eng-data  t="0.016" f="24.712" m="2313.21" cg="221.5"/>
+      <eng-data  t="0.027" f="449.764" m="2311.92" cg="221.5"/>
+      <eng-data  t="0.03" f="1329.52" m="2310.6" cg="221.5"/>
+      <eng-data  t="0.039" f="1784.23" m="2303.66" cg="221.5"/>
+      <eng-data  t="0.043" f="2041.24" m="2299.87" cg="221.5"/>
+      <eng-data  t="0.08" f="2224.11" m="2260.8" cg="221.5"/>
+      <eng-data  t="0.118" f="2357.56" m="2217.7" cg="221.5"/>
+      <eng-data  t="0.198" f="2476.18" m="2121.96" cg="221.5"/>
+      <eng-data  t="0.399" f="2678.82" m="1865.43" cg="221.5"/>
+      <eng-data  t="0.495" f="2748.01" m="1736.45" cg="221.5"/>
+      <eng-data  t="0.601" f="2787.55" m="1591.18" cg="221.5"/>
+      <eng-data  t="0.701" f="2822.15" m="1452.3" cg="221.5"/>
+      <eng-data  t="0.799" f="2822.15" m="1315.36" cg="221.5"/>
+      <eng-data  t="1.001" f="2807.32" m="1033.83" cg="221.5"/>
+      <eng-data  t="1.199" f="2757.9" m="761.024" cg="221.5"/>
+      <eng-data  t="1.399" f="2668.93" m="492.316" cg="221.5"/>
+      <eng-data  t="1.501" f="2565.14" m="360.142" cg="221.5"/>
+      <eng-data  t="1.6" f="2402.04" m="238.397" cg="221.5"/>
+      <eng-data  t="1.675" f="2233.99" m="152.315" cg="221.5"/>
+      <eng-data  t="1.752" f="2006.64" m="71.4746" cg="221.5"/>
+      <eng-data  t="1.777" f="1818.83" m="47.7974" cg="221.5"/>
+      <eng-data  t="1.805" f="1334.47" m="25.9385" cg="221.5"/>
+      <eng-data  t="1.827" f="884.702" m="13.8515" cg="221.5"/>
+      <eng-data  t="1.852" f="434.937" m="5.68375" cg="221.5"/>
+      <eng-data  t="1.87" f="242.181" m="2.66628" cg="221.5"/>
+      <eng-data  t="1.895" f="88.964" m="0.616706" cg="221.5"/>
+      <eng-data  t="1.923" f="0." m="0." cg="221.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

@@ -1,0 +1,44 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="K850DM" Type="single-use" dia="54." len="635."
+initWt="2041." propWt="1224." delays="16" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="882.603" peakThrust="1064.92" throatDia="0." exitDia="0."
+Itot="1869.35" burn-time="2.12" massFrac="59.97" Isp="155.74" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Aerotech K850DM DMS</comments>
+    <data>
+      <eng-data  t="0." f="0." m="1224." cg="317.5"/>
+      <eng-data  t="0.02" f="50.816" m="1223.67" cg="317.5"/>
+      <eng-data  t="0.032" f="236.404" m="1222.54" cg="317.5"/>
+      <eng-data  t="0.034" f="450.714" m="1222.09" cg="317.5"/>
+      <eng-data  t="0.04" f="1049.46" m="1219.14" cg="317.5"/>
+      <eng-data  t="0.044" f="810.843" m="1216.71" cg="317.5"/>
+      <eng-data  t="0.048" f="901.427" m="1214.46" cg="317.5"/>
+      <eng-data  t="0.05" f="859.449" m="1213.31" cg="317.5"/>
+      <eng-data  t="0.066" f="848.402" m="1204.36" cg="317.5"/>
+      <eng-data  t="0.158" f="914.684" m="1151.26" cg="317.5"/>
+      <eng-data  t="0.326" f="961.081" m="1048.09" cg="317.5"/>
+      <eng-data  t="0.615" f="1029.57" m="859.748" cg="317.5"/>
+      <eng-data  t="0.923" f="1064.92" m="648.55" cg="317.5"/>
+      <eng-data  t="1.075" f="1060.5" m="542.784" cg="317.5"/>
+      <eng-data  t="1.233" f="1040.62" m="434.099" cg="317.5"/>
+      <eng-data  t="1.369" f="994.221" m="343.499" cg="317.5"/>
+      <eng-data  t="1.407" f="1018.52" m="318.459" cg="317.5"/>
+      <eng-data  t="1.483" f="978.756" m="268.764" cg="317.5"/>
+      <eng-data  t="1.545" f="974.337" m="229.12" cg="317.5"/>
+      <eng-data  t="1.567" f="985.384" m="215.005" cg="317.5"/>
+      <eng-data  t="1.591" f="963.29" m="199.694" cg="317.5"/>
+      <eng-data  t="1.673" f="947.824" m="148.389" cg="317.5"/>
+      <eng-data  t="1.712" f="952.243" m="124.129" cg="317.5"/>
+      <eng-data  t="1.76" f="910.265" m="94.8605" cg="317.5"/>
+      <eng-data  t="1.854" f="702.583" m="45.2263" cg="317.5"/>
+      <eng-data  t="1.926" f="444.086" m="18.1973" cg="317.5"/>
+      <eng-data  t="1.978" f="225.357" m="6.80066" cg="317.5"/>
+      <eng-data  t="2.028" f="79.538" m="1.80975" cg="317.5"/>
+      <eng-data  t="2.07" f="24.303" m="0.38191" cg="317.5"/>
+      <eng-data  t="2.118" f="0." m="0." cg="317.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

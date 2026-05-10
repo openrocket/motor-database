@@ -1,0 +1,41 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="H219T" Type="single-use" dia="38." len="155." initWt="261."
+propWt="144." delays="14" auto-calc-mass="1" auto-calc-cg="1" avgThrust="216.985"
+peakThrust="295.987" throatDia="0." exitDia="0." Itot="234.561" burn-time="1.08"
+massFrac="55.17" Isp="166.1" tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1."
+FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Aerotech H219 BT DMS</comments>
+    <data>
+      <eng-data  t="0." f="0." m="144." cg="77.5"/>
+      <eng-data  t="0.009" f="88.796" m="143.755" cg="77.5"/>
+      <eng-data  t="0.012" f="133.194" m="143.55" cg="77.5"/>
+      <eng-data  t="0.017" f="221.318" m="143.006" cg="77.5"/>
+      <eng-data  t="0.019" f="243.517" m="142.721" cg="77.5"/>
+      <eng-data  t="0.04" f="256.971" m="139.495" cg="77.5"/>
+      <eng-data  t="0.104" f="278.497" m="128.975" cg="77.5"/>
+      <eng-data  t="0.112" f="295.987" m="127.564" cg="77.5"/>
+      <eng-data  t="0.124" f="275.806" m="125.458" cg="77.5"/>
+      <eng-data  t="0.203" f="276.479" m="112.066" cg="77.5"/>
+      <eng-data  t="0.294" f="273.116" m="96.7138" cg="77.5"/>
+      <eng-data  t="0.4" f="264.371" m="79.2254" cg="77.5"/>
+      <eng-data  t="0.499" f="254.28" m="63.4642" cg="77.5"/>
+      <eng-data  t="0.6" f="241.499" m="48.0938" cg="77.5"/>
+      <eng-data  t="0.65" f="234.772" m="40.7841" cg="77.5"/>
+      <eng-data  t="0.698" f="226.027" m="33.9947" cg="77.5"/>
+      <eng-data  t="0.74" f="213.918" m="28.3229" cg="77.5"/>
+      <eng-data  t="0.8" f="191.719" m="20.8521" cg="77.5"/>
+      <eng-data  t="0.842" f="177.592" m="16.0909" cg="77.5"/>
+      <eng-data  t="0.891" f="161.448" m="10.9914" cg="77.5"/>
+      <eng-data  t="0.937" f="150.685" m="6.5841" cg="77.5"/>
+      <eng-data  t="0.957" f="151.357" m="4.72983" cg="77.5"/>
+      <eng-data  t="0.971" f="133.867" m="3.50411" cg="77.5"/>
+      <eng-data  t="0.999" f="91.487" m="1.56724" cg="77.5"/>
+      <eng-data  t="1.024" f="44.398" m="0.524474" cg="77.5"/>
+      <eng-data  t="1.04" f="21.526" m="0.200701" cg="77.5"/>
+      <eng-data  t="1.055" f="8.072" m="0.0644216" cg="77.5"/>
+      <eng-data  t="1.081" f="0." m="0." cg="77.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

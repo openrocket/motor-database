@@ -1,0 +1,32 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="J615ST" Type="reloadable" dia="54." len="230.1"
+initWt="805." propWt="373." delays="20" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="613.757" peakThrust="829.659" throatDia="0." exitDia="0." Itot="762.9"
+burn-time="1.24" massFrac="46.34" Isp="208.56" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>from TMT thrustcurve posted on TRF;</comments>
+    <data>
+      <eng-data  t="0." f="0." m="373." cg="115.05"/>
+      <eng-data  t="0.003" f="2.405" m="372.998" cg="115.05"/>
+      <eng-data  t="0.025" f="21.643" m="372.869" cg="115.05"/>
+      <eng-data  t="0.037" f="829.659" m="370.372" cg="115.05"/>
+      <eng-data  t="0.052" f="726.253" m="364.666" cg="115.05"/>
+      <eng-data  t="0.093" f="668.537" m="350.686" cg="115.05"/>
+      <eng-data  t="0.174" f="680.561" m="323.972" cg="115.05"/>
+      <eng-data  t="0.369" f="719.038" m="257.253" cg="115.05"/>
+      <eng-data  t="0.532" f="728.657" m="199.567" cg="115.05"/>
+      <eng-data  t="0.688" f="704.609" m="144.908" cg="115.05"/>
+      <eng-data  t="0.851" f="649.299" m="90.958" cg="115.05"/>
+      <eng-data  t="0.953" f="589.178" m="60.0764" cg="115.05"/>
+      <eng-data  t="1.031" f="531.463" m="38.708" cg="115.05"/>
+      <eng-data  t="1.113" f="478.557" m="18.4613" cg="115.05"/>
+      <eng-data  t="1.166" f="387.174" m="7.24449" cg="115.05"/>
+      <eng-data  t="1.198" f="254.91" m="2.22161" cg="115.05"/>
+      <eng-data  t="1.212" f="122.645" m="0.929442" cg="115.05"/>
+      <eng-data  t="1.243" f="0." m="0." cg="115.05"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

@@ -1,0 +1,42 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Estes Industries, Inc." code="E30" Type="single-use" dia="24." len="70."
+initWt="47." propWt="17.8" delays="4,7" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="33.585" peakThrust="49." throatDia="0." exitDia="0." Itot="33.585"
+burn-time="1." massFrac="37.87" Isp="192.4" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>Estes E30
+from NAR data sheet updated 08/01/2010
+created by David Moore 08/17/2012
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="17.8" cg="35."/>
+      <eng-data  t="0.01" f="49." m="17.6702" cg="35."/>
+      <eng-data  t="0.02" f="49." m="17.4105" cg="35."/>
+      <eng-data  t="0.05" f="46." m="16.6552" cg="35."/>
+      <eng-data  t="0.1" f="44." m="15.4627" cg="35."/>
+      <eng-data  t="0.2" f="43." m="13.1572" cg="35."/>
+      <eng-data  t="0.25" f="42." m="12.031" cg="35."/>
+      <eng-data  t="0.3" f="41." m="10.9312" cg="35."/>
+      <eng-data  t="0.35" f="40." m="9.85797" cg="35."/>
+      <eng-data  t="0.4" f="39." m="8.81123" cg="35."/>
+      <eng-data  t="0.45" f="38." m="7.79098" cg="35."/>
+      <eng-data  t="0.5" f="37." m="6.79723" cg="35."/>
+      <eng-data  t="0.55" f="35." m="5.84323" cg="35."/>
+      <eng-data  t="0.6" f="33." m="4.94224" cg="35."/>
+      <eng-data  t="0.65" f="32." m="4.08099" cg="35."/>
+      <eng-data  t="0.7" f="31." m="3.24624" cg="35."/>
+      <eng-data  t="0.75" f="30." m="2.43799" cg="35."/>
+      <eng-data  t="0.8" f="27." m="1.68275" cg="35."/>
+      <eng-data  t="0.85" f="25." m="0.993747" cg="35."/>
+      <eng-data  t="0.9" f="20." m="0.397499" cg="35."/>
+      <eng-data  t="0.91" f="19." m="0.294149" cg="35."/>
+      <eng-data  t="0.93" f="12." m="0.12985" cg="35."/>
+      <eng-data  t="0.95" f="5." m="0.0397499" cg="35."/>
+      <eng-data  t="0.97" f="1." m="0.00794998" cg="35."/>
+      <eng-data  t="1." f="0." m="0." cg="35."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

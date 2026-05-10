@@ -1,0 +1,37 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="M1075DM" Type="reloadable" dia="98." len="597."
+initWt="6971." propWt="3846." delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1023.31" peakThrust="1264.43" throatDia="0." exitDia="0."
+Itot="5628.19" burn-time="5.5" massFrac="55.17" Isp="149.22" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>M1075 Dark Matter</comments>
+    <data>
+      <eng-data  t="0." f="0." m="3846." cg="298.5"/>
+      <eng-data  t="0.02" f="927.501" m="3839.66" cg="298.5"/>
+      <eng-data  t="0.112" f="988.073" m="3779.45" cg="298.5"/>
+      <eng-data  t="0.26" f="1033.5" m="3677.22" cg="298.5"/>
+      <eng-data  t="0.53" f="1080.82" m="3482.17" cg="298.5"/>
+      <eng-data  t="0.897" f="1124.36" m="3205.66" cg="298.5"/>
+      <eng-data  t="1.509" f="1198.18" m="2720." cg="298.5"/>
+      <eng-data  t="1.998" f="1239.82" m="2312.67" cg="298.5"/>
+      <eng-data  t="2.355" f="1260.64" m="2007.67" cg="298.5"/>
+      <eng-data  t="2.503" f="1264.43" m="1879.98" cg="298.5"/>
+      <eng-data  t="2.773" f="1237.93" m="1649.13" cg="298.5"/>
+      <eng-data  t="2.997" f="1222.79" m="1460.8" cg="298.5"/>
+      <eng-data  t="3.502" f="1162.22" m="1049.28" cg="298.5"/>
+      <eng-data  t="4.001" f="1063.79" m="669.761" cg="298.5"/>
+      <eng-data  t="4.501" f="906.68" m="333.133" cg="298.5"/>
+      <eng-data  t="4.741" f="834.751" m="190.333" cg="298.5"/>
+      <eng-data  t="4.878" f="742.001" m="116.527" cg="298.5"/>
+      <eng-data  t="4.96" f="664.394" m="77.1236" cg="298.5"/>
+      <eng-data  t="5.062" f="448.608" m="38.3348" cg="298.5"/>
+      <eng-data  t="5.164" f="223.357" m="14.9164" cg="298.5"/>
+      <eng-data  t="5.26" f="79.5" m="4.98249" cg="298.5"/>
+      <eng-data  t="5.352" f="30.286" m="1.53149" cg="298.5"/>
+      <eng-data  t="5.5" f="0." m="0." cg="298.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

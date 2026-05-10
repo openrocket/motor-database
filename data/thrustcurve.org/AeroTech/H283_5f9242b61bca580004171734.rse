@@ -1,0 +1,51 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="H283ST" Type="single-use" dia="38." len="155."
+initWt="247." propWt="97." delays="7,11,15" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="269.031" peakThrust="337.193" throatDia="0." exitDia="0."
+Itot="199.083" burn-time="0.74" massFrac="39.27" Isp="209.29" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>38mm DMS Super Thunder</comments>
+    <data>
+      <eng-data  t="0." f="0." m="97." cg="77.5"/>
+      <eng-data  t="0.003" f="133.038" m="96.9028" cg="77.5"/>
+      <eng-data  t="0.005" f="223.16" m="96.7292" cg="77.5"/>
+      <eng-data  t="0.007" f="267.302" m="96.4902" cg="77.5"/>
+      <eng-data  t="0.009" f="285.694" m="96.2208" cg="77.5"/>
+      <eng-data  t="0.017" f="296.73" m="95.0857" cg="77.5"/>
+      <eng-data  t="0.045" f="300.408" m="91.0125" cg="77.5"/>
+      <eng-data  t="0.049" f="310.83" m="90.4168" cg="77.5"/>
+      <eng-data  t="0.052" f="301.634" m="89.9692" cg="77.5"/>
+      <eng-data  t="0.066" f="304.7" m="87.9012" cg="77.5"/>
+      <eng-data  t="0.081" f="312.67" m="85.6452" cg="77.5"/>
+      <eng-data  t="0.094" f="308.378" m="83.6783" cg="77.5"/>
+      <eng-data  t="0.108" f="315.122" m="81.5518" cg="77.5"/>
+      <eng-data  t="0.222" f="331.062" m="63.6057" cg="77.5"/>
+      <eng-data  t="0.225" f="337.193" m="63.1173" cg="77.5"/>
+      <eng-data  t="0.229" f="332.901" m="62.4644" cg="77.5"/>
+      <eng-data  t="0.336" f="316.348" m="45.5404" cg="77.5"/>
+      <eng-data  t="0.371" f="312.67" m="40.177" cg="77.5"/>
+      <eng-data  t="0.404" f="300.408" m="35.2482" cg="77.5"/>
+      <eng-data  t="0.435" f="289.986" m="30.7895" cg="77.5"/>
+      <eng-data  t="0.449" f="290.599" m="28.8093" cg="77.5"/>
+      <eng-data  t="0.47" f="278.337" m="25.8987" cg="77.5"/>
+      <eng-data  t="0.499" f="274.046" m="21.9961" cg="77.5"/>
+      <eng-data  t="0.538" f="257.493" m="16.946" cg="77.5"/>
+      <eng-data  t="0.572" f="239.1" m="12.8327" cg="77.5"/>
+      <eng-data  t="0.593" f="239.713" m="10.3831" cg="77.5"/>
+      <eng-data  t="0.606" f="226.839" m="8.90551" cg="77.5"/>
+      <eng-data  t="0.636" f="225.613" m="5.59876" cg="77.5"/>
+      <eng-data  t="0.644" f="221.934" m="4.72652" cg="77.5"/>
+      <eng-data  t="0.658" f="178.406" m="3.3611" cg="77.5"/>
+      <eng-data  t="0.67" f="129.972" m="2.45959" cg="77.5"/>
+      <eng-data  t="0.677" f="121.389" m="2.03094" cg="77.5"/>
+      <eng-data  t="0.688" f="91.962" m="1.4592" cg="77.5"/>
+      <eng-data  t="0.691" f="98.092" m="1.3203" cg="77.5"/>
+      <eng-data  t="0.722" f="41.689" m="0.264658" cg="77.5"/>
+      <eng-data  t="0.738" f="23.297" m="0.0113511" cg="77.5"/>
+      <eng-data  t="0.74" f="0." m="0." cg="77.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

@@ -1,0 +1,25 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Loki" code="K690-SF" Type="reloadable" dia="54.0004" len="498."
+initWt="1800." propWt="950." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="718.801" peakThrust="807.388" throatDia="0." exitDia="0."
+Itot="1689.18" burn-time="2.35" massFrac="52.78" Isp="181.31" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="950." cg="249."/>
+      <eng-data  t="0.01" f="643.799" m="948.19" cg="249."/>
+      <eng-data  t="0.25" f="688.654" m="858.265" cg="249."/>
+      <eng-data  t="0.5" f="730.871" m="758.472" cg="249."/>
+      <eng-data  t="0.749636" f="770.449" m="653.082" cg="249."/>
+      <eng-data  t="1." f="807.388" m="541.998" cg="249."/>
+      <eng-data  t="1.25" f="796.834" m="429.221" cg="249."/>
+      <eng-data  t="1.5" f="762.533" m="319.597" cg="249."/>
+      <eng-data  t="1.75" f="733.509" m="214.425" cg="249."/>
+      <eng-data  t="2." f="696.57" m="113.89" cg="249."/>
+      <eng-data  t="2.25" f="659.631" m="18.5489" cg="249."/>
+      <eng-data  t="2.35" f="0." m="0." cg="249."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

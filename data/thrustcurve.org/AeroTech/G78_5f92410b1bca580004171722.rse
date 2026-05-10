@@ -1,0 +1,49 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="G78" Type="single-use" dia="29." len="128." initWt="128.2"
+propWt="62.5" delays="7,10,13" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="73.701" peakThrust="102.2" throatDia="0." exitDia="0." Itot="133.244"
+burn-time="1.81" massFrac="48.75" Isp="217.39" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>@File: NewATG80.txt, @Pts-I: 905, @Pts-O: 31, @Sm: 0, @CO: 5%
+@TI: 133.2377, @TIa: 133.1309, @TIe: 0.0%, @ThMax: 102.2, @ThAvg: 77.9911, @Tb: 1.707
+Exported using ThrustCurveTool, www.ThrustGear.com
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="62.5" cg="64."/>
+      <eng-data  t="0.006" f="1.15809" m="62.4984" cg="64."/>
+      <eng-data  t="0.008" f="7.48984" m="62.4943" cg="64."/>
+      <eng-data  t="0.01" f="33.7575" m="62.475" cg="64."/>
+      <eng-data  t="0.012" f="64.5955" m="62.4288" cg="64."/>
+      <eng-data  t="0.014" f="62.9316" m="62.369" cg="64."/>
+      <eng-data  t="0.016" f="58.8272" m="62.3119" cg="64."/>
+      <eng-data  t="0.018" f="74.9118" m="62.2492" cg="64."/>
+      <eng-data  t="0.02" f="85.0062" m="62.1742" cg="64."/>
+      <eng-data  t="0.022" f="91.1072" m="62.0915" cg="64."/>
+      <eng-data  t="0.026" f="93.9913" m="61.9179" cg="64."/>
+      <eng-data  t="0.028" f="98.4284" m="61.8276" cg="64."/>
+      <eng-data  t="0.032" f="97.652" m="61.6437" cg="64."/>
+      <eng-data  t="0.038" f="102.2" m="61.3625" cg="64."/>
+      <eng-data  t="0.074" f="97.3192" m="59.6779" cg="64."/>
+      <eng-data  t="0.124" f="95.4334" m="57.4175" cg="64."/>
+      <eng-data  t="0.376" f="99.3159" m="45.9074" cg="64."/>
+      <eng-data  t="0.68" f="99.4268" m="31.7374" cg="64."/>
+      <eng-data  t="0.994" f="91.6619" m="17.665" cg="64."/>
+      <eng-data  t="1.2459" f="83.0095" m="7.34564" cg="64."/>
+      <eng-data  t="1.2819" f="77.3522" m="5.99168" cg="64."/>
+      <eng-data  t="1.3159" f="61.9332" m="4.881" cg="64."/>
+      <eng-data  t="1.3599" f="44.6285" m="3.78134" cg="64."/>
+      <eng-data  t="1.4239" f="29.0986" m="2.67469" cg="64."/>
+      <eng-data  t="1.5039" f="21.2227" m="1.73053" cg="64."/>
+      <eng-data  t="1.5979" f="19.3369" m="0.836347" cg="64."/>
+      <eng-data  t="1.6559" f="16.3419" m="0.351011" cg="64."/>
+      <eng-data  t="1.6759" f="13.9015" m="0.20915" cg="64."/>
+      <eng-data  t="1.6779" f="11.7938" m="0.197097" cg="64."/>
+      <eng-data  t="1.7139" f="5.0938" m="0.0545113" cg="64."/>
+      <eng-data  t="1.7339" f="1.38882" m="0.0241035" cg="64."/>
+      <eng-data  t="1.8079" f="0." m="0." cg="64."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

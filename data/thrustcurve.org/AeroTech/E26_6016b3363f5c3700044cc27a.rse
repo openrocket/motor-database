@@ -1,0 +1,26 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="E26W" Type="single-use" dia="24." len="88." initWt="44."
+propWt="18." delays="4,7,10" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="22.583" peakThrust="26.955" throatDia="0." exitDia="0." Itot="27.619"
+burn-time="1.22" massFrac="40.91" Isp="156.46" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="18." cg="44."/>
+      <eng-data  t="0.006" f="0.02" m="18." cg="44."/>
+      <eng-data  t="0.025" f="2.0373" m="17.9872" cg="44."/>
+      <eng-data  t="0.064" f="16.9322" m="17.7461" cg="44."/>
+      <eng-data  t="0.167" f="22.1472" m="16.4345" cg="44."/>
+      <eng-data  t="0.419" f="26.955" m="12.4023" cg="44."/>
+      <eng-data  t="0.673" f="25.8612" m="8.03066" cg="44."/>
+      <eng-data  t="0.929" f="25.6314" m="3.73504" cg="44."/>
+      <eng-data  t="1.086" f="26.2173" m="1.08241" cg="44."/>
+      <eng-data  t="1.144" f="16.7647" m="0.270034" cg="44."/>
+      <eng-data  t="1.172" f="6.11622" m="0.0612625" cg="44."/>
+      <eng-data  t="1.198" f="0.568172" m="0.00462871" cg="44."/>
+      <eng-data  t="1.223" f="0." m="0." cg="44."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

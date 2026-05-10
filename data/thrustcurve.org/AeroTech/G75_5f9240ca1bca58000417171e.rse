@@ -1,0 +1,35 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="G75M" Type="single-use" dia="29." len="157." initWt="133."
+propWt="67." delays="7,9,11,13" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="82.157" peakThrust="103.37" throatDia="0." exitDia="0." Itot="114.855"
+burn-time="1.4" massFrac="50.38" Isp="174.81" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>data from TMT certification, tested April 22, 2020</comments>
+    <data>
+      <eng-data  t="0." f="0." m="67." cg="78.5"/>
+      <eng-data  t="0.021" f="1.11" m="66.9932" cg="78.5"/>
+      <eng-data  t="0.027" f="16.73" m="66.962" cg="78.5"/>
+      <eng-data  t="0.032" f="42.59" m="66.8755" cg="78.5"/>
+      <eng-data  t="0.071" f="76.46" m="65.5213" cg="78.5"/>
+      <eng-data  t="0.098" f="89.43" m="64.2149" cg="78.5"/>
+      <eng-data  t="0.146" f="95.76" m="61.6222" cg="78.5"/>
+      <eng-data  t="0.208" f="100.7" m="58.0694" cg="78.5"/>
+      <eng-data  t="0.282" f="103.37" m="53.6649" cg="78.5"/>
+      <eng-data  t="0.345" f="100.3" m="49.9224" cg="78.5"/>
+      <eng-data  t="0.467" f="99.99" m="42.7953" cg="78.5"/>
+      <eng-data  t="0.619" f="103.37" m="33.7795" cg="78.5"/>
+      <eng-data  t="0.732" f="100.7" m="27.0536" cg="78.5"/>
+      <eng-data  t="0.916" f="95.36" m="16.5315" cg="78.5"/>
+      <eng-data  t="1.048" f="86.1" m="9.54523" cg="78.5"/>
+      <eng-data  t="1.121" f="77.1" m="6.07038" cg="78.5"/>
+      <eng-data  t="1.211" f="68.24" m="2.25514" cg="78.5"/>
+      <eng-data  t="1.258" f="34.37" m="0.848509" cg="78.5"/>
+      <eng-data  t="1.304" f="10.55" m="0.245823" cg="78.5"/>
+      <eng-data  t="1.347" f="4.14" m="0.0615835" cg="78.5"/>
+      <eng-data  t="1.398" f="0." m="0." cg="78.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

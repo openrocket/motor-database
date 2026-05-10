@@ -1,0 +1,36 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="H135W" Type="single-use" dia="29." len="216." initWt="212."
+propWt="82." delays="6,8,10,12,14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="110.537" peakThrust="159.806" throatDia="0." exitDia="0."
+Itot="229.032" burn-time="2.07" massFrac="38.68" Isp="284.81" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>AeroTech Pro-SU 29mm H135 14sec adjustable delay.
+From Tripoli Data Sheet updated 2013/02/10
+Created by Robert Belknap 2013/03/04
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="82." cg="108."/>
+      <eng-data  t="0.014" f="159.806" m="81.5995" cg="108."/>
+      <eng-data  t="0.045" f="110.931" m="80.0971" cg="108."/>
+      <eng-data  t="0.104" f="144.43" m="77.4" cg="108."/>
+      <eng-data  t="0.131" f="135.643" m="76.0463" cg="108."/>
+      <eng-data  t="0.252" f="154.315" m="69.7656" cg="108."/>
+      <eng-data  t="0.293" f="130.701" m="67.6737" cg="108."/>
+      <eng-data  t="0.387" f="149.921" m="62.9515" cg="108."/>
+      <eng-data  t="1.005" f="140.037" m="30.8732" cg="108."/>
+      <eng-data  t="1.261" f="119.168" m="18.9944" cg="108."/>
+      <eng-data  t="1.297" f="142.233" m="17.3098" cg="108."/>
+      <eng-data  t="1.324" f="109.833" m="16.0915" cg="108."/>
+      <eng-data  t="1.387" f="120.267" m="13.4964" cg="108."/>
+      <eng-data  t="1.518" f="110.382" m="8.08751" cg="108."/>
+      <eng-data  t="1.595" f="80.727" m="5.45324" cg="108."/>
+      <eng-data  t="1.685" f="60.408" m="3.17938" cg="108."/>
+      <eng-data  t="1.797" f="33.499" m="1.29658" cg="108."/>
+      <eng-data  t="1.896" f="14.278" m="0.449851" cg="108."/>
+      <eng-data  t="2.072" f="0." m="0." cg="108."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

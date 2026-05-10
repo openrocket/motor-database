@@ -1,0 +1,37 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="J250FJ" Type="reloadable" dia="54." len="241."
+initWt="920." propWt="511." delays="6,10,14,18" auto-calc-mass="1"
+auto-calc-cg="1" avgThrust="252.927" peakThrust="306.038" throatDia="0."
+exitDia="0." Itot="707.183" burn-time="2.8" massFrac="55.54" Isp="141.12"
+tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10"
+mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Aerotech J250FJ from TRA Cert Data</comments>
+    <data>
+      <eng-data  t="0." f="0." m="511." cg="120.5"/>
+      <eng-data  t="0.011" f="132.176" m="510.475" cg="120.5"/>
+      <eng-data  t="0.021" f="263.335" m="509.046" cg="120.5"/>
+      <eng-data  t="0.084" f="236.899" m="497.66" cg="120.5"/>
+      <eng-data  t="0.168" f="252.151" m="482.818" cg="120.5"/>
+      <eng-data  t="0.294" f="238.933" m="460.462" cg="120.5"/>
+      <eng-data  t="0.494" f="261.301" m="424.316" cg="120.5"/>
+      <eng-data  t="0.715" f="285.703" m="380.64" cg="120.5"/>
+      <eng-data  t="0.993" f="295.87" m="322.227" cg="120.5"/>
+      <eng-data  t="1.177" f="306.038" m="282.214" cg="120.5"/>
+      <eng-data  t="1.267" f="305.021" m="262.344" cg="120.5"/>
+      <eng-data  t="1.498" f="301.971" m="211.686" cg="120.5"/>
+      <eng-data  t="1.64" f="292.82" m="181.171" cg="120.5"/>
+      <eng-data  t="2.002" f="253.167" m="109.762" cg="120.5"/>
+      <eng-data  t="2.344" f="224.699" m="50.716" cg="120.5"/>
+      <eng-data  t="2.391" f="225.715" m="43.0676" cg="120.5"/>
+      <eng-data  t="2.502" f="233.849" m="24.6375" cg="120.5"/>
+      <eng-data  t="2.57" f="185.046" m="14.3461" cg="120.5"/>
+      <eng-data  t="2.659" f="116.925" m="4.63621" cg="120.5"/>
+      <eng-data  t="2.685" f="76.255" m="2.82155" cg="120.5"/>
+      <eng-data  t="2.738" f="32.536" m="0.738367" cg="120.5"/>
+      <eng-data  t="2.77" f="17.285" m="0.162369" cg="120.5"/>
+      <eng-data  t="2.796" f="0." m="0." cg="120.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

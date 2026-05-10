@@ -1,0 +1,30 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="L1170FJ" Type="reloadable" dia="75." len="665."
+initWt="4990." propWt="2800." delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1148.35" peakThrust="1473.29" throatDia="0." exitDia="0."
+Itot="4214.45" burn-time="3.67" massFrac="56.11" Isp="153.48" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="2800." cg="332.5"/>
+      <eng-data  t="0.031" f="992.64" m="2789.78" cg="332.5"/>
+      <eng-data  t="0.072" f="1400.14" m="2757.19" cg="332.5"/>
+      <eng-data  t="0.113" f="1473.29" m="2718.05" cg="332.5"/>
+      <eng-data  t="0.144" f="1389.7" m="2688.57" cg="332.5"/>
+      <eng-data  t="0.351" f="1285.21" m="2504.63" cg="332.5"/>
+      <eng-data  t="1.495" f="1431.49" m="1472.22" cg="332.5"/>
+      <eng-data  t="1.856" f="1431.49" m="1128.89" cg="332.5"/>
+      <eng-data  t="2.227" f="1358.35" m="785.061" cg="332.5"/>
+      <eng-data  t="2.753" f="1201.62" m="337.753" cg="332.5"/>
+      <eng-data  t="2.928" f="1170.27" m="199.867" cg="332.5"/>
+      <eng-data  t="3." f="1065.78" m="146.386" cg="332.5"/>
+      <eng-data  t="3.113" f="679.175" m="80.8849" cg="332.5"/>
+      <eng-data  t="3.247" f="355.261" m="34.8385" cg="332.5"/>
+      <eng-data  t="3.361" f="177.63" m="14.6581" cg="332.5"/>
+      <eng-data  t="3.464" f="83.591" m="5.72023" cg="332.5"/>
+      <eng-data  t="3.67" f="0." m="0." cg="332.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

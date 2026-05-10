@@ -1,0 +1,29 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="I175WS" Type="single-use" dia="38." len="214."
+initWt="348." propWt="168." delays="5,9,13" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="169.135" peakThrust="252.63" throatDia="0." exitDia="0."
+Itot="333.196" burn-time="1.97" massFrac="51.72" Isp="188.76" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>data from TMT certification, tested April 22, 2020</comments>
+    <data>
+      <eng-data  t="0." f="0." m="180." cg="107."/>
+      <eng-data  t="0.022" f="2.71" m="179.984" cg="107."/>
+      <eng-data  t="0.028" f="93.62" m="179.828" cg="107."/>
+      <eng-data  t="0.06" f="219.78" m="177.119" cg="107."/>
+      <eng-data  t="0.097" f="244.93" m="172.475" cg="107."/>
+      <eng-data  t="0.209" f="252.63" m="157.422" cg="107."/>
+      <eng-data  t="0.299" f="249.21" m="145.222" cg="107."/>
+      <eng-data  t="0.581" f="226.99" m="108.95" cg="107."/>
+      <eng-data  t="0.97" f="190.27" m="65.1067" cg="107."/>
+      <eng-data  t="1.381" f="136.13" m="28.8712" cg="107."/>
+      <eng-data  t="1.749" f="109.02" m="4.50305" cg="107."/>
+      <eng-data  t="1.802" f="65.53" m="2.00421" cg="107."/>
+      <eng-data  t="1.857" f="24.89" m="0.660922" cg="107."/>
+      <eng-data  t="1.908" f="10.42" m="0.174503" cg="107."/>
+      <eng-data  t="1.97" f="0." m="0." cg="107."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

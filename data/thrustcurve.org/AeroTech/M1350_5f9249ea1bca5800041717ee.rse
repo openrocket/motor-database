@@ -1,0 +1,38 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="M1350W" Type="single-use" dia="75." len="622."
+initWt="4808." propWt="2690." delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1296.16" peakThrust="1749.91" throatDia="0." exitDia="0."
+Itot="5179.48" burn-time="4." massFrac="55.95" Isp="196.34" tDiv="10" tStep="-1."
+tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="2690." cg="311."/>
+      <eng-data  t="0.03" f="1428.89" m="2678.87" cg="311."/>
+      <eng-data  t="0.044" f="1724.73" m="2667.4" cg="311."/>
+      <eng-data  t="0.056" f="1548.48" m="2657.2" cg="311."/>
+      <eng-data  t="0.078" f="1620.87" m="2639.1" cg="311."/>
+      <eng-data  t="0.115" f="1589.4" m="2608.25" cg="311."/>
+      <eng-data  t="0.178" f="1642.9" m="2555.37" cg="311."/>
+      <eng-data  t="0.455" f="1749.91" m="2311.32" cg="311."/>
+      <eng-data  t="0.496" f="1724.73" m="2274.33" cg="311."/>
+      <eng-data  t="0.54" f="1737.32" m="2234.77" cg="311."/>
+      <eng-data  t="1.132" f="1746.77" m="1699.16" cg="311."/>
+      <eng-data  t="1.499" f="1731.03" m="1367.72" cg="311."/>
+      <eng-data  t="1.639" f="1715.29" m="1242.43" cg="311."/>
+      <eng-data  t="2.505" f="1334.47" m="556.597" cg="311."/>
+      <eng-data  t="3.086" f="1051.21" m="196.662" cg="311."/>
+      <eng-data  t="3.179" f="985.113" m="147.485" cg="311."/>
+      <eng-data  t="3.227" f="928.461" m="123.633" cg="311."/>
+      <eng-data  t="3.315" f="670.38" m="87.0965" cg="311."/>
+      <eng-data  t="3.419" f="446.92" m="56.922" cg="311."/>
+      <eng-data  t="3.46" f="396.563" m="47.9416" cg="311."/>
+      <eng-data  t="3.545" f="298.996" m="32.5888" cg="311."/>
+      <eng-data  t="3.697" f="173.103" m="13.9544" cg="311."/>
+      <eng-data  t="3.737" f="173.103" m="10.3584" cg="311."/>
+      <eng-data  t="3.845" f="81.83" m="3.20868" cg="311."/>
+      <eng-data  t="3.996" f="0." m="0." cg="311."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

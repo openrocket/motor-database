@@ -1,0 +1,36 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Quest" code="D5-0" Type="single-use" dia="20." len="88." initWt="38.4"
+propWt="25." delays="0" auto-calc-mass="1" auto-calc-cg="1" avgThrust="4.933"
+peakThrust="11.483" throatDia="0." exitDia="0." Itot="19.65" burn-time="3.98"
+massFrac="65.1" Isp="80.15" tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1."
+FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Quest D5-0 by Mark Koelsch from NAR data</comments>
+    <data>
+      <eng-data  t="0." f="0." m="25." cg="44."/>
+      <eng-data  t="0.096" f="1.241" m="24.9242" cg="44."/>
+      <eng-data  t="0.252" f="5.897" m="24.2159" cg="44."/>
+      <eng-data  t="0.304" f="8.586" m="23.7368" cg="44."/>
+      <eng-data  t="0.357" f="10.552" m="23.0915" cg="44."/>
+      <eng-data  t="0.391" f="11.483" m="22.615" cg="44."/>
+      <eng-data  t="0.435" f="9.828" m="22.0185" cg="44."/>
+      <eng-data  t="0.557" f="6.103" m="20.7821" cg="44."/>
+      <eng-data  t="0.583" f="5.172" m="20.5956" cg="44."/>
+      <eng-data  t="0.67" f="5.172" m="20.0231" cg="44."/>
+      <eng-data  t="1.078" f="4.966" m="17.3919" cg="44."/>
+      <eng-data  t="1.2" f="4.345" m="16.6693" cg="44."/>
+      <eng-data  t="1.73" f="4.759" m="13.5998" cg="44."/>
+      <eng-data  t="1.8" f="4.759" m="13.176" cg="44."/>
+      <eng-data  t="1.887" f="4.138" m="12.6836" cg="44."/>
+      <eng-data  t="2.391" f="5.069" m="9.73174" cg="44."/>
+      <eng-data  t="2.626" f="4.966" m="8.23159" cg="44."/>
+      <eng-data  t="3.009" f="5.379" m="5.71114" cg="44."/>
+      <eng-data  t="3.357" f="5.276" m="3.35239" cg="44."/>
+      <eng-data  t="3.661" f="5.69" m="1.23173" cg="44."/>
+      <eng-data  t="3.835" f="3.103" m="0.258459" cg="44."/>
+      <eng-data  t="3.887" f="1.655" m="0.101069" cg="44."/>
+      <eng-data  t="3.983" f="0." m="0." cg="44."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

@@ -1,0 +1,45 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="K456DM-14A" Type="reloadable" dia="54." len="401."
+initWt="1484." propWt="866." delays="14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="429.91" peakThrust="519.582" throatDia="0." exitDia="0."
+Itot="1305.64" burn-time="3.04" massFrac="58.36" Isp="153.74" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>K456 Dark Matter</comments>
+    <data>
+      <eng-data  t="0." f="0." m="866." cg="200.5"/>
+      <eng-data  t="0.027" f="444.074" m="862.024" cg="200.5"/>
+      <eng-data  t="0.038" f="519.582" m="858.508" cg="200.5"/>
+      <eng-data  t="0.066" f="482.95" m="849.199" cg="200.5"/>
+      <eng-data  t="0.129" f="461.269" m="829.471" cg="200.5"/>
+      <eng-data  t="0.302" f="467.998" m="776.156" cg="200.5"/>
+      <eng-data  t="0.389" f="468.745" m="749.128" cg="200.5"/>
+      <eng-data  t="0.499" f="476.969" m="714.628" cg="200.5"/>
+      <eng-data  t="0.655" f="476.221" m="665.315" cg="200.5"/>
+      <eng-data  t="0.798" f="483.697" m="619.791" cg="200.5"/>
+      <eng-data  t="0.946" f="488.93" m="572.052" cg="200.5"/>
+      <eng-data  t="1.096" f="499.397" m="522.887" cg="200.5"/>
+      <eng-data  t="1.401" f="500.892" m="421.708" cg="200.5"/>
+      <eng-data  t="1.603" f="503.882" m="354.397" cg="200.5"/>
+      <eng-data  t="1.801" f="501.64" m="288.37" cg="200.5"/>
+      <eng-data  t="1.905" f="498.649" m="253.87" cg="200.5"/>
+      <eng-data  t="2.1" f="485.94" m="190.197" cg="200.5"/>
+      <eng-data  t="2.302" f="456.036" m="127.093" cg="200.5"/>
+      <eng-data  t="2.404" f="435.851" m="96.9229" cg="200.5"/>
+      <eng-data  t="2.505" f="420.151" m="68.2507" cg="200.5"/>
+      <eng-data  t="2.574" f="398.471" m="49.5181" cg="200.5"/>
+      <eng-data  t="2.607" f="373.052" m="41.0745" cg="200.5"/>
+      <eng-data  t="2.645" f="356.605" m="31.8792" cg="200.5"/>
+      <eng-data  t="2.703" f="289.321" m="19.4548" cg="200.5"/>
+      <eng-data  t="2.768" f="178.676" m="9.36639" cg="200.5"/>
+      <eng-data  t="2.804" f="123.354" m="5.76046" cg="200.5"/>
+      <eng-data  t="2.837" f="88.964" m="3.43684" cg="200.5"/>
+      <eng-data  t="2.875" f="50.837" m="1.67503" cg="200.5"/>
+      <eng-data  t="2.908" f="24.671" m="0.848661" cg="200.5"/>
+      <eng-data  t="2.957" f="10.466" m="0.277674" cg="200.5"/>
+      <eng-data  t="3.037" f="0." m="0." cg="200.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

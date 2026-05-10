@@ -1,0 +1,45 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="AMWProX" code="K1130BB" Type="reloadable" dia="54." len="728."
+initWt="2574." propWt="1334." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1061.94" peakThrust="1390.89" throatDia="0." exitDia="0."
+Itot="2438.22" burn-time="2.3" massFrac="51.83" Isp="186.38" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>AMW/ProX 2551-K1130-BB-P Made by Cesaroni Technology for Animal
+54mm hardware.
+
+Entered by Tim Van Milligan
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="1334." cg="364."/>
+      <eng-data  t="0.009" f="1270.17" m="1330.87" cg="364."/>
+      <eng-data  t="0.018" f="1390.89" m="1324.32" cg="364."/>
+      <eng-data  t="0.035" f="1341.03" m="1311.62" cg="364."/>
+      <eng-data  t="0.068" f="1306.91" m="1287.71" cg="364."/>
+      <eng-data  t="0.104" f="1272.8" m="1262.31" cg="364."/>
+      <eng-data  t="0.251" f="1267.55" m="1160.15" cg="364."/>
+      <eng-data  t="0.774" f="1267.55" m="797.451" cg="364."/>
+      <eng-data  t="1.094" f="1272.8" m="575.071" cg="364."/>
+      <eng-data  t="1.372" f="1264.92" m="382.079" cg="364."/>
+      <eng-data  t="1.519" f="1267.55" m="280.24" cg="364."/>
+      <eng-data  t="1.592" f="1278.04" m="229.405" cg="364."/>
+      <eng-data  t="1.625" f="1275.42" m="206.354" cg="364."/>
+      <eng-data  t="1.649" f="1236.05" m="189.865" cg="364."/>
+      <eng-data  t="1.72" f="1086.47" m="144.755" cg="364."/>
+      <eng-data  t="1.775" f="842.406" m="115.733" cg="364."/>
+      <eng-data  t="1.813" f="705.942" m="99.6379" cg="364."/>
+      <eng-data  t="1.83" f="1023.48" m="91.5951" cg="364."/>
+      <eng-data  t="1.859" f="642.958" m="78.3748" cg="364."/>
+      <eng-data  t="1.89" f="616.715" m="67.6924" cg="364."/>
+      <eng-data  t="1.914" f="600.969" m="59.6977" cg="364."/>
+      <eng-data  t="1.947" f="551.107" m="49.2974" cg="364."/>
+      <eng-data  t="2.099" f="293.924" m="14.16" cg="364."/>
+      <eng-data  t="2.179" f="162.708" m="4.16675" cg="364."/>
+      <eng-data  t="2.218" f="83.978" m="1.5349" cg="364."/>
+      <eng-data  t="2.258" f="28.868" m="0.300091" cg="364."/>
+      <eng-data  t="2.296" f="0." m="0." cg="364."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

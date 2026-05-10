@@ -1,0 +1,40 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="N2220DM" Type="reloadable" dia="98." len="1046."
+initWt="11997." propWt="7183." delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="2016.56" peakThrust="3063.08" throatDia="0." exitDia="0."
+Itot="10831." burn-time="5.37" massFrac="59.87" Isp="153.76" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="7183." cg="523."/>
+      <eng-data  t="0.045" f="2638.37" m="7143.63" cg="523."/>
+      <eng-data  t="0.067" f="2528.97" m="7105.93" cg="523."/>
+      <eng-data  t="0.084" f="3063.08" m="7074.41" cg="523."/>
+      <eng-data  t="0.124" f="2426.01" m="7001.61" cg="523."/>
+      <eng-data  t="0.186" f="2548.28" m="6899.34" cg="523."/>
+      <eng-data  t="0.231" f="2599.76" m="6822.52" cg="523."/>
+      <eng-data  t="0.298" f="2554.71" m="6708." cg="523."/>
+      <eng-data  t="0.371" f="2644.8" m="6582.14" cg="523."/>
+      <eng-data  t="0.534" f="2638.37" m="6296.59" cg="523."/>
+      <eng-data  t="0.979" f="2561.14" m="5529.35" cg="523."/>
+      <eng-data  t="1.142" f="2606.19" m="5250.05" cg="523."/>
+      <eng-data  t="2.002" f="2638.37" m="3754.45" cg="523."/>
+      <eng-data  t="2.289" f="2638.37" m="3252.27" cg="523."/>
+      <eng-data  t="2.761" f="2580.45" m="2435.46" cg="523."/>
+      <eng-data  t="3.121" f="2496.8" m="1829.37" cg="523."/>
+      <eng-data  t="3.436" f="2335.92" m="1324.58" cg="523."/>
+      <eng-data  t="3.678" f="2213.65" m="959.492" cg="523."/>
+      <eng-data  t="3.79" f="2130." m="798.175" cg="523."/>
+      <eng-data  t="4.004" f="1653.81" m="529.67" cg="523."/>
+      <eng-data  t="4.415" f="888.035" m="183.253" cg="523."/>
+      <eng-data  t="4.538" f="630.634" m="121.313" cg="523."/>
+      <eng-data  t="4.656" f="450.453" m="79.0115" cg="523."/>
+      <eng-data  t="4.82" f="289.577" m="38.7675" cg="523."/>
+      <eng-data  t="5.005" f="135.136" m="12.7134" cg="523."/>
+      <eng-data  t="5.219" f="25.74" m="1.29736" cg="523."/>
+      <eng-data  t="5.371" f="0." m="0." cg="523."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

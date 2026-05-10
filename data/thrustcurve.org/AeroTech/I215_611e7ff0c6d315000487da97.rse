@@ -1,0 +1,35 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="AT" code="I215R" Type="reloadable" dia="54." len="156." initWt="527.001"
+propWt="208." delays="6,10,14,0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="213.475" peakThrust="259.145" throatDia="0." exitDia="0."
+Itot="396.85" burn-time="1.86" massFrac="39.47" Isp="194.56" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Aerotech I215R from TRA Cert Data</comments>
+    <data>
+      <eng-data  t="0." f="0." m="208." cg="78."/>
+      <eng-data  t="0.049" f="88.39" m="206.865" cg="78."/>
+      <eng-data  t="0.089" f="154.683" m="204.317" cg="78."/>
+      <eng-data  t="0.094" f="206.914" m="203.843" cg="78."/>
+      <eng-data  t="0.178" f="245.083" m="193.893" cg="78."/>
+      <eng-data  t="0.251" f="255.127" m="184.324" cg="78."/>
+      <eng-data  t="0.325" f="259.145" m="174.351" cg="78."/>
+      <eng-data  t="0.404" f="249.1" m="163.828" cg="78."/>
+      <eng-data  t="0.582" f="257.136" m="140.214" cg="78."/>
+      <eng-data  t="0.631" f="253.118" m="133.662" cg="78."/>
+      <eng-data  t="0.7" f="253.118" m="124.508" cg="78."/>
+      <eng-data  t="0.774" f="245.083" m="114.846" cg="78."/>
+      <eng-data  t="1.001" f="239.056" m="86.0456" cg="78."/>
+      <eng-data  t="1.509" f="192.852" m="28.5464" cg="78."/>
+      <eng-data  t="1.681" f="178.79" m="11.7947" cg="78."/>
+      <eng-data  t="1.716" f="180.799" m="8.49643" cg="78."/>
+      <eng-data  t="1.746" f="190.843" m="5.57461" cg="78."/>
+      <eng-data  t="1.775" f="178.79" m="2.76546" cg="78."/>
+      <eng-data  t="1.8" f="90.399" m="1.00184" cg="78."/>
+      <eng-data  t="1.82" f="34.151" m="0.34904" cg="78."/>
+      <eng-data  t="1.859" f="0." m="0." cg="78."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

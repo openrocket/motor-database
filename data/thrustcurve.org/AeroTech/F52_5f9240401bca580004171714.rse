@@ -1,0 +1,29 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="F52C" Type="single-use" dia="29." len="111." initWt="81.4"
+propWt="30." delays="5,8,12" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="49.895" peakThrust="61.323" throatDia="0." exitDia="0." Itot="66.311"
+burn-time="1.33" massFrac="36.86" Isp="225.39" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>AeroTech F52C, data from TMT test firing</comments>
+    <data>
+      <eng-data  t="0." f="0." m="30." cg="55.5"/>
+      <eng-data  t="0.02" f="0.267" m="29.9988" cg="55.5"/>
+      <eng-data  t="0.024" f="3.465" m="29.9954" cg="55.5"/>
+      <eng-data  t="0.038" f="38.82" m="29.8615" cg="55.5"/>
+      <eng-data  t="0.073" f="53.881" m="29.1276" cg="55.5"/>
+      <eng-data  t="0.143" f="56.492" m="27.3799" cg="55.5"/>
+      <eng-data  t="0.323" f="61.323" m="22.5827" cg="55.5"/>
+      <eng-data  t="0.826" f="57.346" m="9.08031" cg="55.5"/>
+      <eng-data  t="1.141" f="51.074" m="1.3548" cg="55.5"/>
+      <eng-data  t="1.17" f="35.612" m="0.786142" cg="55.5"/>
+      <eng-data  t="1.225" f="11.761" m="0.196755" cg="55.5"/>
+      <eng-data  t="1.266" f="4.559" m="0.0453946" cg="55.5"/>
+      <eng-data  t="1.291" f="1.512" m="0.011062" cg="55.5"/>
+      <eng-data  t="1.32" f="0.133" m="0.00027077" cg="55.5"/>
+      <eng-data  t="1.329" f="0." m="0." cg="55.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

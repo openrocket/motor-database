@@ -1,0 +1,38 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="I180W" Type="reloadable" dia="38." len="191." initWt="385."
+propWt="180." delays="14,12,10,8,6" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="166.818" peakThrust="361.192" throatDia="0." exitDia="0."
+Itot="326.296" burn-time="1.96" massFrac="46.75" Isp="184.85" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>38/360 Non hazmat I161W equivalalent</comments>
+    <data>
+      <eng-data  t="0." f="0." m="180." cg="95.5"/>
+      <eng-data  t="0.027" f="133.693" m="179.004" cg="95.5"/>
+      <eng-data  t="0.029" f="224.545" m="178.807" cg="95.5"/>
+      <eng-data  t="0.033" f="328.692" m="178.196" cg="95.5"/>
+      <eng-data  t="0.042" f="338.295" m="176.541" cg="95.5"/>
+      <eng-data  t="0.061" f="327.215" m="173.053" cg="95.5"/>
+      <eng-data  t="0.082" f="337.556" m="169.202" cg="95.5"/>
+      <eng-data  t="0.088" f="347.158" m="168.069" cg="95.5"/>
+      <eng-data  t="0.117" f="361.192" m="162.403" cg="95.5"/>
+      <eng-data  t="0.203" f="360.454" m="145.285" cg="95.5"/>
+      <eng-data  t="0.243" f="350.851" m="137.437" cg="95.5"/>
+      <eng-data  t="0.289" f="350.851" m="128.534" cg="95.5"/>
+      <eng-data  t="0.358" f="313.181" m="115.897" cg="95.5"/>
+      <eng-data  t="0.368" f="303.579" m="114.196" cg="95.5"/>
+      <eng-data  t="0.387" f="312.442" m="110.967" cg="95.5"/>
+      <eng-data  t="0.446" f="278.465" m="101.351" cg="95.5"/>
+      <eng-data  t="0.502" f="259.999" m="93.0339" cg="95.5"/>
+      <eng-data  t="0.634" f="223.068" m="75.4461" cg="95.5"/>
+      <eng-data  t="0.762" f="195.738" m="60.66" cg="95.5"/>
+      <eng-data  t="0.998" f="151.42" m="38.0621" cg="95.5"/>
+      <eng-data  t="1.5" f="68.693" m="7.58454" cg="95.5"/>
+      <eng-data  t="1.736" f="26.591" m="1.38211" cg="95.5"/>
+      <eng-data  t="1.845" f="9.602" m="0.293978" cg="95.5"/>
+      <eng-data  t="1.956" f="0." m="0." cg="95.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

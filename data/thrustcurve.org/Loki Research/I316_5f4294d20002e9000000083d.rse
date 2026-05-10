@@ -1,0 +1,21 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Loki" code="I316-SF" Type="reloadable" dia="38." len="292." initWt="540."
+propWt="240." delays="5,8,10,13,17" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="316.03" peakThrust="500." throatDia="0." exitDia="0." Itot="474.044"
+burn-time="1.5" massFrac="44.44" Isp="201.41" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="240." cg="146."/>
+      <eng-data  t="0.00931677" f="448.276" m="238.943" cg="146."/>
+      <eng-data  t="0.127329" f="491.379" m="210.872" cg="146."/>
+      <eng-data  t="0.242236" f="500." m="182.035" cg="146."/>
+      <eng-data  t="0.347826" f="482.759" m="155.767" cg="146."/>
+      <eng-data  t="0.484472" f="439.655" m="123.86" cg="146."/>
+      <eng-data  t="1." f="258.621" m="32.7338" cg="146."/>
+      <eng-data  t="1.5" f="0." m="0." cg="146."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

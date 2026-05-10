@@ -1,0 +1,23 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Loki" code="L780-SF" Type="reloadable" dia="75.0011" len="498."
+initWt="3500." propWt="1800." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="794.306" peakThrust="934.037" throatDia="0." exitDia="0."
+Itot="3018.36" burn-time="3.8" massFrac="51.43" Isp="170.99" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="1800." cg="249."/>
+      <eng-data  t="0.02" f="506.596" m="1796.98" cg="249."/>
+      <eng-data  t="0.5" f="696.57" m="1624.78" cg="249."/>
+      <eng-data  t="1." f="844.327" m="1395.05" cg="249."/>
+      <eng-data  t="1.5" f="897.098" m="1135.42" cg="249."/>
+      <eng-data  t="2." f="934.037" m="862.425" cg="249."/>
+      <eng-data  t="2.5" f="918.206" m="586.279" cg="249."/>
+      <eng-data  t="3." f="865.435" m="320.361" cg="249."/>
+      <eng-data  t="3.5" f="802.111" m="71.7508" cg="249."/>
+      <eng-data  t="3.8" f="0." m="0." cg="249."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

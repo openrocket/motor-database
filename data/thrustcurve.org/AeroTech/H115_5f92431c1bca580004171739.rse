@@ -1,0 +1,40 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="H115DM-14A" Type="Single-Use" dia="29." len="203."
+initWt="205." propWt="113." delays="14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="104.972" peakThrust="130.742" throatDia="0." exitDia="0."
+Itot="177.718" burn-time="1.69" massFrac="55.12" Isp="160.37" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>AT H115 Dark Matter DMS</comments>
+    <data>
+      <eng-data  t="0." f="0." m="113." cg="101.5"/>
+      <eng-data  t="0.014" f="89.265" m="112.603" cg="101.5"/>
+      <eng-data  t="0.024" f="130.742" m="111.903" cg="101.5"/>
+      <eng-data  t="0.036" f="108.2" m="110.992" cg="101.5"/>
+      <eng-data  t="0.048" f="101.588" m="110.191" cg="101.5"/>
+      <eng-data  t="0.081" f="111.206" m="107.959" cg="101.5"/>
+      <eng-data  t="0.202" f="121.124" m="99.0215" cg="101.5"/>
+      <eng-data  t="0.405" f="123.228" m="83.2516" cg="101.5"/>
+      <eng-data  t="0.598" f="123.829" m="68.0926" cg="101.5"/>
+      <eng-data  t="0.8" f="123.528" m="52.2074" cg="101.5"/>
+      <eng-data  t="1.002" f="122.326" m="36.4188" cg="101.5"/>
+      <eng-data  t="1.2" f="114.211" m="21.5293" cg="101.5"/>
+      <eng-data  t="1.269" f="111.807" m="16.5712" cg="101.5"/>
+      <eng-data  t="1.293" f="111.506" m="14.8674" cg="101.5"/>
+      <eng-data  t="1.35" f="119.32" m="10.6845" cg="101.5"/>
+      <eng-data  t="1.367" f="117.818" m="9.40282" cg="101.5"/>
+      <eng-data  t="1.393" f="111.807" m="7.50477" cg="101.5"/>
+      <eng-data  t="1.429" f="88.964" m="5.20693" cg="101.5"/>
+      <eng-data  t="1.467" f="67.024" m="3.32245" cg="101.5"/>
+      <eng-data  t="1.524" f="44.182" m="1.30724" cg="101.5"/>
+      <eng-data  t="1.562" f="22.842" m="0.49753" cg="101.5"/>
+      <eng-data  t="1.583" f="13.224" m="0.256743" cg="101.5"/>
+      <eng-data  t="1.6" f="6.913" m="0.14791" cg="101.5"/>
+      <eng-data  t="1.626" f="3.306" m="0.0634407" cg="101.5"/>
+      <eng-data  t="1.662" f="1.202" m="0.0118463" cg="101.5"/>
+      <eng-data  t="1.693" f="0." m="0." cg="101.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

@@ -1,0 +1,33 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Quest" code="E35" Type="single-use" dia="24." len="112.8" initWt="55.1"
+propWt="25.4" delays="5,8,11" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="34.446" peakThrust="46.498" throatDia="0." exitDia="0." Itot="39.302"
+burn-time="1.14" massFrac="46.1" Isp="157.78" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>From TMT letter June 3 2022</comments>
+    <data>
+      <eng-data  t="0." f="0." m="25.4" cg="56.4"/>
+      <eng-data  t="0.001" f="0.626" m="25.3998" cg="56.4"/>
+      <eng-data  t="0.028" f="3.962" m="25.3598" cg="56.4"/>
+      <eng-data  t="0.04" f="13.136" m="25.2935" cg="56.4"/>
+      <eng-data  t="0.051" f="29.608" m="25.1415" cg="56.4"/>
+      <eng-data  t="0.178" f="34.821" m="22.4975" cg="56.4"/>
+      <eng-data  t="0.321" f="36.489" m="19.2024" cg="56.4"/>
+      <eng-data  t="0.516" f="37.74" m="14.5251" cg="56.4"/>
+      <eng-data  t="0.712" f="40.242" m="9.58617" cg="56.4"/>
+      <eng-data  t="0.854" f="41.911" m="5.81657" cg="56.4"/>
+      <eng-data  t="0.947" f="43.579" m="3.24746" cg="56.4"/>
+      <eng-data  t="0.979" f="46.498" m="2.31603" cg="56.4"/>
+      <eng-data  t="0.999" f="41.911" m="1.74467" cg="56.4"/>
+      <eng-data  t="1.018" f="33.779" m="1.27997" cg="56.4"/>
+      <eng-data  t="1.04" f="26.481" m="0.851584" cg="56.4"/>
+      <eng-data  t="1.069" f="19.6" m="0.419763" cg="56.4"/>
+      <eng-data  t="1.104" f="9.383" m="0.0919739" cg="56.4"/>
+      <eng-data  t="1.122" f="3.128" m="0.0192045" cg="56.4"/>
+      <eng-data  t="1.141" f="0." m="0." cg="56.4"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

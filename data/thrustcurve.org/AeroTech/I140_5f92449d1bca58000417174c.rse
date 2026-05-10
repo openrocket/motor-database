@@ -1,0 +1,38 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="I140W" Type="single-use" dia="38." len="202.7"
+initWt="356." propWt="183." delays="14,12,10,8,6" auto-calc-mass="1"
+auto-calc-cg="1" avgThrust="136.91" peakThrust="179.023" throatDia="0."
+exitDia="0." Itot="339.263" burn-time="2.48" massFrac="51.4" Isp="189.04"
+tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10"
+mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>AT I140W DMS</comments>
+    <data>
+      <eng-data  t="0." f="0." m="183." cg="101.35"/>
+      <eng-data  t="0.011" f="96.257" m="182.714" cg="101.35"/>
+      <eng-data  t="0.024" f="80.214" m="182.096" cg="101.35"/>
+      <eng-data  t="0.049" f="160.428" m="180.473" cg="101.35"/>
+      <eng-data  t="0.062" f="144.02" m="179.406" cg="101.35"/>
+      <eng-data  t="0.114" f="160.428" m="175.136" cg="101.35"/>
+      <eng-data  t="0.159" f="164.074" m="171.198" cg="101.35"/>
+      <eng-data  t="0.238" f="174.647" m="163.981" cg="101.35"/>
+      <eng-data  t="0.314" f="173.918" m="156.836" cg="101.35"/>
+      <eng-data  t="0.419" f="179.023" m="146.841" cg="101.35"/>
+      <eng-data  t="0.627" f="178.293" m="126.796" cg="101.35"/>
+      <eng-data  t="0.835" f="176.835" m="106.874" cg="101.35"/>
+      <eng-data  t="0.943" f="177.2" m="96.5622" cg="101.35"/>
+      <eng-data  t="1.146" f="164.803" m="77.8377" cg="101.35"/>
+      <eng-data  t="1.349" f="148.76" m="60.6702" cg="101.35"/>
+      <eng-data  t="1.459" f="141.103" m="52.0708" cg="101.35"/>
+      <eng-data  t="1.562" f="131.259" m="44.5048" cg="101.35"/>
+      <eng-data  t="1.773" f="113.393" m="30.5823" cg="101.35"/>
+      <eng-data  t="2.192" f="83.86" m="8.29168" cg="101.35"/>
+      <eng-data  t="2.295" f="67.088" m="4.09844" cg="101.35"/>
+      <eng-data  t="2.395" f="37.555" m="1.2762" cg="101.35"/>
+      <eng-data  t="2.435" f="31.356" m="0.532779" cg="101.35"/>
+      <eng-data  t="2.47" f="20.418" m="0.0440542" cg="101.35"/>
+      <eng-data  t="2.478" f="0." m="0." cg="101.35"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

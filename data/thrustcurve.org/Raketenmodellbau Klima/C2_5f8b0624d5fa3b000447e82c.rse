@@ -1,0 +1,38 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Klima" code="C2" Type="single-use" dia="18." len="70." initWt="22.4"
+propWt="11.3" delays="0,0" auto-calc-mass="1" auto-calc-cg="1" avgThrust="1.954"
+peakThrust="5.001" throatDia="0." exitDia="0." Itot="9.931" burn-time="5.08"
+massFrac="50.45" Isp="89.62" tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1."
+FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Raketenmodellbau Klima GmbH
+Official manufacturer thrust data - C2
+Created by Leo Nutz for OpenRocket,
+released into the Public Domain (3/2014)
+
+Conversion in to .rse by Raketenmodellbau Klima / Floyd Wurster on 08/13/2014 for use in RockSim.</comments>
+    <data>
+      <eng-data  t="0." f="0." m="11.3" cg="35."/>
+      <eng-data  t="0.04" f="0.229" m="11.2948" cg="35."/>
+      <eng-data  t="0.12" f="0.658" m="11.2544" cg="35."/>
+      <eng-data  t="0.211" f="1.144" m="11.1611" cg="35."/>
+      <eng-data  t="0.291" f="1.831" m="11.0257" cg="35."/>
+      <eng-data  t="0.385" f="2.86" m="10.7748" cg="35."/>
+      <eng-data  t="0.447" f="3.833" m="10.5387" cg="35."/>
+      <eng-data  t="0.505" f="5.001" m="10.2472" cg="35."/>
+      <eng-data  t="0.567" f="3.89" m="9.93361" cg="35."/>
+      <eng-data  t="0.615" f="3.146" m="9.74146" cg="35."/>
+      <eng-data  t="0.665" f="2.66" m="9.5763" cg="35."/>
+      <eng-data  t="0.735" f="2.203" m="9.38263" cg="35."/>
+      <eng-data  t="0.815" f="2.088" m="9.18732" cg="35."/>
+      <eng-data  t="0.93" f="1.98" m="8.92116" cg="35."/>
+      <eng-data  t="4.589" f="1.96" m="0.719051" cg="35."/>
+      <eng-data  t="4.729" f="1.888" m="0.412551" cg="35."/>
+      <eng-data  t="4.815" f="1.602" m="0.24179" cg="35."/>
+      <eng-data  t="4.873" f="1.259" m="0.147381" cg="35."/>
+      <eng-data  t="4.969" f="0.658" m="0.0426774" cg="35."/>
+      <eng-data  t="5.083" f="0." m="0." cg="35."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

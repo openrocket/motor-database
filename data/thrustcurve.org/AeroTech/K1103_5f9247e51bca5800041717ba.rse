@@ -1,0 +1,39 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="K1103X" Type="reloadable" dia="54." len="401."
+initWt="1459." propWt="830." delays="14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1071.99" peakThrust="1619.8" throatDia="0." exitDia="0."
+Itot="1809.52" burn-time="1.69" massFrac="56.89" Isp="222.31" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>K1103X Propellant X</comments>
+    <data>
+      <eng-data  t="0." f="0." m="830." cg="200.5"/>
+      <eng-data  t="0.012" f="1335.71" m="826.324" cg="200.5"/>
+      <eng-data  t="0.016" f="1505.17" m="823.718" cg="200.5"/>
+      <eng-data  t="0.028" f="1619.8" m="815.118" cg="200.5"/>
+      <eng-data  t="0.045" f="1500.18" m="802.953" cg="200.5"/>
+      <eng-data  t="0.081" f="1393.03" m="779.066" cg="200.5"/>
+      <eng-data  t="0.151" f="1330.73" m="735.339" cg="200.5"/>
+      <eng-data  t="0.201" f="1305.81" m="705.106" cg="200.5"/>
+      <eng-data  t="0.399" f="1280.89" m="587.644" cg="200.5"/>
+      <eng-data  t="0.602" f="1243.51" m="470.117" cg="200.5"/>
+      <eng-data  t="0.803" f="1196.16" m="357.654" cg="200.5"/>
+      <eng-data  t="1.001" f="1143.83" m="251.396" cg="200.5"/>
+      <eng-data  t="1.203" f="1074.05" m="148.648" cg="200.5"/>
+      <eng-data  t="1.296" f="1041.66" m="103.522" cg="200.5"/>
+      <eng-data  t="1.384" f="1031.69" m="61.6779" cg="200.5"/>
+      <eng-data  t="1.408" f="1004.28" m="50.4716" cg="200.5"/>
+      <eng-data  t="1.423" f="961.912" m="43.7076" cg="200.5"/>
+      <eng-data  t="1.438" f="839.804" m="37.5095" cg="200.5"/>
+      <eng-data  t="1.46" f="737.632" m="29.5505" cg="200.5"/>
+      <eng-data  t="1.49" f="510.86" m="20.9605" cg="200.5"/>
+      <eng-data  t="1.505" f="446.068" m="17.6686" cg="200.5"/>
+      <eng-data  t="1.603" f="176.932" m="3.6663" cg="200.5"/>
+      <eng-data  t="1.608" f="209.328" m="3.22338" cg="200.5"/>
+      <eng-data  t="1.638" f="97.188" m="1.11447" cg="200.5"/>
+      <eng-data  t="1.688" f="0." m="0." cg="200.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

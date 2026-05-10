@@ -1,0 +1,30 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="G125T-14A" Type="single-use" dia="29." len="127."
+initWt="127." propWt="62." delays="14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="124.681" peakThrust="155.17" throatDia="0." exitDia="0."
+Itot="124.805" burn-time="1." massFrac="48.82" Isp="205.27" tDiv="10" tStep="-1."
+tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>At DMS G125</comments>
+    <data>
+      <eng-data  t="0." f="0." m="62." cg="63.5"/>
+      <eng-data  t="0.008" f="89.654" m="61.8218" cg="63.5"/>
+      <eng-data  t="0.017" f="117.24" m="61.3593" cg="63.5"/>
+      <eng-data  t="0.027" f="119.654" m="60.7709" cg="63.5"/>
+      <eng-data  t="0.047" f="111.033" m="59.6249" cg="63.5"/>
+      <eng-data  t="0.115" f="124.826" m="55.6412" cg="63.5"/>
+      <eng-data  t="0.2" f="134.136" m="50.1738" cg="63.5"/>
+      <eng-data  t="0.399" f="149.308" m="36.1634" cg="63.5"/>
+      <eng-data  t="0.601" f="155.17" m="20.8865" cg="63.5"/>
+      <eng-data  t="0.8" f="138.274" m="6.38183" cg="63.5"/>
+      <eng-data  t="0.824" f="133.791" m="4.75997" cg="63.5"/>
+      <eng-data  t="0.878" f="88.964" m="1.77218" cg="63.5"/>
+      <eng-data  t="0.914" f="44.482" m="0.578913" cg="63.5"/>
+      <eng-data  t="0.933" f="22.414" m="0.263207" cg="63.5"/>
+      <eng-data  t="0.974" f="2.069" m="0.0138756" cg="63.5"/>
+      <eng-data  t="1.001" f="0." m="0." cg="63.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

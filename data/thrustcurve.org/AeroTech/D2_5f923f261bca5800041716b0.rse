@@ -1,0 +1,47 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="D2.3" Type="single-use" dia="18." len="72." initWt="29.3"
+propWt="10.7" delays="0" auto-calc-mass="1" auto-calc-cg="1" avgThrust="2.114"
+peakThrust="10.14" throatDia="0." exitDia="0." Itot="17.209" burn-time="8.14"
+massFrac="36.52" Isp="164." tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1."
+FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Aerotech D2.3-PT RASP.ENG file made from NAR published data
+File produced, 2013
+The total impulse, peak thrust, average thrust and burn time are
+the same as the averaged static test data on the NAR web site in
+the certification file. The curve drawn with these data points is as
+close to the certification curve as can be with such a limited
+number of points (32) allowed with wRASP up to v1.6.
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="10.7" cg="36."/>
+      <eng-data  t="0.02" f="5.071" m="10.6685" cg="36."/>
+      <eng-data  t="0.039" f="9.478" m="10.5825" cg="36."/>
+      <eng-data  t="0.093" f="10.14" m="10.2532" cg="36."/>
+      <eng-data  t="0.184" f="9.478" m="9.69818" cg="36."/>
+      <eng-data  t="0.275" f="8.429" m="9.19157" cg="36."/>
+      <eng-data  t="0.438" f="6.82" m="8.41884" cg="36."/>
+      <eng-data  t="0.657" f="4.372" m="7.65684" cg="36."/>
+      <eng-data  t="0.747" f="3.392" m="7.4396" cg="36."/>
+      <eng-data  t="0.838" f="2.413" m="7.27537" cg="36."/>
+      <eng-data  t="1.056" f="2.064" m="6.97195" cg="36."/>
+      <eng-data  t="1.365" f="1.923" m="6.58894" cg="36."/>
+      <eng-data  t="1.892" f="1.783" m="5.98176" cg="36."/>
+      <eng-data  t="2.528" f="1.713" m="5.29052" cg="36."/>
+      <eng-data  t="2.946" f="1.713" m="4.8453" cg="36."/>
+      <eng-data  t="3.219" f="1.643" m="4.56047" cg="36."/>
+      <eng-data  t="4.091" f="1.573" m="3.68863" cg="36."/>
+      <eng-data  t="4.727" f="1.573" m="3.06659" cg="36."/>
+      <eng-data  t="5.218" f="1.573" m="2.58637" cg="36."/>
+      <eng-data  t="5.636" f="1.573" m="2.17754" cg="36."/>
+      <eng-data  t="6.217" f="1.573" m="1.6093" cg="36."/>
+      <eng-data  t="6.726" f="1.433" m="1.13362" cg="36."/>
+      <eng-data  t="7.199" f="1.503" m="0.701884" cg="36."/>
+      <eng-data  t="7.635" f="1.363" m="0.313406" cg="36."/>
+      <eng-data  t="7.907" f="1.224" m="0.094646" cg="36."/>
+      <eng-data  t="8.016" f="0.734" m="0.0282957" cg="36."/>
+      <eng-data  t="8.14" f="0." m="0." cg="36."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

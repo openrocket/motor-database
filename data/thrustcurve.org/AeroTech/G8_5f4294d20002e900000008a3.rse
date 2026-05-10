@@ -1,0 +1,40 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="G8" Type="single-use" dia="29." len="153." initWt="154.1"
+propWt="93." delays="1000" auto-calc-mass="1" auto-calc-cg="1" avgThrust="8.002"
+peakThrust="10.397" throatDia="0." exitDia="0." Itot="138.181" burn-time="17.27"
+massFrac="60.35" Isp="151.51" tDiv="10" tStep="-1." tFix="1" FDiv="10"
+FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1."
+cgFix="1">
+    <comments>AT G8 End Burner Super Thunder</comments>
+    <data>
+      <eng-data  t="0." f="0." m="93." cg="76.5"/>
+      <eng-data  t="0.038" f="5.121" m="92.9345" cg="76.5"/>
+      <eng-data  t="0.039" f="8.069" m="92.9301" cg="76.5"/>
+      <eng-data  t="0.188" f="9.828" m="92.0327" cg="76.5"/>
+      <eng-data  t="0.414" f="10.397" m="90.4945" cg="76.5"/>
+      <eng-data  t="0.715" f="10.19" m="88.4093" cg="76.5"/>
+      <eng-data  t="1.354" f="9.517" m="84.1716" cg="76.5"/>
+      <eng-data  t="2.069" f="9.155" m="79.6789" cg="76.5"/>
+      <eng-data  t="3.424" f="8.793" m="71.495" cg="76.5"/>
+      <eng-data  t="4.552" f="8.431" m="64.957" cg="76.5"/>
+      <eng-data  t="6.057" f="8.276" m="56.4956" cg="76.5"/>
+      <eng-data  t="6.81" f="8.069" m="52.3539" cg="76.5"/>
+      <eng-data  t="7.713" f="8.121" m="47.4341" cg="76.5"/>
+      <eng-data  t="9.03" f="8.017" m="40.2819" cg="76.5"/>
+      <eng-data  t="9.97" f="7.966" m="35.2261" cg="76.5"/>
+      <eng-data  t="10.76" f="7.914" m="31.0045" cg="76.5"/>
+      <eng-data  t="14.222" f="7.397" m="13.1669" cg="76.5"/>
+      <eng-data  t="14.335" f="7.19" m="12.6122" cg="76.5"/>
+      <eng-data  t="15.764" f="7.138" m="5.72212" cg="76.5"/>
+      <eng-data  t="16.404" f="6.983" m="2.68088" cg="76.5"/>
+      <eng-data  t="16.554" f="7.5" m="1.94981" cg="76.5"/>
+      <eng-data  t="16.63" f="6.724" m="1.58603" cg="76.5"/>
+      <eng-data  t="16.818" f="5.69" m="0.800661" cg="76.5"/>
+      <eng-data  t="16.968" f="3.414" m="0.341116" cg="76.5"/>
+      <eng-data  t="17.119" f="1.655" m="0.08354" cg="76.5"/>
+      <eng-data  t="17.269" f="0." m="0." cg="76.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

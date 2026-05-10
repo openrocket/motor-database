@@ -1,0 +1,46 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="J825R" Type="unspecified" dia="38." len="479."
+initWt="875." propWt="500." delays="14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="862.931" peakThrust="1202.98" throatDia="0." exitDia="0."
+Itot="962.168" burn-time="1.11" massFrac="57.14" Isp="196.23" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>J825 Redline</comments>
+    <data>
+      <eng-data  t="0." f="0." m="500." cg="239.5"/>
+      <eng-data  t="0.006" f="444.822" m="499.307" cg="239.5"/>
+      <eng-data  t="0.014" f="889.644" m="496.533" cg="239.5"/>
+      <eng-data  t="0.015" f="1060.3" m="496.026" cg="239.5"/>
+      <eng-data  t="0.018" f="1202.98" m="494.262" cg="239.5"/>
+      <eng-data  t="0.029" f="1040.72" m="487.849" cg="239.5"/>
+      <eng-data  t="0.039" f="1110.66" m="482.259" cg="239.5"/>
+      <eng-data  t="0.047" f="1071.49" m="477.723" cg="239.5"/>
+      <eng-data  t="0.056" f="1091.07" m="472.666" cg="239.5"/>
+      <eng-data  t="0.08" f="1077.09" m="459.146" cg="239.5"/>
+      <eng-data  t="0.104" f="1068.69" m="445.765" cg="239.5"/>
+      <eng-data  t="0.134" f="1063.1" m="429.148" cg="239.5"/>
+      <eng-data  t="0.17" f="1063.1" m="409.26" cg="239.5"/>
+      <eng-data  t="0.202" f="1068.69" m="391.535" cg="239.5"/>
+      <eng-data  t="0.303" f="1054.7" m="335.811" cg="239.5"/>
+      <eng-data  t="0.401" f="1021.13" m="282.953" cg="239.5"/>
+      <eng-data  t="0.497" f="995.954" m="232.64" cg="239.5"/>
+      <eng-data  t="0.603" f="948.394" m="179.088" cg="239.5"/>
+      <eng-data  t="0.702" f="909.227" m="131.305" cg="239.5"/>
+      <eng-data  t="0.8" f="842.084" m="86.7104" cg="239.5"/>
+      <eng-data  t="0.906" f="772.144" m="42.2514" cg="239.5"/>
+      <eng-data  t="0.933" f="749.763" m="31.5746" cg="239.5"/>
+      <eng-data  t="0.952" f="671.429" m="24.5585" cg="239.5"/>
+      <eng-data  t="0.98" f="579.108" m="15.4606" cg="239.5"/>
+      <eng-data  t="1.005" f="470.001" m="8.64581" cg="239.5"/>
+      <eng-data  t="1.01" f="405.655" m="7.5082" cg="239.5"/>
+      <eng-data  t="1.019" f="405.655" m="5.61098" cg="239.5"/>
+      <eng-data  t="1.034" f="226.607" m="3.14677" cg="239.5"/>
+      <eng-data  t="1.055" f="123.095" m="1.23864" cg="239.5"/>
+      <eng-data  t="1.07" f="50.357" m="0.562624" cg="239.5"/>
+      <eng-data  t="1.093" f="22.381" m="0.127936" cg="239.5"/>
+      <eng-data  t="1.115" f="0." m="0." cg="239.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

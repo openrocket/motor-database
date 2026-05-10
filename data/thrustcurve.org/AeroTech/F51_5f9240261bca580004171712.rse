@@ -1,0 +1,40 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="F51NT" Type="reloadable" dia="24." len="95." initWt="82."
+propWt="26.5" delays="4,6,8,10" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="50.339" peakThrust="71.343" throatDia="0." exitDia="0." Itot="52.856"
+burn-time="1.05" massFrac="32.32" Isp="203.39" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>Curve Fit From AT Instruction Sheet by C. Kobel 5/2/18
+delay times assumed by adjusting provided 10-sec delay grain
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="26.5" cg="47.5"/>
+      <eng-data  t="0.004" f="68.776" m="26.431" cg="47.5"/>
+      <eng-data  t="0.013" f="69.033" m="26.1201" cg="47.5"/>
+      <eng-data  t="0.018" f="70.316" m="25.9455" cg="47.5"/>
+      <eng-data  t="0.027" f="71.343" m="25.6259" cg="47.5"/>
+      <eng-data  t="0.06" f="71.343" m="24.4455" cg="47.5"/>
+      <eng-data  t="0.1" f="70.829" m="23.0199" cg="47.5"/>
+      <eng-data  t="0.2" f="68.52" m="19.5267" cg="47.5"/>
+      <eng-data  t="0.3" f="66.723" m="16.1365" cg="47.5"/>
+      <eng-data  t="0.4" f="64.414" m="12.8492" cg="47.5"/>
+      <eng-data  t="0.5" f="62.361" m="9.67117" cg="47.5"/>
+      <eng-data  t="0.6" f="59.281" m="6.62186" cg="47.5"/>
+      <eng-data  t="0.7" f="54.918" m="3.75913" cg="47.5"/>
+      <eng-data  t="0.722" f="53.635" m="3.16047" cg="47.5"/>
+      <eng-data  t="0.738" f="52.352" m="2.73537" cg="47.5"/>
+      <eng-data  t="0.757" f="48.759" m="2.25379" cg="47.5"/>
+      <eng-data  t="0.775" f="44.397" m="1.83345" cg="47.5"/>
+      <eng-data  t="0.8" f="36.441" m="1.32684" cg="47.5"/>
+      <eng-data  t="0.85" f="18.477" m="0.638498" cg="47.5"/>
+      <eng-data  t="0.875" f="12.318" m="0.445507" cg="47.5"/>
+      <eng-data  t="0.9" f="8.982" m="0.31202" cg="47.5"/>
+      <eng-data  t="0.95" f="4.876" m="0.138325" cg="47.5"/>
+      <eng-data  t="1." f="3.08" m="0.0386046" cg="47.5"/>
+      <eng-data  t="1.05" f="0." m="0." cg="47.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

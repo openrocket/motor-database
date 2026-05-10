@@ -1,0 +1,34 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Quest" code="B14T" Type="single-use" dia="18." len="70." initWt="17.8"
+propWt="2.3" delays="3,5,7" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="12.007" peakThrust="17.45" throatDia="0." exitDia="0." Itot="4.983"
+burn-time="0.41" massFrac="12.92" Isp="220.91" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>Quest by Aerotech B14T entered by kjh from TMT 2024-04-14 thrust curve</comments>
+    <data>
+      <eng-data  t="0." f="0." m="2.3" cg="35."/>
+      <eng-data  t="0.012" f="0.27" m="2.29925" cg="35."/>
+      <eng-data  t="0.047" f="10.64" m="2.21112" cg="35."/>
+      <eng-data  t="0.054" f="11.73" m="2.17498" cg="35."/>
+      <eng-data  t="0.086" f="14.45" m="1.98163" cg="35."/>
+      <eng-data  t="0.098" f="14.91" m="1.90032" cg="35."/>
+      <eng-data  t="0.122" f="15.27" m="1.73315" cg="35."/>
+      <eng-data  t="0.138" f="16.27" m="1.61668" cg="35."/>
+      <eng-data  t="0.15" f="17." m="1.52454" cg="35."/>
+      <eng-data  t="0.18" f="17.27" m="1.28726" cg="35."/>
+      <eng-data  t="0.195" f="17.45" m="1.16706" cg="35."/>
+      <eng-data  t="0.212" f="17." m="1.03189" cg="35."/>
+      <eng-data  t="0.218" f="16.18" m="0.985945" cg="35."/>
+      <eng-data  t="0.235" f="15.82" m="0.860392" cg="35."/>
+      <eng-data  t="0.337" f="13.55" m="0.168989" cg="35."/>
+      <eng-data  t="0.352" f="6.73" m="0.0987805" cg="35."/>
+      <eng-data  t="0.389" f="3.09" m="0.0149232" cg="35."/>
+      <eng-data  t="0.4" f="1.18" m="0.00408277" cg="35."/>
+      <eng-data  t="0.408" f="0.55" m="0.000888563" cg="35."/>
+      <eng-data  t="0.415" f="0." m="0." cg="35."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

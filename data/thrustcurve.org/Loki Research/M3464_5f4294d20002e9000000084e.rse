@@ -1,0 +1,38 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Loki" code="M3400-LB" Type="reloadable" dia="76." len="1038.2"
+initWt="7597." propWt="4464." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="3158.49" peakThrust="4907.49" throatDia="0." exitDia="0."
+Itot="9399.66" burn-time="2.98" massFrac="58.76" Isp="214.72" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="4464." cg="519.1"/>
+      <eng-data  t="0.007" f="4907.49" m="4455.84" cg="519.1"/>
+      <eng-data  t="0.02" f="4008.22" m="4428.32" cg="519.1"/>
+      <eng-data  t="0.047" f="3866.9" m="4377.83" cg="519.1"/>
+      <eng-data  t="0.35" f="3866.9" m="3821.39" cg="519.1"/>
+      <eng-data  t="0.502" f="3866.9" m="3542.25" cg="519.1"/>
+      <eng-data  t="0.579" f="3892.59" m="3400.38" cg="519.1"/>
+      <eng-data  t="1.239" f="4278." m="2119.88" cg="519.1"/>
+      <eng-data  t="1.808" f="4303.69" m="960.387" cg="519.1"/>
+      <eng-data  t="1.886" f="4303.69" m="800.966" cg="519.1"/>
+      <eng-data  t="1.919" f="4188.07" m="734.424" cg="519.1"/>
+      <eng-data  t="2." f="3404.41" m="588.391" cg="519.1"/>
+      <eng-data  t="2.064" f="2916.23" m="492.335" cg="519.1"/>
+      <eng-data  t="2.152" f="2569.37" m="377.707" cg="519.1"/>
+      <eng-data  t="2.242" f="2569.37" m="267.887" cg="519.1"/>
+      <eng-data  t="2.283" f="2440.9" m="219.109" cg="519.1"/>
+      <eng-data  t="2.347" f="1965.57" m="152.143" cg="519.1"/>
+      <eng-data  t="2.384" f="1541.62" m="121.33" cg="519.1"/>
+      <eng-data  t="2.434" f="1104.83" m="89.909" cg="519.1"/>
+      <eng-data  t="2.485" f="835.045" m="66.4166" cg="519.1"/>
+      <eng-data  t="2.545" f="719.423" m="44.2696" cg="519.1"/>
+      <eng-data  t="2.596" f="475.333" m="29.8009" cg="519.1"/>
+      <eng-data  t="2.717" f="205.55" m="10.2377" cg="519.1"/>
+      <eng-data  t="2.862" f="51.387" m="1.39104" cg="519.1"/>
+      <eng-data  t="2.976" f="0." m="0." cg="519.1"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

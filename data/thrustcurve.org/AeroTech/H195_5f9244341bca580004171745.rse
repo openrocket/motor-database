@@ -1,0 +1,37 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="H195NBT" Type="single-use" dia="29." len="203.2"
+initWt="197." propWt="115." delays="10" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="202.617" peakThrust="256.571" throatDia="0." exitDia="0."
+Itot="236.859" burn-time="1.17" massFrac="58.38" Isp="210.03" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="115." cg="101.6"/>
+      <eng-data  t="0.003" f="178.052" m="114.87" cg="101.6"/>
+      <eng-data  t="0.005" f="224.131" m="114.675" cg="101.6"/>
+      <eng-data  t="0.013" f="252.516" m="113.749" cg="101.6"/>
+      <eng-data  t="0.019" f="256.571" m="113.008" cg="101.6"/>
+      <eng-data  t="0.022" f="248.461" m="112.64" cg="101.6"/>
+      <eng-data  t="0.058" f="239.614" m="108.375" cg="101.6"/>
+      <eng-data  t="0.1" f="240.351" m="103.481" cg="101.6"/>
+      <eng-data  t="0.199" f="235.559" m="92.0432" cg="101.6"/>
+      <eng-data  t="0.255" f="228.555" m="85.7338" cg="101.6"/>
+      <eng-data  t="0.285" f="227.449" m="82.4128" cg="101.6"/>
+      <eng-data  t="0.301" f="230.767" m="80.633" cg="101.6"/>
+      <eng-data  t="0.399" f="223.025" m="69.8371" cg="101.6"/>
+      <eng-data  t="0.5" f="223.025" m="58.9004" cg="101.6"/>
+      <eng-data  t="0.603" f="220.445" m="47.8118" cg="101.6"/>
+      <eng-data  t="0.774" f="217.127" m="29.6473" cg="101.6"/>
+      <eng-data  t="0.802" f="211.598" m="26.7331" cg="101.6"/>
+      <eng-data  t="0.899" f="201.644" m="17.0022" cg="101.6"/>
+      <eng-data  t="0.961" f="180.632" m="11.2485" cg="101.6"/>
+      <eng-data  t="0.999" f="169.942" m="8.0145" cg="101.6"/>
+      <eng-data  t="1.023" f="161.094" m="6.0858" cg="101.6"/>
+      <eng-data  t="1.054" f="155.196" m="3.70554" cg="101.6"/>
+      <eng-data  t="1.101" f="69.304" m="1.14405" cg="101.6"/>
+      <eng-data  t="1.169" f="0." m="0." cg="101.6"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

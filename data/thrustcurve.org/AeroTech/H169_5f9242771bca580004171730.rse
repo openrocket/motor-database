@@ -1,0 +1,30 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="H169WS" Type="single-use" dia="29." len="221."
+initWt="202." propWt="112." delays="5,9,13" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="153.306" peakThrust="233.462" throatDia="0." exitDia="0."
+Itot="234.558" burn-time="1.53" massFrac="55.45" Isp="213.56" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="112." cg="110.5"/>
+      <eng-data  t="0.021" f="3.91694" m="111.98" cg="110.5"/>
+      <eng-data  t="0.034" f="138.475" m="111.538" cg="110.5"/>
+      <eng-data  t="0.053" f="216.791" m="109.927" cg="110.5"/>
+      <eng-data  t="0.08" f="231.308" m="107.038" cg="110.5"/>
+      <eng-data  t="0.22" f="233.462" m="91.5036" cg="110.5"/>
+      <eng-data  t="0.299" f="228.854" m="82.7839" cg="110.5"/>
+      <eng-data  t="0.489" f="221.639" m="62.3487" cg="110.5"/>
+      <eng-data  t="0.653" f="214." m="45.2915" cg="110.5"/>
+      <eng-data  t="0.819" f="178.58" m="29.7328" cg="110.5"/>
+      <eng-data  t="0.945" f="147.99" m="19.9089" cg="110.5"/>
+      <eng-data  t="1.132" f="115.306" m="8.15393" cg="110.5"/>
+      <eng-data  t="1.286" f="55.1945" m="1.88515" cg="110.5"/>
+      <eng-data  t="1.35" f="30.5" m="0.575757" cg="110.5"/>
+      <eng-data  t="1.366" f="12.3644" m="0.412018" cg="110.5"/>
+      <eng-data  t="1.444" f="4.64227" m="0.095316" cg="110.5"/>
+      <eng-data  t="1.53" f="0." m="0." cg="110.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

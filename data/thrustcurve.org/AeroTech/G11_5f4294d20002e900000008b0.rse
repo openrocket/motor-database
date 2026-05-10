@@ -1,0 +1,36 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="G11" Type="single-use" dia="29." len="152.4" initWt="153.7"
+propWt="82." delays="1000" auto-calc-mass="1" auto-calc-cg="1" avgThrust="10.034"
+peakThrust="30.444" throatDia="0." exitDia="0." Itot="139.842" burn-time="13.94"
+massFrac="53.35" Isp="173.9" tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1."
+FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>G11ST-P</comments>
+    <data>
+      <eng-data  t="0." f="0." m="82." cg="76.2"/>
+      <eng-data  t="0.084" f="30.444" m="81.2502" cg="76.2"/>
+      <eng-data  t="0.105" f="28.414" m="80.8878" cg="76.2"/>
+      <eng-data  t="0.209" f="27.738" m="79.1757" cg="76.2"/>
+      <eng-data  t="0.419" f="24.085" m="75.985" cg="76.2"/>
+      <eng-data  t="0.753" f="18.402" m="71.8244" cg="76.2"/>
+      <eng-data  t="0.9" f="14.748" m="70.3957" cg="76.2"/>
+      <eng-data  t="1.046" f="11.907" m="69.2547" cg="76.2"/>
+      <eng-data  t="1.444" f="10.013" m="66.6969" cg="76.2"/>
+      <eng-data  t="2.051" f="9.742" m="63.1812" cg="76.2"/>
+      <eng-data  t="3.034" f="9.201" m="57.7217" cg="76.2"/>
+      <eng-data  t="4.018" f="9.471" m="52.3349" cg="76.2"/>
+      <eng-data  t="5.483" f="9.201" m="44.3149" cg="76.2"/>
+      <eng-data  t="5.713" f="8.93" m="43.0923" cg="76.2"/>
+      <eng-data  t="9.375" f="9.742" m="23.045" cg="76.2"/>
+      <eng-data  t="9.501" f="8.93" m="22.3552" cg="76.2"/>
+      <eng-data  t="11.049" f="9.742" m="13.8808" cg="76.2"/>
+      <eng-data  t="12.263" f="9.336" m="7.09036" cg="76.2"/>
+      <eng-data  t="13.288" f="8.66" m="1.68223" cg="76.2"/>
+      <eng-data  t="13.456" f="7.307" m="0.895767" cg="76.2"/>
+      <eng-data  t="13.602" f="4.6" m="0.386082" cg="76.2"/>
+      <eng-data  t="13.77" f="1.624" m="0.079515" cg="76.2"/>
+      <eng-data  t="13.937" f="0." m="0." cg="76.2"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

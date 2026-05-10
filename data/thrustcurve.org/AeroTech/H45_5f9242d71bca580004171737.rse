@@ -1,0 +1,26 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="H45" Type="single-use" dia="38." len="202.7" initWt="364."
+propWt="180." delays="10" auto-calc-mass="1" auto-calc-cg="1" avgThrust="52.007"
+peakThrust="86.004" throatDia="0." exitDia="0." Itot="321.713" burn-time="6.19"
+massFrac="49.45" Isp="182.25" tDiv="10" tStep="-1." tFix="1" FDiv="10"
+FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1."
+cgFix="1">
+    <comments>From AT DMS announcement May 2014.</comments>
+    <data>
+      <eng-data  t="0." f="0." m="180." cg="101.35"/>
+      <eng-data  t="0.04" f="84.004" m="179.06" cg="101.35"/>
+      <eng-data  t="0.854" f="86.004" m="140.346" cg="101.35"/>
+      <eng-data  t="1.377" f="84.804" m="115.355" cg="101.35"/>
+      <eng-data  t="2.046" f="79.204" m="84.6603" cg="101.35"/>
+      <eng-data  t="2.69" f="66.003" m="58.4997" cg="101.35"/>
+      <eng-data  t="3.286" f="51.603" m="38.891" cg="101.35"/>
+      <eng-data  t="4.414" f="28.401" m="13.6449" cg="101.35"/>
+      <eng-data  t="5.042" f="16.001" m="5.84413" cg="101.35"/>
+      <eng-data  t="5.429" f="9.2" m="3.11577" cg="101.35"/>
+      <eng-data  t="6.113" f="6.4" m="0.1307" cg="101.35"/>
+      <eng-data  t="6.186" f="0." m="0." cg="101.35"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

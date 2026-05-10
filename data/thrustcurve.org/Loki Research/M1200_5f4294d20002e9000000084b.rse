@@ -1,0 +1,25 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Loki" code="M1200-SF" Type="reloadable" dia="75.0011" len="785."
+initWt="5368." propWt="2968." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1152.12" peakThrust="1514.51" throatDia="0." exitDia="0."
+Itot="5184.54" burn-time="4.5" massFrac="55.29" Isp="178.12" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="2968." cg="392.5"/>
+      <eng-data  t="0.02" f="1018.47" m="2962.17" cg="392.5"/>
+      <eng-data  t="0.5" f="1203.17" m="2656.93" cg="392.5"/>
+      <eng-data  t="1." f="1303.43" m="2298.19" cg="392.5"/>
+      <eng-data  t="1.5" f="1398.42" m="1911.51" cg="392.5"/>
+      <eng-data  t="2." f="1514.51" m="1494.62" cg="392.5"/>
+      <eng-data  t="2.5" f="1498.68" m="1063.38" cg="392.5"/>
+      <eng-data  t="3." f="1408.97" m="647.241" cg="392.5"/>
+      <eng-data  t="3.5" f="1203.17" m="273.397" cg="392.5"/>
+      <eng-data  t="4." f="411.609" m="42.2933" cg="392.5"/>
+      <eng-data  t="4.25" f="89.7098" m="6.41953" cg="392.5"/>
+      <eng-data  t="4.5" f="0." m="0." cg="392.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

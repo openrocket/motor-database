@@ -1,0 +1,51 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Unknown" code="O6000W" Type="single-use" dia="152." len="1120."
+initWt="31524.6" propWt="21999." delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="5812.42" peakThrust="8808.32" throatDia="0." exitDia="0."
+Itot="39687.2" burn-time="6.83" massFrac="69.78" Isp="183.96" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments><![CDATA[AeroTech O6000W RASP .ENG file
+File produced December 04, 2023 by NAR Standards & Testing
+
+Motor Diameter Length Delays Propellant_Mass(kg) Initial_Mass(kg) Manufacturer
+]]></comments>
+    <data>
+      <eng-data  t="0." f="0." m="21999." cg="560."/>
+      <eng-data  t="0.001" f="480.452" m="21998.9" cg="560."/>
+      <eng-data  t="0.034" f="8808.32" m="21913.9" cg="560."/>
+      <eng-data  t="0.089" f="6516.15" m="21680.3" cg="560."/>
+      <eng-data  t="0.2" f="7366.97" m="21253.2" cg="560."/>
+      <eng-data  t="0.348" f="6876.51" m="20669." cg="560."/>
+      <eng-data  t="0.753" f="6716.37" m="19143.2" cg="560."/>
+      <eng-data  t="0.797" f="7016.63" m="18975.7" cg="560."/>
+      <eng-data  t="0.843" f="6716.37" m="18800.6" cg="560."/>
+      <eng-data  t="0.916" f="7016.63" m="18522.8" cg="560."/>
+      <eng-data  t="0.993" f="6716.37" m="18229.7" cg="560."/>
+      <eng-data  t="1.021" f="7036.64" m="18123." cg="560."/>
+      <eng-data  t="1.564" f="6876.51" m="16029.1" cg="560."/>
+      <eng-data  t="1.585" f="7136.77" m="15947.6" cg="560."/>
+      <eng-data  t="2.144" f="7196.82" m="13726.9" cg="560."/>
+      <eng-data  t="2.328" f="7557.13" m="12974.5" cg="560."/>
+      <eng-data  t="2.591" f="7316.92" m="11890.3" cg="560."/>
+      <eng-data  t="2.924" f="7567.18" m="10516.6" cg="560."/>
+      <eng-data  t="3.133" f="7036.64" m="9670.65" cg="560."/>
+      <eng-data  t="3.366" f="7116.71" m="8756.66" cg="560."/>
+      <eng-data  t="3.749" f="6866.5" m="7272.34" cg="560."/>
+      <eng-data  t="3.768" f="7116.71" m="7198.71" cg="560."/>
+      <eng-data  t="4.325" f="6876.51" m="5038.5" cg="560."/>
+      <eng-data  t="4.329" f="7176.81" m="5022.92" cg="560."/>
+      <eng-data  t="4.402" f="6876.51" m="4738.59" cg="560."/>
+      <eng-data  t="4.907" f="7136.77" m="2777.25" cg="560."/>
+      <eng-data  t="5.157" f="5975.65" m="1868.71" cg="560."/>
+      <eng-data  t="5.569" f="2872.71" m="858.334" cg="560."/>
+      <eng-data  t="5.751" f="1911.8" m="616.993" cg="560."/>
+      <eng-data  t="6.234" f="1040.97" m="221.718" cg="560."/>
+      <eng-data  t="6.61" f="470.444" m="64.2126" cg="560."/>
+      <eng-data  t="6.801" f="650.597" m="4.86853" cg="560."/>
+      <eng-data  t="6.828" f="0." m="0." cg="560."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

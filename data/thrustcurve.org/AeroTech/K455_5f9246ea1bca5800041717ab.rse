@@ -1,0 +1,38 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="K455NW" Type="single-use" dia="54." len="675."
+initWt="2286." propWt="1456" delays="9,13,17" auto-calc-mass="1"
+auto-calc-cg="1" avgThrust="431.165" peakThrust="1300.22" throatDia="0."
+exitDia="0." Itot="2328.29" burn-time="5.4" massFrac="6.37" Isp="1630.63"
+tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10"
+mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="145.6" cg="337.5"/>
+      <eng-data  t="0.014" f="12.1761" m="145.595" cg="337.5"/>
+      <eng-data  t="0.034" f="263.205" m="145.422" cg="337.5"/>
+      <eng-data  t="0.062" f="1218.88" m="144.125" cg="337.5"/>
+      <eng-data  t="0.111" f="1228.86" m="140.375" cg="337.5"/>
+      <eng-data  t="0.2" f="1287.57" m="133.372" cg="337.5"/>
+      <eng-data  t="0.409" f="1300.22" m="116.461" cg="337.5"/>
+      <eng-data  t="0.505" f="1234.35" m="108.853" cg="337.5"/>
+      <eng-data  t="0.548" f="1082.7" m="105.738" cg="337.5"/>
+      <eng-data  t="0.587" f="395.753" m="103.935" cg="337.5"/>
+      <eng-data  t="0.62" f="445.028" m="103.067" cg="337.5"/>
+      <eng-data  t="0.85" f="476.417" m="96.4407" cg="337.5"/>
+      <eng-data  t="1.23" f="447.072" m="85.4681" cg="337.5"/>
+      <eng-data  t="1.725" f="437.524" m="71.7768" cg="337.5"/>
+      <eng-data  t="2.22" f="428.648" m="58.3707" cg="337.5"/>
+      <eng-data  t="2.714" f="414.93" m="45.3406" cg="337.5"/>
+      <eng-data  t="3.208" f="401.805" m="32.7252" cg="337.5"/>
+      <eng-data  t="3.664" f="395.35" m="21.3593" cg="337.5"/>
+      <eng-data  t="3.941" f="399.6" m="14.4742" cg="337.5"/>
+      <eng-data  t="4.12" f="294.943" m="10.5869" cg="337.5"/>
+      <eng-data  t="4.5" f="164.816" m="5.12419" cg="337.5"/>
+      <eng-data  t="4.881" f="101.877" m="1.94709" cg="337.5"/>
+      <eng-data  t="5.147" f="62.2312" m="0.582167" cg="337.5"/>
+      <eng-data  t="5.329" f="28.8252" m="0.063992" cg="337.5"/>
+      <eng-data  t="5.4" f="0." m="0." cg="337.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

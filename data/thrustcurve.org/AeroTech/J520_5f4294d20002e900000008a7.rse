@@ -1,0 +1,38 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="J520W" Type="reloadable" dia="38." len="502.1"
+initWt="757.4" propWt="381." delays="5,9,13" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="464.687" peakThrust="892.23" throatDia="0." exitDia="0."
+Itot="686.808" burn-time="1.48" massFrac="50.3" Isp="183.82" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Certified 8/26/2018 TMT</comments>
+    <data>
+      <eng-data  t="0." f="0." m="381." cg="251.05"/>
+      <eng-data  t="0.024" f="15.517" m="380.897" cg="251.05"/>
+      <eng-data  t="0.034" f="131.895" m="380.488" cg="251.05"/>
+      <eng-data  t="0.039" f="318.099" m="379.864" cg="251.05"/>
+      <eng-data  t="0.046" f="659.474" m="377.966" cg="251.05"/>
+      <eng-data  t="0.049" f="752.577" m="376.791" cg="251.05"/>
+      <eng-data  t="0.051" f="799.128" m="375.93" cg="251.05"/>
+      <eng-data  t="0.066" f="756.456" m="369.458" cg="251.05"/>
+      <eng-data  t="0.071" f="791.369" m="367.311" cg="251.05"/>
+      <eng-data  t="0.098" f="892.23" m="354.703" cg="251.05"/>
+      <eng-data  t="0.137" f="861.196" m="335.735" cg="251.05"/>
+      <eng-data  t="0.168" f="837.921" m="321.125" cg="251.05"/>
+      <eng-data  t="0.195" f="810.766" m="308.778" cg="251.05"/>
+      <eng-data  t="0.234" f="783.611" m="291.531" cg="251.05"/>
+      <eng-data  t="0.4" f="706.026" m="222.943" cg="251.05"/>
+      <eng-data  t="0.598" f="593.527" m="151.573" cg="251.05"/>
+      <eng-data  t="0.798" f="477.149" m="92.178" cg="251.05"/>
+      <eng-data  t="0.998" f="376.288" m="44.8344" cg="251.05"/>
+      <eng-data  t="1.056" f="333.617" m="33.4139" cg="251.05"/>
+      <eng-data  t="1.102" f="298.703" m="25.3461" cg="251.05"/>
+      <eng-data  t="1.198" f="170.688" m="12.8474" cg="251.05"/>
+      <eng-data  t="1.302" f="100.861" m="5.01412" cg="251.05"/>
+      <eng-data  t="1.4" f="46.551" m="1.00712" cg="251.05"/>
+      <eng-data  t="1.478" f="0." m="0." cg="251.05"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>
