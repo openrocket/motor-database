@@ -1,0 +1,36 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="AT" code="I229T" Type="reloadable" dia="54." len="156." initWt="520.001"
+propWt="205.999" delays="6,10,14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="239.122" peakThrust="273.66" throatDia="0." exitDia="0."
+Itot="413.681" burn-time="1.73" massFrac="39.62" Isp="204.78" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="206." cg="78."/>
+      <eng-data  t="0.01" f="44.73" m="205.889" cg="78."/>
+      <eng-data  t="0.02" f="216.65" m="205.238" cg="78."/>
+      <eng-data  t="0.19" f="244.72" m="185.709" cg="78."/>
+      <eng-data  t="0.4" f="266.64" m="158.972" cg="78."/>
+      <eng-data  t="0.49" f="266.64" m="147.022" cg="78."/>
+      <eng-data  t="0.52" f="273.66" m="142.986" cg="78."/>
+      <eng-data  t="0.59" f="271.9" m="133.478" cg="78."/>
+      <eng-data  t="0.75" f="272.78" m="111.779" cg="78."/>
+      <eng-data  t="0.84" f="268.4" m="99.652" cg="78."/>
+      <eng-data  t="0.88" f="271.9" m="94.271" cg="78."/>
+      <eng-data  t="0.97" f="262.26" m="82.3012" cg="78."/>
+      <eng-data  t="1." f="265.76" m="78.3572" cg="78."/>
+      <eng-data  t="1.07" f="255.24" m="69.2767" cg="78."/>
+      <eng-data  t="1.21" f="249.1" m="51.6966" cg="78."/>
+      <eng-data  t="1.51" f="219.28" m="16.7109" cg="78."/>
+      <eng-data  t="1.6" f="230.68" m="6.6279" cg="78."/>
+      <eng-data  t="1.63" f="191.21" m="3.47659" cg="78."/>
+      <eng-data  t="1.64" f="132.44" m="2.67075" cg="78."/>
+      <eng-data  t="1.66" f="86.83" m="1.57886" cg="78."/>
+      <eng-data  t="1.7" f="44.73" m="0.268604" cg="78."/>
+      <eng-data  t="1.71" f="21.05" m="0.104822" cg="78."/>
+      <eng-data  t="1.73" f="0." m="0." cg="78."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

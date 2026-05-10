@@ -1,0 +1,30 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="L1256WS" Type="reloadable" dia="75." len="561."
+initWt="3756." propWt="1964." auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1230.13" peakThrust="1469.66" throatDia="0." exitDia="0."
+Itot="3762.97" burn-time="3.06" massFrac="52.29" Isp="195.37" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="1964." cg="280.5"/>
+      <eng-data  t="0.017" f="13.8651" m="1963.94" cg="280.5"/>
+      <eng-data  t="0.045" f="1220." m="1954.92" cg="280.5"/>
+      <eng-data  t="0.19" f="1400.24" m="1855.77" cg="280.5"/>
+      <eng-data  t="0.465" f="1439.08" m="1652.01" cg="280.5"/>
+      <eng-data  t="0.77" f="1469.66" m="1420.49" cg="280.5"/>
+      <eng-data  t="1.076" f="1466.08" m="1186.06" cg="280.5"/>
+      <eng-data  t="1.381" f="1445.4" m="954.32" cg="280.5"/>
+      <eng-data  t="1.723" f="1340.96" m="705.638" cg="280.5"/>
+      <eng-data  t="2.029" f="1231.09" m="500.247" cg="280.5"/>
+      <eng-data  t="2.485" f="1098.46" m="223.033" cg="280.5"/>
+      <eng-data  t="2.71" f="1064.1" m="96.0542" cg="280.5"/>
+      <eng-data  t="2.788" f="829.729" m="57.5049" cg="280.5"/>
+      <eng-data  t="2.939" f="376.032" m="9.99119" cg="280.5"/>
+      <eng-data  t="3.023" f="55.7705" m="0.525652" cg="280.5"/>
+      <eng-data  t="3.041" f="28.0667" m="0.131839" cg="280.5"/>
+      <eng-data  t="3.059" f="0." m="0." cg="280.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

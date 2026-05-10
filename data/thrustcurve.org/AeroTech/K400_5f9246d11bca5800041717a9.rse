@@ -1,0 +1,38 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="K400C" Type="single-use" dia="54." len="359."
+initWt="1194." propWt="493." delays="14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="401.122" peakThrust="548.466" throatDia="0." exitDia="0."
+Itot="1307.26" burn-time="3.26" massFrac="41.29" Isp="270.39" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Aerotech K400C DMS</comments>
+    <data>
+      <eng-data  t="0." f="0." m="493." cg="179.5"/>
+      <eng-data  t="0.008" f="376.374" m="492.432" cg="179.5"/>
+      <eng-data  t="0.025" f="526.181" m="489.539" cg="179.5"/>
+      <eng-data  t="0.034" f="548.466" m="487.715" cg="179.5"/>
+      <eng-data  t="0.063" f="500.182" m="481.981" cg="179.5"/>
+      <eng-data  t="0.178" f="527.419" m="459.698" cg="179.5"/>
+      <eng-data  t="0.394" f="522.467" m="416.936" cg="179.5"/>
+      <eng-data  t="0.69" f="502.658" m="359.719" cg="179.5"/>
+      <eng-data  t="1.003" f="487.801" m="301.262" cg="179.5"/>
+      <eng-data  t="1.494" f="446.944" m="214.72" cg="179.5"/>
+      <eng-data  t="2.002" f="402.374" m="133.364" cg="179.5"/>
+      <eng-data  t="2.243" f="377.612" m="97.9183" cg="179.5"/>
+      <eng-data  t="2.501" f="363.994" m="61.8398" cg="179.5"/>
+      <eng-data  t="2.658" f="354.089" m="40.5814" cg="179.5"/>
+      <eng-data  t="2.772" f="337.994" m="25.7043" cg="179.5"/>
+      <eng-data  t="2.844" f="304.566" m="16.9806" cg="179.5"/>
+      <eng-data  t="2.882" f="268.662" m="12.8732" cg="179.5"/>
+      <eng-data  t="2.929" f="177.044" m="8.92311" cg="179.5"/>
+      <eng-data  t="2.963" f="116.379" m="7.04194" cg="179.5"/>
+      <eng-data  t="3.001" f="99.046" m="5.49834" cg="179.5"/>
+      <eng-data  t="3.064" f="94.094" m="3.20394" cg="179.5"/>
+      <eng-data  t="3.123" f="61.904" m="1.46843" cg="179.5"/>
+      <eng-data  t="3.208" f="18.571" m="0.178592" cg="179.5"/>
+      <eng-data  t="3.259" f="0." m="0." cg="179.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

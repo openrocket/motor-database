@@ -1,0 +1,38 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="I327DM" Type="reloadable" dia="38." len="337."
+initWt="628." propWt="354." delays="14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="315.022" peakThrust="432.602" throatDia="0." exitDia="0."
+Itot="542.784" burn-time="1.72" massFrac="56.37" Isp="156.35" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>I327-14 Dark Matter</comments>
+    <data>
+      <eng-data  t="0." f="0." m="354." cg="168.5"/>
+      <eng-data  t="0.009" f="393.741" m="352.844" cg="168.5"/>
+      <eng-data  t="0.026" f="432.602" m="348.263" cg="168.5"/>
+      <eng-data  t="0.161" f="387.142" m="312.176" cg="168.5"/>
+      <eng-data  t="0.245" f="382.742" m="291.087" cg="168.5"/>
+      <eng-data  t="0.303" f="371.011" m="276.831" cg="168.5"/>
+      <eng-data  t="0.601" f="372.477" m="204.581" cg="168.5"/>
+      <eng-data  t="0.702" f="371.011" m="180.094" cg="168.5"/>
+      <eng-data  t="0.798" f="375.41" m="156.727" cg="168.5"/>
+      <eng-data  t="0.983" f="371.744" m="111.653" cg="168.5"/>
+      <eng-data  t="1.04" f="370.278" m="97.8602" cg="168.5"/>
+      <eng-data  t="1.104" f="371.744" m="82.3741" cg="168.5"/>
+      <eng-data  t="1.199" f="343.148" m="60.2273" cg="168.5"/>
+      <eng-data  t="1.3" f="335.816" m="37.8651" cg="168.5"/>
+      <eng-data  t="1.335" f="357.813" m="29.9485" cg="168.5"/>
+      <eng-data  t="1.365" f="327.751" m="23.2417" cg="168.5"/>
+      <eng-data  t="1.399" f="265.427" m="16.6649" cg="168.5"/>
+      <eng-data  t="1.428" f="185.505" m="12.4006" cg="168.5"/>
+      <eng-data  t="1.451" f="156.91" m="9.83237" cg="168.5"/>
+      <eng-data  t="1.493" f="112.183" m="6.14685" cg="168.5"/>
+      <eng-data  t="1.553" f="68.19" m="2.61771" cg="168.5"/>
+      <eng-data  t="1.601" f="32.262" m="1.04537" cg="168.5"/>
+      <eng-data  t="1.656" f="11.732" m="0.256326" cg="168.5"/>
+      <eng-data  t="1.723" f="0." m="0." cg="168.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

@@ -1,0 +1,36 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="K76WN" Type="single-use" dia="54." len="368."
+initWt="1277.9" propWt="840." delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="66.015" peakThrust="284.07" throatDia="0." exitDia="0." Itot="1358.32"
+burn-time="20.58" massFrac="65.73" Isp="164.89" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="840." cg="184."/>
+      <eng-data  t="0.002" f="0.89" m="839.999" cg="184."/>
+      <eng-data  t="0.024" f="14.56" m="839.894" cg="184."/>
+      <eng-data  t="0.03" f="103.75" m="839.675" cg="184."/>
+      <eng-data  t="0.046" f="251.29" m="837.918" cg="184."/>
+      <eng-data  t="0.122" f="277.15" m="825.5" cg="184."/>
+      <eng-data  t="0.834" f="279.78" m="702.889" cg="184."/>
+      <eng-data  t="1.266" f="284.07" m="627.572" cg="184."/>
+      <eng-data  t="2.13" f="273.27" m="478.676" cg="184."/>
+      <eng-data  t="2.886" f="256.7" m="354.79" cg="184."/>
+      <eng-data  t="3.084" f="151.95" m="329.771" cg="184."/>
+      <eng-data  t="3.278" f="49.95" m="317.66" cg="184."/>
+      <eng-data  t="3.71" f="39.6" m="305.698" cg="184."/>
+      <eng-data  t="4.862" f="36.31" m="278.658" cg="184."/>
+      <eng-data  t="9.686" f="30.08" m="179.63" cg="184."/>
+      <eng-data  t="12.965" f="28.25" m="120.49" cg="184."/>
+      <eng-data  t="15.665" f="26.82" m="74.5146" cg="184."/>
+      <eng-data  t="18.512" f="25.91" m="28.0958" cg="184."/>
+      <eng-data  t="19.951" f="24.61" m="5.61696" cg="184."/>
+      <eng-data  t="20.131" f="22.17" m="3.01332" cg="184."/>
+      <eng-data  t="20.286" f="14.57" m="1.25248" cg="184."/>
+      <eng-data  t="20.442" f="6.13" m="0.253989" cg="184."/>
+      <eng-data  t="20.576" f="0." m="0." cg="184."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

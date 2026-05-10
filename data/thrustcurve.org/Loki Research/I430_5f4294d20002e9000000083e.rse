@@ -1,0 +1,21 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Loki" code="I430-LB" Type="reloadable" dia="38." len="292." initWt="540."
+propWt="240." delays="7,9,12,15" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="435.281" peakThrust="534.483" throatDia="0." exitDia="0."
+Itot="522.337" burn-time="1.2" massFrac="44.44" Isp="221.93" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="240." cg="146."/>
+      <eng-data  t="0.00931677" f="534.483" m="238.856" cg="146."/>
+      <eng-data  t="0.0310559" f="448.276" m="233.948" cg="146."/>
+      <eng-data  t="0.0962733" f="465.517" m="220.257" cg="146."/>
+      <eng-data  t="0.372671" f="456.897" m="161.684" cg="146."/>
+      <eng-data  t="0.748447" f="439.655" m="84.2855" cg="146."/>
+      <eng-data  t="1.14907" f="422.414" m="4.94246" cg="146."/>
+      <eng-data  t="1.2" f="0." m="0." cg="146."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

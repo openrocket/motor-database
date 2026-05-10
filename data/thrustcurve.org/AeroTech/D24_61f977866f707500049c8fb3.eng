@@ -1,0 +1,21 @@
+; Aerotech D24
+; From NAR data sheet, June 2003
+; Joseph Avins, February 1, 2022
+; Total mass (31.1 g) refers to the 7 second delay. For the 4 second delay it is 30.5 g.
+
+D24 18 70 4-7 .0087 .0311 Aerotech
+   0.008 10
+   0.015 15
+   0.035 25.52
+   0.06 22.5
+   0.1 21.8
+   0.2 21
+   0.4 20
+   0.6 17.8
+   0.8 14.3
+   0.94 10
+   1.03 5.2
+   1.1 2.45
+   1.15 1
+   1.22 0
+;

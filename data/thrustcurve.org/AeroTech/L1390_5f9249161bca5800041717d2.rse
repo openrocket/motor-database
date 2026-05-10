@@ -1,0 +1,55 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="L1390G" Type="reloadable" dia="75." len="517.91"
+initWt="3876." propWt="1973." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1355.71" peakThrust="1649.83" throatDia="0." exitDia="0."
+Itot="3946.48" burn-time="2.91" massFrac="50.9" Isp="203.97" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Input by Tim Van Milligan for RockSim users. Used John Coker's ThrustCruve
+Tracer program. Thrust curve and engine data from Aerotech thrust stand.
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="1973." cg="258.955"/>
+      <eng-data  t="0.018" f="906.203" m="1968.92" cg="258.955"/>
+      <eng-data  t="0.041" f="1249.41" m="1956.53" cg="258.955"/>
+      <eng-data  t="0.055" f="1336.72" m="1947.48" cg="258.955"/>
+      <eng-data  t="0.099" f="1369.84" m="1917.71" cg="258.955"/>
+      <eng-data  t="0.173" f="1402.96" m="1866.42" cg="258.955"/>
+      <eng-data  t="0.236" f="1411.99" m="1822.09" cg="258.955"/>
+      <eng-data  t="0.284" f="1411.99" m="1788.21" cg="258.955"/>
+      <eng-data  t="0.678" f="1586.61" m="1492.88" cg="258.955"/>
+      <eng-data  t="0.869" f="1649.83" m="1338.36" cg="258.955"/>
+      <eng-data  t="0.939" f="1640.8" m="1280.78" cg="258.955"/>
+      <eng-data  t="1.102" f="1625.74" m="1147.68" cg="258.955"/>
+      <eng-data  t="1.197" f="1628.76" m="1070.4" cg="258.955"/>
+      <eng-data  t="1.293" f="1619.72" m="992.446" cg="258.955"/>
+      <eng-data  t="1.374" f="1607.68" m="927.099" cg="258.955"/>
+      <eng-data  t="1.455" f="1601.66" m="862.118" cg="258.955"/>
+      <eng-data  t="1.518" f="1589.62" m="811.861" cg="258.955"/>
+      <eng-data  t="1.592" f="1550.48" m="753.777" cg="258.955"/>
+      <eng-data  t="1.691" f="1499.3" m="678.304" cg="258.955"/>
+      <eng-data  t="1.838" f="1424.03" m="570.885" cg="258.955"/>
+      <eng-data  t="1.96" f="1366.83" m="485.774" cg="258.955"/>
+      <eng-data  t="2.1" f="1312.64" m="392.004" cg="258.955"/>
+      <eng-data  t="2.225" f="1261.46" m="311.573" cg="258.955"/>
+      <eng-data  t="2.343" f="1228.34" m="238.133" cg="258.955"/>
+      <eng-data  t="2.417" f="1213.29" m="192.968" cg="258.955"/>
+      <eng-data  t="2.479" f="1204.26" m="155.501" cg="258.955"/>
+      <eng-data  t="2.524" f="1198.23" m="128.476" cg="258.955"/>
+      <eng-data  t="2.564" f="1198.23" m="104.514" cg="258.955"/>
+      <eng-data  t="2.601" f="1165.12" m="82.6561" cg="258.955"/>
+      <eng-data  t="2.638" f="1074.8" m="61.9394" cg="258.955"/>
+      <eng-data  t="2.66" f="957.383" m="50.7637" cg="258.955"/>
+      <eng-data  t="2.689" f="839.968" m="37.7345" cg="258.955"/>
+      <eng-data  t="2.712" f="713.522" m="28.8031" cg="258.955"/>
+      <eng-data  t="2.737" f="590.085" m="20.6565" cg="258.955"/>
+      <eng-data  t="2.763" f="427.511" m="14.0429" cg="258.955"/>
+      <eng-data  t="2.8" f="295.043" m="7.36013" cg="258.955"/>
+      <eng-data  t="2.844" f="153.543" m="2.42629" cg="258.955"/>
+      <eng-data  t="2.877" f="69.245" m="0.588511" cg="258.955"/>
+      <eng-data  t="2.911" f="0." m="0." cg="258.955"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

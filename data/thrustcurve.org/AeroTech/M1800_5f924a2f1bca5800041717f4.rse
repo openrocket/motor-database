@@ -1,0 +1,57 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="M1800FJ" Type="reloadable" dia="98." len="751."
+initWt="9162." propWt="5599." delays="4" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1658.46" peakThrust="3007.36" throatDia="0." exitDia="0."
+Itot="8212.7" burn-time="4.95" massFrac="61.11" Isp="149.57" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Entered by Tim Van Milligan. Used John Coker's ThrustCurve Tracer software and
+data from TRA certification dated 10-14-08
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="5599." cg="375.5"/>
+      <eng-data  t="0.021" f="3007.36" m="5577.47" cg="375.5"/>
+      <eng-data  t="0.043" f="1964.71" m="5540.19" cg="375.5"/>
+      <eng-data  t="0.059" f="1858.32" m="5519.33" cg="375.5"/>
+      <eng-data  t="0.069" f="1766.12" m="5506.98" cg="375.5"/>
+      <eng-data  t="0.134" f="1829.95" m="5427.3" cg="375.5"/>
+      <eng-data  t="0.192" f="1822.86" m="5355.08" cg="375.5"/>
+      <eng-data  t="0.267" f="1822.86" m="5261.88" cg="375.5"/>
+      <eng-data  t="0.363" f="1865.41" m="5141.18" cg="375.5"/>
+      <eng-data  t="0.502" f="1936.34" m="4961.05" cg="375.5"/>
+      <eng-data  t="0.582" f="1922.16" m="4855.83" cg="375.5"/>
+      <eng-data  t="0.684" f="1964.71" m="4720.69" cg="375.5"/>
+      <eng-data  t="1.132" f="2071.11" m="4104.37" cg="375.5"/>
+      <eng-data  t="1.581" f="2149.13" m="3458.45" cg="375.5"/>
+      <eng-data  t="1.923" f="2198.78" m="2951.57" cg="375.5"/>
+      <eng-data  t="2.142" f="2220.06" m="2621.7" cg="375.5"/>
+      <eng-data  t="2.393" f="2220.06" m="2241.81" cg="375.5"/>
+      <eng-data  t="2.463" f="2198.78" m="2136.37" cg="375.5"/>
+      <eng-data  t="2.655" f="2106.57" m="1854.59" cg="375.5"/>
+      <eng-data  t="2.831" f="2007.27" m="1607.79" cg="375.5"/>
+      <eng-data  t="2.922" f="1978.9" m="1484.14" cg="375.5"/>
+      <eng-data  t="3.029" f="1915.07" m="1342.11" cg="375.5"/>
+      <eng-data  t="3.21" f="1808.67" m="1112.36" cg="375.5"/>
+      <eng-data  t="3.349" f="1695.19" m="946.343" cg="375.5"/>
+      <eng-data  t="3.526" f="1588.8" m="748.205" cg="375.5"/>
+      <eng-data  t="3.723" f="1439.85" m="544.825" cg="375.5"/>
+      <eng-data  t="3.851" f="1397.29" m="421.035" cg="375.5"/>
+      <eng-data  t="3.921" f="1361.82" m="355.199" cg="375.5"/>
+      <eng-data  t="4.017" f="1255.43" m="269.552" cg="375.5"/>
+      <eng-data  t="4.097" f="1120.67" m="204.756" cg="375.5"/>
+      <eng-data  t="4.167" f="978.811" m="154.66" cg="375.5"/>
+      <eng-data  t="4.263" f="780.212" m="97.0976" cg="375.5"/>
+      <eng-data  t="4.327" f="624.169" m="66.4596" cg="375.5"/>
+      <eng-data  t="4.402" f="453.941" m="38.8971" cg="375.5"/>
+      <eng-data  t="4.428" f="375.92" m="31.5423" cg="375.5"/>
+      <eng-data  t="4.482" f="276.621" m="19.5308" cg="375.5"/>
+      <eng-data  t="4.53" f="177.321" m="12.1034" cg="375.5"/>
+      <eng-data  t="4.583" f="99.3" m="7.10588" cg="375.5"/>
+      <eng-data  t="4.653" f="42.557" m="3.72099" cg="375.5"/>
+      <eng-data  t="4.76" f="21.279" m="1.39267" cg="375.5"/>
+      <eng-data  t="4.952" f="0." m="0." cg="375.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

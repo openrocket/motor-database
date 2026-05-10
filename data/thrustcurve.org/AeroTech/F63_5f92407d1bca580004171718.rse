@@ -1,0 +1,33 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="F63R" Type="reloadable" dia="24." len="95." initWt="81."
+propWt="27.6" delays="4,6,8,10" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="61.927" peakThrust="72.931" throatDia="0." exitDia="0." Itot="49.542"
+burn-time="0.8" massFrac="34.07" Isp="183.04" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>Curve Fit From AT Instruction Sheet by C. Kobel 5/2/18
+delay times assumed by adjusting provided 10-sec delay grain
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="27.6" cg="47.5"/>
+      <eng-data  t="0.002" f="52.189" m="27.5709" cg="47.5"/>
+      <eng-data  t="0.018" f="59.103" m="27.0749" cg="47.5"/>
+      <eng-data  t="0.035" f="63.341" m="26.4951" cg="47.5"/>
+      <eng-data  t="0.063" f="66.686" m="25.481" cg="47.5"/>
+      <eng-data  t="0.1" f="68.916" m="24.0834" cg="47.5"/>
+      <eng-data  t="0.2" f="72.485" m="20.1446" cg="47.5"/>
+      <eng-data  t="0.3" f="72.931" m="16.094" cg="47.5"/>
+      <eng-data  t="0.35" f="71.816" m="14.078" cg="47.5"/>
+      <eng-data  t="0.4" f="70.478" m="12.0962" cg="47.5"/>
+      <eng-data  t="0.5" f="67.578" m="8.25062" cg="47.5"/>
+      <eng-data  t="0.6" f="63.118" m="4.61005" cg="47.5"/>
+      <eng-data  t="0.65" f="60.664" m="2.88606" cg="47.5"/>
+      <eng-data  t="0.665" f="58.657" m="2.3875" cg="47.5"/>
+      <eng-data  t="0.685" f="53.081" m="1.765" cg="47.5"/>
+      <eng-data  t="0.7" f="48.175" m="1.34193" cg="47.5"/>
+      <eng-data  t="0.8" f="0." m="0." cg="47.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

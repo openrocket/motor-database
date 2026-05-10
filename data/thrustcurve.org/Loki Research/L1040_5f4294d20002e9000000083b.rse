@@ -1,0 +1,44 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Loki" code="L1040LR" Type="reloadable" dia="54." len="736." initWt="2962."
+propWt="1684." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1006.07" peakThrust="1394.96" throatDia="0." exitDia="0."
+Itot="3722.46" burn-time="3.7" massFrac="40.18" Isp="318.98" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>54-2800 Loki Red</comments>
+    <data>
+      <eng-data  t="0." f="0." m="1190." cg="368."/>
+      <eng-data  t="0.015" f="1021.16" m="1187.55" cg="368."/>
+      <eng-data  t="0.03" f="1237.86" m="1182.14" cg="368."/>
+      <eng-data  t="0.074" f="1289.32" m="1164.36" cg="368."/>
+      <eng-data  t="0.115" f="1324.53" m="1147.23" cg="368."/>
+      <eng-data  t="0.218" f="1232.44" m="1105.14" cg="368."/>
+      <eng-data  t="0.392" f="1189.1" m="1037.79" cg="368."/>
+      <eng-data  t="0.514" f="1197.23" m="991.252" cg="368."/>
+      <eng-data  t="0.744" f="1232.44" m="901.93" cg="368."/>
+      <eng-data  t="1.032" f="1297.45" m="785.469" cg="368."/>
+      <eng-data  t="1.251" f="1340.79" m="693.117" cg="368."/>
+      <eng-data  t="1.517" f="1392.25" m="576.915" cg="368."/>
+      <eng-data  t="2.013" f="1394.96" m="355.943" cg="368."/>
+      <eng-data  t="2.161" f="1386.83" m="290.136" cg="368."/>
+      <eng-data  t="2.257" f="1343.49" m="248.24" cg="368."/>
+      <eng-data  t="2.416" f="1067.21" m="186.973" cg="368."/>
+      <eng-data  t="2.453" f="999.495" m="174.75" cg="368."/>
+      <eng-data  t="2.512" f="961.574" m="156.256" cg="368."/>
+      <eng-data  t="2.612" f="939.905" m="125.863" cg="368."/>
+      <eng-data  t="2.735" f="755.716" m="92.526" cg="368."/>
+      <eng-data  t="2.838" f="604.031" m="70.1397" cg="368."/>
+      <eng-data  t="2.897" f="509.228" m="59.641" cg="368."/>
+      <eng-data  t="3.012" f="474.015" m="41.5674" cg="368."/>
+      <eng-data  t="3.212" f="257.323" m="18.1879" cg="368."/>
+      <eng-data  t="3.297" f="170.646" m="12.3734" cg="368."/>
+      <eng-data  t="3.404" f="119.181" m="7.41648" cg="368."/>
+      <eng-data  t="3.475" f="113.764" m="4.77286" cg="368."/>
+      <eng-data  t="3.549" f="92.094" m="2.33794" cg="368."/>
+      <eng-data  t="3.619" f="54.173" m="0.701382" cg="368."/>
+      <eng-data  t="3.7" f="0." m="0." cg="368."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

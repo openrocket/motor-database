@@ -1,0 +1,57 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="K480W-P" Type="reloadable" dia="54." len="568."
+initWt="2059." propWt="1232." delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="478.075" peakThrust="915.996" throatDia="0." exitDia="0."
+Itot="2294.76" burn-time="4.8" massFrac="59.83" Isp="189.94" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>From AT Instruction Sheet by C. Kobel 3/12/10</comments>
+    <data>
+      <eng-data  t="0." f="0." m="1232." cg="284."/>
+      <eng-data  t="0.03" f="535.684" m="1227.69" cg="284."/>
+      <eng-data  t="0.045" f="860.341" m="1222.06" cg="284."/>
+      <eng-data  t="0.057" f="915.996" m="1216.34" cg="284."/>
+      <eng-data  t="0.098" f="830.194" m="1197.12" cg="284."/>
+      <eng-data  t="0.159" f="832.513" m="1169.9" cg="284."/>
+      <eng-data  t="0.246" f="795.409" m="1131.88" cg="284."/>
+      <eng-data  t="0.307" f="811.642" m="1105.56" cg="284."/>
+      <eng-data  t="0.398" f="793.09" m="1066.36" cg="284."/>
+      <eng-data  t="0.492" f="809.323" m="1025.93" cg="284."/>
+      <eng-data  t="0.557" f="823.237" m="997.445" cg="284."/>
+      <eng-data  t="0.621" f="811.642" m="969.358" cg="284."/>
+      <eng-data  t="0.689" f="779.176" m="940.319" cg="284."/>
+      <eng-data  t="0.735" f="795.409" m="920.876" cg="284."/>
+      <eng-data  t="0.845" f="767.581" m="874.724" cg="284."/>
+      <eng-data  t="0.989" f="718.883" m="817.265" cg="284."/>
+      <eng-data  t="1.091" f="707.288" m="778.215" cg="284."/>
+      <eng-data  t="1.25" f="684.098" m="718.829" cg="284."/>
+      <eng-data  t="1.307" f="667.865" m="698.142" cg="284."/>
+      <eng-data  t="1.5" f="653.952" m="629.661" cg="284."/>
+      <eng-data  t="1.606" f="656.271" m="592.379" cg="284."/>
+      <eng-data  t="1.742" f="651.633" m="544.631" cg="284."/>
+      <eng-data  t="1.909" f="628.443" m="487.246" cg="284."/>
+      <eng-data  t="2." f="605.253" m="457.11" cg="284."/>
+      <eng-data  t="2.25" f="586.701" m="377.119" cg="284."/>
+      <eng-data  t="2.5" f="565.83" m="299.773" cg="284."/>
+      <eng-data  t="2.75" f="547.279" m="225.073" cg="284."/>
+      <eng-data  t="2.886" f="544.96" m="185.198" cg="284."/>
+      <eng-data  t="3." f="524.089" m="152.483" cg="284."/>
+      <eng-data  t="3.064" f="491.623" m="135.033" cg="284."/>
+      <eng-data  t="3.144" f="417.416" m="115.511" cg="284."/>
+      <eng-data  t="3.25" f="394.226" m="92.4166" cg="284."/>
+      <eng-data  t="3.292" f="338.571" m="84.1547" cg="284."/>
+      <eng-data  t="3.451" f="271.32" m="58.1236" cg="284."/>
+      <eng-data  t="3.5" f="231.898" m="51.5046" cg="284."/>
+      <eng-data  t="3.625" f="178.561" m="37.7318" cg="284."/>
+      <eng-data  t="3.7" f="143.777" m="31.2422" cg="284."/>
+      <eng-data  t="3.871" f="132.182" m="18.5749" cg="284."/>
+      <eng-data  t="4." f="88.121" m="10.9461" cg="284."/>
+      <eng-data  t="4.133" f="41.742" m="6.30973" cg="284."/>
+      <eng-data  t="4.246" f="23.19" m="4.34012" cg="284."/>
+      <eng-data  t="4.5" f="18.552" m="1.49402" cg="284."/>
+      <eng-data  t="4.8" f="0." m="0." cg="284."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

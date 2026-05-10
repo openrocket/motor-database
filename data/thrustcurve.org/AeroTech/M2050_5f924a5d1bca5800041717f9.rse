@@ -1,0 +1,33 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="M2050X" Type="reloadable" dia="75." len="700."
+initWt="4559." propWt="2268." auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1986.74" peakThrust="2562.07" throatDia="0." exitDia="0."
+Itot="5491.36" burn-time="2.76" massFrac="49.75" Isp="246.9" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="2268." cg="350."/>
+      <eng-data  t="0.028" f="417.223" m="2265.59" cg="350."/>
+      <eng-data  t="0.067" f="2562.08" m="2241.59" cg="350."/>
+      <eng-data  t="0.151" f="2409.04" m="2155.36" cg="350."/>
+      <eng-data  t="0.261" f="2391.86" m="2046.31" cg="350."/>
+      <eng-data  t="0.372" f="2297.6" m="1938.81" cg="350."/>
+      <eng-data  t="0.557" f="2265.37" m="1764.49" cg="350."/>
+      <eng-data  t="0.779" f="2242.44" m="1557.83" cg="350."/>
+      <eng-data  t="0.965" f="2220.18" m="1386.42" cg="350."/>
+      <eng-data  t="1.15" f="2188.68" m="1217.99" cg="350."/>
+      <eng-data  t="1.372" f="2145.75" m="1019.28" cg="350."/>
+      <eng-data  t="1.816" f="2059.65" m="633.691" cg="350."/>
+      <eng-data  t="2.149" f="2027.93" m="352.602" cg="350."/>
+      <eng-data  t="2.325" f="2021." m="205.443" cg="350."/>
+      <eng-data  t="2.419" f="1865." m="130.01" cg="350."/>
+      <eng-data  t="2.495" f="1461.84" m="77.7965" cg="350."/>
+      <eng-data  t="2.611" f="804.758" m="23.5007" cg="350."/>
+      <eng-data  t="2.697" f="307.633" m="3.74511" cg="350."/>
+      <eng-data  t="2.736" f="91.61" m="0.529705" cg="350."/>
+      <eng-data  t="2.764" f="0." m="0." cg="350."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

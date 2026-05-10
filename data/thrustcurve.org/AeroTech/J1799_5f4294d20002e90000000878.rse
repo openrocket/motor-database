@@ -1,0 +1,52 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="J1799N" Type="reloadable" dia="54." len="368."
+initWt="1111." propWt="591." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1649.9" peakThrust="2114.01" throatDia="0." exitDia="0."
+Itot="1075.74" burn-time="0.65" massFrac="53.2" Isp="185.61" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>This is the J1799N. It was a replacement for the J1999N.</comments>
+    <data>
+      <eng-data  t="0." f="0." m="591." cg="184."/>
+      <eng-data  t="0.004" f="665.031" m="590.269" cg="184."/>
+      <eng-data  t="0.007" f="1338.87" m="588.618" cg="184."/>
+      <eng-data  t="0.009" f="1625.14" m="586.989" cg="184."/>
+      <eng-data  t="0.014" f="1497.42" m="582.701" cg="184."/>
+      <eng-data  t="0.02" f="2021.52" m="576.901" cg="184."/>
+      <eng-data  t="0.026" f="1572.29" m="570.978" cg="184."/>
+      <eng-data  t="0.042" f="1796.9" m="556.17" cg="184."/>
+      <eng-data  t="0.051" f="1730.84" m="547.448" cg="184."/>
+      <eng-data  t="0.062" f="1849.76" m="536.629" cg="184."/>
+      <eng-data  t="0.075" f="1788.1" m="523.638" cg="184."/>
+      <eng-data  t="0.083" f="1898.2" m="515.537" cg="184."/>
+      <eng-data  t="0.096" f="1832.14" m="502.216" cg="184."/>
+      <eng-data  t="0.104" f="1911.41" m="493.989" cg="184."/>
+      <eng-data  t="0.138" f="1955.45" m="457.874" cg="184."/>
+      <eng-data  t="0.144" f="2114.01" m="451.167" cg="184."/>
+      <eng-data  t="0.154" f="2008.31" m="439.843" cg="184."/>
+      <eng-data  t="0.176" f="2008.31" m="415.569" cg="184."/>
+      <eng-data  t="0.18" f="1964.26" m="411.204" cg="184."/>
+      <eng-data  t="0.207" f="1973.07" m="382.002" cg="184."/>
+      <eng-data  t="0.258" f="2025.92" m="325.978" cg="184."/>
+      <eng-data  t="0.325" f="1977.48" m="252.297" cg="184."/>
+      <eng-data  t="0.362" f="1937.84" m="212.503" cg="184."/>
+      <eng-data  t="0.399" f="1951.05" m="172.977" cg="184."/>
+      <eng-data  t="0.428" f="1933.43" m="142.033" cg="184."/>
+      <eng-data  t="0.44" f="1858.56" m="129.533" cg="184."/>
+      <eng-data  t="0.499" f="1695.61" m="71.9304" cg="184."/>
+      <eng-data  t="0.527" f="1633.95" m="46.3212" cg="184."/>
+      <eng-data  t="0.553" f="1523.85" m="23.7679" cg="184."/>
+      <eng-data  t="0.564" f="1431.36" m="14.8383" cg="184."/>
+      <eng-data  t="0.572" f="1114.26" m="9.24415" cg="184."/>
+      <eng-data  t="0.581" f="665.031" m="4.84529" cg="184."/>
+      <eng-data  t="0.587" f="409.589" m="3.07413" cg="184."/>
+      <eng-data  t="0.595" f="220.209" m="1.69011" cg="184."/>
+      <eng-data  t="0.604" f="96.892" m="0.90615" cg="184."/>
+      <eng-data  t="0.615" f="26.425" m="0.533529" cg="184."/>
+      <eng-data  t="0.633" f="39.638" m="0.206879" cg="184."/>
+      <eng-data  t="0.652" f="0." m="0." cg="184."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

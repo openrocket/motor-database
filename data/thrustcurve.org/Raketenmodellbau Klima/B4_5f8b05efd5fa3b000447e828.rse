@@ -1,0 +1,41 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Klima" code="B4" Type="single-use" dia="18." len="70." initWt="16.3"
+propWt="5.4" delays="0,4" auto-calc-mass="1" auto-calc-cg="1" avgThrust="3.664"
+peakThrust="8.001" throatDia="0." exitDia="0." Itot="4.998" burn-time="1.36"
+massFrac="33.13" Isp="94.37" tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1."
+FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Raketenmodellbau Klima GmbH
+Official manufacturer thrust data - B4
+Created by Leo Nutz for OpenRocket,
+released into the Public Domain (3/2014)
+
+Conversion in to .rse by Raketenmodellbau Klima / Floyd Wurster on 08/13/2014 for use in RockSim.</comments>
+    <data>
+      <eng-data  t="0." f="0." m="5.4" cg="35."/>
+      <eng-data  t="0.049" f="0.83" m="5.37803" cg="35."/>
+      <eng-data  t="0.096" f="1.745" m="5.31264" cg="35."/>
+      <eng-data  t="0.157" f="2.946" m="5.15804" cg="35."/>
+      <eng-data  t="0.209" f="3.89" m="4.966" cg="35."/>
+      <eng-data  t="0.273" f="4.977" m="4.6594" cg="35."/>
+      <eng-data  t="0.335" f="6.093" m="4.2886" cg="35."/>
+      <eng-data  t="0.38" f="7.122" m="3.96731" cg="35."/>
+      <eng-data  t="0.411" f="8.001" m="3.71403" cg="35."/>
+      <eng-data  t="0.436" f="7.065" m="3.51054" cg="35."/>
+      <eng-data  t="0.465" f="6.236" m="3.30214" cg="35."/>
+      <eng-data  t="0.516" f="5.063" m="2.99082" cg="35."/>
+      <eng-data  t="0.564" f="4.462" m="2.74381" cg="35."/>
+      <eng-data  t="0.607" f="4.205" m="2.54246" cg="35."/>
+      <eng-data  t="0.669" f="4.09" m="2.26461" cg="35."/>
+      <eng-data  t="0.9" f="4.09" m="1.24374" cg="35."/>
+      <eng-data  t="0.966" f="3.976" m="0.956122" cg="35."/>
+      <eng-data  t="1.025" f="3.719" m="0.710839" cg="35."/>
+      <eng-data  t="1.084" f="3.261" m="0.488347" cg="35."/>
+      <eng-data  t="1.145" f="2.546" m="0.296971" cg="35."/>
+      <eng-data  t="1.212" f="1.745" m="0.141646" cg="35."/>
+      <eng-data  t="1.295" f="0.772" m="0.0287788" cg="35."/>
+      <eng-data  t="1.364" f="0." m="0." cg="35."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

@@ -1,0 +1,37 @@
+;Estes A10T RASP.ENG file made from NAR published data
+; File produced March 3, 2011
+; The total impulse, peak thrust, average thrust and burn time are
+; the same as the averaged static test data on the NAR web site in
+; the certification file. The curve drawn with these data points is as
+; close to the certification curve as can be with such a limited
+; number of points (32) allowed with wRASP up to v1.6.
+A10T 13 45 0 .0038 .00525 E
+0.016 0.492
+0.040 0.752
+0.062 0.962
+0.078 2.051
+0.096 2.858
+0.122 4.611
+0.138 6.054
+0.162 8.100
+0.180 9.502
+0.198 9.740
+0.212 8.204
+0.224 4.530
+0.238 2.054
+0.268 1.414
+0.292 1.385
+0.324 1.067
+0.364 1.099
+0.396 0.957
+0.446 0.995
+0.490 0.901
+0.574 0.909
+0.676 0.909
+0.782 1.031
+0.886 1.048
+0.980 1.029
+1.006 0.995
+1.038 1.049
+1.050 0.741
+1.060 0.000

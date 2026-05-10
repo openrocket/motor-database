@@ -1,0 +1,22 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Loki" code="J350-SF" Type="reloadable" dia="54." len="327." initWt="1260."
+propWt="590." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="354.857" peakThrust="445.525" throatDia="0." exitDia="0."
+Itot="958.114" burn-time="2.7" massFrac="46.83" Isp="165.59" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="590." cg="163.5"/>
+      <eng-data  t="0.02" f="325.858" m="587.993" cg="163.5"/>
+      <eng-data  t="0.499161" f="377.432" m="484.236" cg="163.5"/>
+      <eng-data  t="1.00252" f="445.525" m="356.692" cg="163.5"/>
+      <eng-data  t="1.50168" f="437.743" m="220.943" cg="163.5"/>
+      <eng-data  t="2.00084" f="404.669" m="91.4728" cg="163.5"/>
+      <eng-data  t="2.20218" f="383.268" m="42.6265" cg="163.5"/>
+      <eng-data  t="2.5" f="48.8127" m="3.00585" cg="163.5"/>
+      <eng-data  t="2.7" f="0." m="0." cg="163.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

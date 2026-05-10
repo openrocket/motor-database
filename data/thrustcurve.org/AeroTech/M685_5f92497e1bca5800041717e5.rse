@@ -1,0 +1,37 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="M685W-PS" Type="reloadable" dia="75." len="936."
+initWt="7008." propWt="4320." delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="630.119" peakThrust="1380.01" throatDia="0." exitDia="0."
+Itot="7557.65" burn-time="11.99" massFrac="61.64" Isp="178.39" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>M685W-PS Moonburner</comments>
+    <data>
+      <eng-data  t="0." f="0." m="4320." cg="468."/>
+      <eng-data  t="0.083" f="1333.47" m="4288.37" cg="468."/>
+      <eng-data  t="0.13" f="1368.38" m="4252.07" cg="468."/>
+      <eng-data  t="0.249" f="1361.39" m="4159.23" cg="468."/>
+      <eng-data  t="0.308" f="1380.01" m="4113.01" cg="468."/>
+      <eng-data  t="0.403" f="1359.07" m="4038.64" cg="468."/>
+      <eng-data  t="0.675" f="1184.53" m="3840.9" cg="468."/>
+      <eng-data  t="1.018" f="1072.83" m="3619.61" cg="468."/>
+      <eng-data  t="1.456" f="996.029" m="3360.63" cg="468."/>
+      <eng-data  t="1.977" f="958.794" m="3069.55" cg="468."/>
+      <eng-data  t="2.995" f="914.578" m="2524.5" cg="468."/>
+      <eng-data  t="3.99" f="856.399" m="2020.88" cg="468."/>
+      <eng-data  t="4.985" f="781.929" m="1554.98" cg="468."/>
+      <eng-data  t="5.494" f="730.732" m="1334.92" cg="468."/>
+      <eng-data  t="5.991" f="679.534" m="1134.6" cg="468."/>
+      <eng-data  t="7.258" f="542.231" m="692.188" cg="468."/>
+      <eng-data  t="7.862" f="463.107" m="518.642" cg="468."/>
+      <eng-data  t="8.015" f="456.125" m="478.445" cg="468."/>
+      <eng-data  t="8.998" f="330.458" m="257.459" cg="468."/>
+      <eng-data  t="9.993" f="207.118" m="104.586" cg="468."/>
+      <eng-data  t="10.514" f="137.303" m="53.301" cg="468."/>
+      <eng-data  t="11.496" f="34.908" m="4.96846" cg="468."/>
+      <eng-data  t="11.994" f="0." m="0." cg="468."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

@@ -1,0 +1,40 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="M1850W" Type="reloadable" dia="75." len="935."
+initWt="6693." propWt="3951." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1133.21" peakThrust="2411." throatDia="0." exitDia="0." Itot="7365.9"
+burn-time="6.5" massFrac="57.91" Isp="188.77" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>75-7680 case
+Greg Gardner - 10/25/07
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="3979." cg="467.5"/>
+      <eng-data  t="0.1" f="2411." m="3913.88" cg="467.5"/>
+      <eng-data  t="0.2" f="2135." m="3791.09" cg="467.5"/>
+      <eng-data  t="0.3" f="2015." m="3679." cg="467.5"/>
+      <eng-data  t="0.4" f="2000." m="3570.56" cg="467.5"/>
+      <eng-data  t="0.5" f="2055." m="3461.04" cg="467.5"/>
+      <eng-data  t="1." f="2098." m="2900.18" cg="467.5"/>
+      <eng-data  t="1.5" f="1860." m="2365.66" cg="467.5"/>
+      <eng-data  t="2." f="1788." m="1873.01" cg="467.5"/>
+      <eng-data  t="2.5" f="1659." m="1407.5" cg="467.5"/>
+      <eng-data  t="3." f="1468." m="985.202" cg="467.5"/>
+      <eng-data  t="3.25" f="1423." m="789.99" cg="467.5"/>
+      <eng-data  t="3.35" f="1334." m="715.525" cg="467.5"/>
+      <eng-data  t="3.5" f="1201." m="612.821" cg="467.5"/>
+      <eng-data  t="3.75" f="934." m="468.657" cg="467.5"/>
+      <eng-data  t="3.8" f="930." m="443.484" cg="467.5"/>
+      <eng-data  t="4." f="881." m="345.655" cg="467.5"/>
+      <eng-data  t="4.25" f="600." m="245.652" cg="467.5"/>
+      <eng-data  t="4.5" f="468." m="173.537" cg="467.5"/>
+      <eng-data  t="4.75" f="400." m="114.926" cg="467.5"/>
+      <eng-data  t="5." f="290." m="68.3343" cg="467.5"/>
+      <eng-data  t="5.5" f="85." m="17.6913" cg="467.5"/>
+      <eng-data  t="6." f="23." m="3.1061" cg="467.5"/>
+      <eng-data  t="6.5" f="0." m="0." cg="467.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

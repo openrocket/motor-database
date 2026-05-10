@@ -1,0 +1,27 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="D22W" Type="single-use" dia="24." len="87." initWt="38."
+propWt="12." delays="4,7,10" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="19.053" peakThrust="27.691" throatDia="0." exitDia="0." Itot="19.243"
+burn-time="1.01" massFrac="31.58" Isp="163.52" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="12." cg="43.5"/>
+      <eng-data  t="0.002" f="0.02" m="12." cg="43.5"/>
+      <eng-data  t="0.023" f="1.38977" m="11.9908" cg="43.5"/>
+      <eng-data  t="0.059" f="21.5977" m="11.7327" cg="43.5"/>
+      <eng-data  t="0.102" f="25.0086" m="11.1079" cg="43.5"/>
+      <eng-data  t="0.174" f="27.691" m="9.92481" cg="43.5"/>
+      <eng-data  t="0.318" f="24.697" m="7.57267" cg="43.5"/>
+      <eng-data  t="0.462" f="22.4683" m="5.45503" cg="43.5"/>
+      <eng-data  t="0.642" f="21.8138" m="2.96978" cg="43.5"/>
+      <eng-data  t="0.861" f="16.2258" m="0.372322" cg="43.5"/>
+      <eng-data  t="0.897" f="6.84043" m="0.113413" cg="43.5"/>
+      <eng-data  t="0.936" f="1.08682" m="0.0170177" cg="43.5"/>
+      <eng-data  t="0.974" f="0.17947" m="0.00201447" cg="43.5"/>
+      <eng-data  t="1.01" f="0." m="0." cg="43.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

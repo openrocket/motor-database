@@ -1,0 +1,33 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="O5280X" Type="single-use" dia="98." len="1499."
+initWt="15681." propWt="9779." auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="4920.07" peakThrust="6321." throatDia="0." exitDia="0." Itot="22223.9"
+burn-time="4.52" massFrac="62.36" Isp="231.74" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="9779." cg="749.5"/>
+      <eng-data  t="0.02" f="97.5153" m="9778.57" cg="749.5"/>
+      <eng-data  t="0.063" f="5878.54" m="9722.03" cg="749.5"/>
+      <eng-data  t="0.116" f="6146.99" m="9581.81" cg="749.5"/>
+      <eng-data  t="0.206" f="6321." m="9334.93" cg="749.5"/>
+      <eng-data  t="0.349" f="6313.79" m="8937.42" cg="749.5"/>
+      <eng-data  t="0.578" f="6286.77" m="8302.58" cg="749.5"/>
+      <eng-data  t="0.921" f="6281.54" m="7354.13" cg="749.5"/>
+      <eng-data  t="1.378" f="6265.53" m="6092.58" cg="749.5"/>
+      <eng-data  t="1.834" f="6213.6" m="4840.62" cg="749.5"/>
+      <eng-data  t="2.29" f="6137.53" m="3601.49" cg="749.5"/>
+      <eng-data  t="2.746" f="6164.89" m="2367.26" cg="749.5"/>
+      <eng-data  t="2.87" f="6079." m="2033.23" cg="749.5"/>
+      <eng-data  t="3.202" f="4268.06" m="1277.44" cg="749.5"/>
+      <eng-data  t="3.659" f="2843.96" m="562.366" cg="749.5"/>
+      <eng-data  t="3.999" f="1793.96" m="215.434" cg="749.5"/>
+      <eng-data  t="4.19" f="1242.27" m="87.8456" cg="749.5"/>
+      <eng-data  t="4.38" f="513.758" m="14.4404" cg="749.5"/>
+      <eng-data  t="4.487" f="77.8319" m="0.513715" cg="749.5"/>
+      <eng-data  t="4.517" f="0." m="0." cg="749.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

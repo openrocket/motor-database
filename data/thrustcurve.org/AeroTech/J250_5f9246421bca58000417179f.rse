@@ -1,0 +1,35 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="J250W" Type="single-use" dia="54." len="218.2"
+initWt="708." propWt="363." delays="14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="244.228" peakThrust="335.735" throatDia="0." exitDia="0."
+Itot="708.75" burn-time="2.9" massFrac="51.27" Isp="199.1" tDiv="10" tStep="-1."
+tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>J250W DMS</comments>
+    <data>
+      <eng-data  t="0." f="0." m="363." cg="109.1"/>
+      <eng-data  t="0.005" f="149.863" m="362.808" cg="109.1"/>
+      <eng-data  t="0.016" f="124.444" m="362.035" cg="109.1"/>
+      <eng-data  t="0.048" f="224." m="359.18" cg="109.1"/>
+      <eng-data  t="0.051" f="290.723" m="358.785" cg="109.1"/>
+      <eng-data  t="0.077" f="309.787" m="354.786" cg="109.1"/>
+      <eng-data  t="0.221" f="324.085" m="331.411" cg="109.1"/>
+      <eng-data  t="0.269" f="316.141" m="323.542" cg="109.1"/>
+      <eng-data  t="0.497" f="335.735" m="285.481" cg="109.1"/>
+      <eng-data  t="0.997" f="324.085" m="200.996" cg="109.1"/>
+      <eng-data  t="1.497" f="288.605" m="122.545" cg="109.1"/>
+      <eng-data  t="1.713" f="266.893" m="91.8185" cg="109.1"/>
+      <eng-data  t="2.003" f="210.231" m="56.3851" cg="109.1"/>
+      <eng-data  t="2.162" f="176.87" m="40.6233" cg="109.1"/>
+      <eng-data  t="2.487" f="119.678" m="15.9424" cg="109.1"/>
+      <eng-data  t="2.516" f="125.503" m="14.1215" cg="109.1"/>
+      <eng-data  t="2.718" f="91.612" m="2.89038" cg="109.1"/>
+      <eng-data  t="2.766" f="45.541" m="1.20448" cg="109.1"/>
+      <eng-data  t="2.814" f="18.005" m="0.423372" cg="109.1"/>
+      <eng-data  t="2.867" f="7.943" m="0.0711928" cg="109.1"/>
+      <eng-data  t="2.902" f="0." m="0." cg="109.1"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

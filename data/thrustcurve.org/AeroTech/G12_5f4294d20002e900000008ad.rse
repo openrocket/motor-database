@@ -1,0 +1,35 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="G12ST" Type="single-use" dia="29." len="153."
+initWt="154.7" propWt="82." delays="1000" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="10.87" peakThrust="33.827" throatDia="0." exitDia="0." Itot="141.966"
+burn-time="13.06" massFrac="53.01" Isp="176.54" tDiv="10" tStep="-1." tFix="1"
+FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10"
+cgStep="-1." cgFix="1">
+    <comments>TMT Certified 142-G11-P 8-26-18</comments>
+    <data>
+      <eng-data  t="0." f="0." m="82." cg="76.5"/>
+      <eng-data  t="0.042" f="33.827" m="81.5897" cg="76.5"/>
+      <eng-data  t="0.104" f="30.173" m="80.4437" cg="76.5"/>
+      <eng-data  t="0.23" f="28.009" m="78.3265" cg="76.5"/>
+      <eng-data  t="0.543" f="22.326" m="73.7765" cg="76.5"/>
+      <eng-data  t="0.836" f="16.102" m="70.5248" cg="76.5"/>
+      <eng-data  t="1.024" f="12.448" m="68.9747" cg="76.5"/>
+      <eng-data  t="1.379" f="10.96" m="66.5748" cg="76.5"/>
+      <eng-data  t="2.006" f="10.148" m="62.7526" cg="76.5"/>
+      <eng-data  t="4.054" f="9.742" m="50.9883" cg="76.5"/>
+      <eng-data  t="6.269" f="10.148" m="38.2648" cg="76.5"/>
+      <eng-data  t="6.415" f="10.148" m="37.409" cg="76.5"/>
+      <eng-data  t="6.582" f="10.148" m="36.4302" cg="76.5"/>
+      <eng-data  t="11.973" f="9.742" m="5.46286" cg="76.5"/>
+      <eng-data  t="12.475" f="9.742" m="2.63811" cg="76.5"/>
+      <eng-data  t="12.663" f="9.607" m="1.58756" cg="76.5"/>
+      <eng-data  t="12.83" f="9.066" m="0.686963" cg="76.5"/>
+      <eng-data  t="12.913" f="7.713" m="0.284762" cg="76.5"/>
+      <eng-data  t="12.934" f="5.412" m="0.205161" cg="76.5"/>
+      <eng-data  t="13.018" f="2.03" m="0.0246232" cg="76.5"/>
+      <eng-data  t="13.06" f="0." m="0." cg="76.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

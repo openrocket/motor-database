@@ -1,0 +1,28 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Klima" code="A6" Type="single-use" dia="18." len="70." initWt="14.5"
+propWt="3.5" delays="4" auto-calc-mass="1" auto-calc-cg="1" avgThrust="3.515"
+peakThrust="10.477" throatDia="0." exitDia="0." Itot="2.495" burn-time="0.71"
+massFrac="24.14" Isp="72.7" tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1."
+FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Raketenmodellbau Klima GmbH
+Official manufacturer thrust data - A6
+Created by Leo Nutz for OpenRocket,
+released into the Public Domain (3/2014).
+
+Conversion in to .rse by Raketenmodellbau Klima / Floyd Wurster on 08/13/2014 for use in RockSim.
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="3.5" cg="35."/>
+      <eng-data  t="0.088" f="0.502" m="3.46902" cg="35."/>
+      <eng-data  t="0.186" f="4.601" m="3.11829" cg="35."/>
+      <eng-data  t="0.232" f="7.089" m="2.74117" cg="35."/>
+      <eng-data  t="0.314" f="10.477" m="1.73098" cg="35."/>
+      <eng-data  t="0.418" f="6.713" m="0.477193" cg="35."/>
+      <eng-data  t="0.467" f="3.011" m="0.143032" cg="35."/>
+      <eng-data  t="0.501" f="0.418" m="0.0612685" cg="35."/>
+      <eng-data  t="0.71" f="0." m="0." cg="35."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

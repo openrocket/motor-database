@@ -1,0 +1,47 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="G77R" Type="single-use" dia="29." len="124." initWt="122."
+propWt="59.1" delays="4" auto-calc-mass="1" auto-calc-cg="1" avgThrust="79.638"
+peakThrust="99.309" throatDia="0." exitDia="0." Itot="101.697" burn-time="1.28"
+massFrac="48.44" Isp="175.47" tDiv="10" tStep="-1." tFix="1" FDiv="10"
+FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1."
+cgFix="1">
+    <comments>Single-Use Casing. Entered by Tim Van Milligan for RockSim Users. Used John
+Coker's ThrustCurve Tracer software and NAR cert paperwork dated 7-29-06.
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="59.1" cg="62."/>
+      <eng-data  t="0.01" f="19.124" m="59.0444" cg="62."/>
+      <eng-data  t="0.018" f="15.668" m="58.9636" cg="62."/>
+      <eng-data  t="0.059" f="66.59" m="57.9836" cg="62."/>
+      <eng-data  t="0.084" f="72.35" m="56.9743" cg="62."/>
+      <eng-data  t="0.122" f="75.115" m="55.3461" cg="62."/>
+      <eng-data  t="0.151" f="77.419" m="54.0607" cg="62."/>
+      <eng-data  t="0.173" f="77.65" m="53.0694" cg="62."/>
+      <eng-data  t="0.271" f="85.945" m="48.411" cg="62."/>
+      <eng-data  t="0.337" f="88.018" m="45.0748" cg="62."/>
+      <eng-data  t="0.424" f="91.935" m="40.5257" cg="62."/>
+      <eng-data  t="0.475" f="93.318" m="37.7804" cg="62."/>
+      <eng-data  t="0.523" f="94.931" m="35.1548" cg="62."/>
+      <eng-data  t="0.57" f="96.313" m="32.5431" cg="62."/>
+      <eng-data  t="0.61" f="96.313" m="30.3042" cg="62."/>
+      <eng-data  t="0.644" f="99.309" m="28.3716" cg="62."/>
+      <eng-data  t="0.656" f="96.774" m="27.6879" cg="62."/>
+      <eng-data  t="0.728" f="95.622" m="23.6628" cg="62."/>
+      <eng-data  t="0.792" f="94.24" m="20.1321" cg="62."/>
+      <eng-data  t="0.902" f="91.014" m="14.2109" cg="62."/>
+      <eng-data  t="0.961" f="88.479" m="11.1337" cg="62."/>
+      <eng-data  t="1.017" f="88.018" m="8.26179" cg="62."/>
+      <eng-data  t="1.047" f="84.562" m="6.7574" cg="62."/>
+      <eng-data  t="1.071" f="81.106" m="5.60209" cg="62."/>
+      <eng-data  t="1.099" f="76.037" m="4.32359" cg="62."/>
+      <eng-data  t="1.127" f="69.355" m="3.14069" cg="62."/>
+      <eng-data  t="1.158" f="61.06" m="1.96596" cg="62."/>
+      <eng-data  t="1.188" f="44.931" m="1.04203" cg="62."/>
+      <eng-data  t="1.213" f="30.184" m="0.496379" cg="62."/>
+      <eng-data  t="1.231" f="18.203" m="0.243304" cg="62."/>
+      <eng-data  t="1.277" f="0." m="0." cg="62."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

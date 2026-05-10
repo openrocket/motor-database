@@ -1,0 +1,55 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="K513FJ" Type="reloadable" dia="54." len="410."
+initWt="1647." propWt="974." delays="6" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="541.036" peakThrust="656.019" throatDia="0." exitDia="0."
+Itot="1474.86" burn-time="2.73" massFrac="59.14" Isp="154.41" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Input by Tim Van Milligan using ThrustCurve Tracer by John Coker. Data from
+Tripoli certification paperwork dated 25 November 2007.
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="974." cg="205."/>
+      <eng-data  t="0.007" f="555.093" m="972.717" cg="205."/>
+      <eng-data  t="0.015" f="652.655" m="969.527" cg="205."/>
+      <eng-data  t="0.041" f="551.729" m="959.187" cg="205."/>
+      <eng-data  t="0.059" f="592.099" m="952.388" cg="205."/>
+      <eng-data  t="0.074" f="551.729" m="946.723" cg="205."/>
+      <eng-data  t="0.2" f="575.278" m="899.834" cg="205."/>
+      <eng-data  t="0.282" f="582.007" m="868.498" cg="205."/>
+      <eng-data  t="0.412" f="605.556" m="817.521" cg="205."/>
+      <eng-data  t="0.519" f="615.649" m="774.374" cg="205."/>
+      <eng-data  t="0.679" f="635.834" m="708.256" cg="205."/>
+      <eng-data  t="0.823" f="642.562" m="647.47" cg="205."/>
+      <eng-data  t="0.986" f="649.291" m="577.939" cg="205."/>
+      <eng-data  t="1.12" f="652.655" m="520.332" cg="205."/>
+      <eng-data  t="1.328" f="656.019" m="430.45" cg="205."/>
+      <eng-data  t="1.48" f="649.291" m="364.936" cg="205."/>
+      <eng-data  t="1.602" f="629.105" m="313.437" cg="205."/>
+      <eng-data  t="1.854" f="585.371" m="212.38" cg="205."/>
+      <eng-data  t="1.999" f="555.093" m="157.775" cg="205."/>
+      <eng-data  t="2.054" f="545." m="137.796" cg="205."/>
+      <eng-data  t="2.08" f="545." m="128.439" cg="205."/>
+      <eng-data  t="2.114" f="528.179" m="116.39" cg="205."/>
+      <eng-data  t="2.184" f="524.815" m="92.0513" cg="205."/>
+      <eng-data  t="2.229" f="521.451" m="76.5049" cg="205."/>
+      <eng-data  t="2.258" f="504.63" m="66.6793" cg="205."/>
+      <eng-data  t="2.295" f="474.352" m="54.7187" cg="205."/>
+      <eng-data  t="2.325" f="437.346" m="45.6874" cg="205."/>
+      <eng-data  t="2.358" f="380.155" m="36.7794" cg="205."/>
+      <eng-data  t="2.37" f="349.877" m="33.8868" cg="205."/>
+      <eng-data  t="2.399" f="312.871" m="27.5404" cg="205."/>
+      <eng-data  t="2.451" f="272.5" m="17.4894" cg="205."/>
+      <eng-data  t="2.492" f="238.858" m="10.5665" cg="205."/>
+      <eng-data  t="2.529" f="161.482" m="5.67539" cg="205."/>
+      <eng-data  t="2.57" f="84.105" m="2.35059" cg="205."/>
+      <eng-data  t="2.592" f="43.735" m="1.42191" cg="205."/>
+      <eng-data  t="2.618" f="26.914" m="0.815371" cg="205."/>
+      <eng-data  t="2.655" f="13.457" m="0.322142" cg="205."/>
+      <eng-data  t="2.692" f="6.728" m="0.0755339" cg="205."/>
+      <eng-data  t="2.726" f="0." m="0." cg="205."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

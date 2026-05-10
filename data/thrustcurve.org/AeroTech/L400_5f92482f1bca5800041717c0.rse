@@ -1,0 +1,48 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="L400W" Type="reloadable" dia="98." len="443.2"
+initWt="5084.74" propWt="2648.97" delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="293.408" peakThrust="720.612" throatDia="0." exitDia="0."
+Itot="4676.34" burn-time="15.94" massFrac="52.1" Isp="180.02" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Aerotech L400W-PS created using TCtracer and AT thrustcurve</comments>
+    <data>
+      <eng-data  t="0." f="0." m="2648.97" cg="221.6"/>
+      <eng-data  t="0.031" f="436.662" m="2645.13" cg="221.6"/>
+      <eng-data  t="0.062" f="493.929" m="2636.96" cg="221.6"/>
+      <eng-data  t="0.063" f="586.988" m="2636.65" cg="221.6"/>
+      <eng-data  t="0.108" f="634.711" m="2621.08" cg="221.6"/>
+      <eng-data  t="0.154" f="606.077" m="2604.92" cg="221.6"/>
+      <eng-data  t="0.277" f="622.78" m="2562.11" cg="221.6"/>
+      <eng-data  t="0.4" f="639.483" m="2518.13" cg="221.6"/>
+      <eng-data  t="0.508" f="610.85" m="2479.89" cg="221.6"/>
+      <eng-data  t="0.538" f="601.305" m="2469.59" cg="221.6"/>
+      <eng-data  t="0.908" f="665.731" m="2336.81" cg="221.6"/>
+      <eng-data  t="1.092" f="684.82" m="2266.43" cg="221.6"/>
+      <eng-data  t="1.631" f="720.612" m="2051.87" cg="221.6"/>
+      <eng-data  t="1.954" f="706.295" m="1921.33" cg="221.6"/>
+      <eng-data  t="2.385" f="703.909" m="1749.18" cg="221.6"/>
+      <eng-data  t="2.6" f="701.523" m="1663.6" cg="221.6"/>
+      <eng-data  t="2.769" f="689.592" m="1597.01" cg="221.6"/>
+      <eng-data  t="3.2" f="656.186" m="1432.73" cg="221.6"/>
+      <eng-data  t="3.754" f="586.988" m="1237.67" cg="221.6"/>
+      <eng-data  t="4.354" f="527.335" m="1048.3" cg="221.6"/>
+      <eng-data  t="5.262" f="434.276" m="800.999" cg="221.6"/>
+      <eng-data  t="5.815" f="386.553" m="672.435" cg="221.6"/>
+      <eng-data  t="6.477" f="336.445" m="536.874" cg="221.6"/>
+      <eng-data  t="7.354" f="276.791" m="384.551" cg="221.6"/>
+      <eng-data  t="8.046" f="217.138" m="287.743" cg="221.6"/>
+      <eng-data  t="8.846" f="167.029" m="200.696" cg="221.6"/>
+      <eng-data  t="9.862" f="107.376" m="121.733" cg="221.6"/>
+      <eng-data  t="10.969" f="64.426" m="67.8667" cg="221.6"/>
+      <eng-data  t="11.969" f="40.564" m="38.1303" cg="221.6"/>
+      <eng-data  t="12.969" f="26.247" m="19.2074" cg="221.6"/>
+      <eng-data  t="13.985" f="14.317" m="7.53463" cg="221.6"/>
+      <eng-data  t="14.938" f="7.158" m="1.73813" cg="221.6"/>
+      <eng-data  t="15.462" f="2.386" m="0.321675" cg="221.6"/>
+      <eng-data  t="15.938" f="0." m="0." cg="221.6"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

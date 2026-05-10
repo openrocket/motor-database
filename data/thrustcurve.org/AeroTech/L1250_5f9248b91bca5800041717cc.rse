@@ -1,0 +1,37 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="L1250DM" Type="reloadable" dia="75." len="801."
+initWt="5647." propWt="2565." delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1145.25" peakThrust="1553.61" throatDia="0." exitDia="0."
+Itot="4400.06" burn-time="3.84" massFrac="45.42" Isp="174.92" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="2565." cg="400.5"/>
+      <eng-data  t="0.032" f="1511.09" m="2550.91" cg="400.5"/>
+      <eng-data  t="0.049" f="1295.22" m="2537." cg="400.5"/>
+      <eng-data  t="0.211" f="1334.47" m="2412.83" cg="400.5"/>
+      <eng-data  t="0.247" f="1396.61" m="2384.17" cg="400.5"/>
+      <eng-data  t="0.256" f="1553.61" m="2376.43" cg="400.5"/>
+      <eng-data  t="0.284" f="1380.26" m="2352.49" cg="400.5"/>
+      <eng-data  t="0.491" f="1354.09" m="2187.51" cg="400.5"/>
+      <eng-data  t="1.493" f="1448.94" m="1368.87" cg="400.5"/>
+      <eng-data  t="1.72" f="1468.57" m="1175.84" cg="400.5"/>
+      <eng-data  t="1.862" f="1478.38" m="1053.86" cg="400.5"/>
+      <eng-data  t="2.008" f="1458.76" m="928.875" cg="400.5"/>
+      <eng-data  t="2.499" f="1334.47" m="529.128" cg="400.5"/>
+      <eng-data  t="3.002" f="1174.2" m="161.33" cg="400.5"/>
+      <eng-data  t="3.108" f="889.644" m="97.5653" cg="400.5"/>
+      <eng-data  t="3.156" f="667.233" m="75.7835" cg="400.5"/>
+      <eng-data  t="3.245" f="444.822" m="46.9356" cg="400.5"/>
+      <eng-data  t="3.42" f="225.682" m="12.7347" cg="400.5"/>
+      <eng-data  t="3.505" f="94.852" m="4.79336" cg="400.5"/>
+      <eng-data  t="3.529" f="62.144" m="3.69511" cg="400.5"/>
+      <eng-data  t="3.574" f="39.249" m="2.36521" cg="400.5"/>
+      <eng-data  t="3.663" f="16.354" m="0.922811" cg="400.5"/>
+      <eng-data  t="3.785" f="6.541" m="0.108672" cg="400.5"/>
+      <eng-data  t="3.842" f="0." m="0." cg="400.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

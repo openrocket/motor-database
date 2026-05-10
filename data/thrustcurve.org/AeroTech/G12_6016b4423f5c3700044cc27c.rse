@@ -1,0 +1,39 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="G12ST" Type="single-use" dia="29." len="156." initWt="150."
+propWt="82." delays="0" auto-calc-mass="1" auto-calc-cg="1" avgThrust="11.574"
+peakThrust="31.263" throatDia="0." exitDia="0." Itot="145.847" burn-time="12.6"
+massFrac="54.67" Isp="181.37" tDiv="10" tStep="-1." tFix="1" FDiv="10"
+FStep="-1." FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1."
+cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="82." cg="78."/>
+      <eng-data  t="0.005" f="0.1561" m="81.9998" cg="78."/>
+      <eng-data  t="0.032" f="1.672" m="81.9859" cg="78."/>
+      <eng-data  t="0.043" f="5.2585" m="81.9645" cg="78."/>
+      <eng-data  t="0.078" f="21.9365" m="81.6969" cg="78."/>
+      <eng-data  t="0.15" f="24.0015" m="80.7671" cg="78."/>
+      <eng-data  t="0.33" f="28.2116" m="78.1251" cg="78."/>
+      <eng-data  t="0.478" f="31.0011" m="75.6615" cg="78."/>
+      <eng-data  t="0.502" f="31.2631" m="75.2414" cg="78."/>
+      <eng-data  t="0.644" f="15.2447" m="73.3849" cg="78."/>
+      <eng-data  t="0.876" f="12.2725" m="71.5902" cg="78."/>
+      <eng-data  t="1.164" f="11.4507" m="69.6696" cg="78."/>
+      <eng-data  t="1.755" f="10.679" m="65.9929" cg="78."/>
+      <eng-data  t="3.003" f="10.1589" m="58.6823" cg="78."/>
+      <eng-data  t="4.025" f="9.8697" m="52.9281" cg="78."/>
+      <eng-data  t="5.141" f="9.9547" m="46.7086" cg="78."/>
+      <eng-data  t="6.725" f="10.9102" m="37.4177" cg="78."/>
+      <eng-data  t="8.856" f="12.0202" m="23.681" cg="78."/>
+      <eng-data  t="11.232" f="12.7126" m="7.16116" cg="78."/>
+      <eng-data  t="12.01" f="11.3399" m="1.90066" cg="78."/>
+      <eng-data  t="12.19" f="9.21" m="0.860817" cg="78."/>
+      <eng-data  t="12.261" f="6.9116" m="0.539041" cg="78."/>
+      <eng-data  t="12.344" f="4.5435" m="0.271763" cg="78."/>
+      <eng-data  t="12.472" f="1.5521" m="0.0524252" cg="78."/>
+      <eng-data  t="12.568" f="0.2906" m="0.00269585" cg="78."/>
+      <eng-data  t="12.601" f="0." m="0." cg="78."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

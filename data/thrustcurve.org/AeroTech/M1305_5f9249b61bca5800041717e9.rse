@@ -1,0 +1,44 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="M1305M" Type="reloadable" dia="98." len="597."
+initWt="7098." propWt="4080." delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="1207.16" peakThrust="1927.67" throatDia="0." exitDia="0."
+Itot="6889.26" burn-time="5.71" massFrac="57.48" Isp="172.18" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>M1305 Metalstorm</comments>
+    <data>
+      <eng-data  t="0." f="0." m="4080." cg="298.5"/>
+      <eng-data  t="0.016" f="1288.08" m="4073.9" cg="298.5"/>
+      <eng-data  t="0.043" f="1462.78" m="4051.9" cg="298.5"/>
+      <eng-data  t="0.08" f="1370.99" m="4020.86" cg="298.5"/>
+      <eng-data  t="0.407" f="1622.68" m="3730.98" cg="298.5"/>
+      <eng-data  t="0.535" f="1640.45" m="3607.3" cg="298.5"/>
+      <eng-data  t="0.787" f="1705.59" m="3357.62" cg="298.5"/>
+      <eng-data  t="0.985" f="1693.74" m="3158.32" cg="298.5"/>
+      <eng-data  t="1.13" f="1717.43" m="3011.85" cg="298.5"/>
+      <eng-data  t="1.328" f="1693.74" m="2811.85" cg="298.5"/>
+      <eng-data  t="1.349" f="1927.67" m="2789.33" cg="298.5"/>
+      <eng-data  t="1.397" f="1726.32" m="2737.4" cg="298.5"/>
+      <eng-data  t="1.751" f="1711.51" m="2377.03" cg="298.5"/>
+      <eng-data  t="2.018" f="1687.82" m="2108.27" cg="298.5"/>
+      <eng-data  t="2.275" f="1690.78" m="1851.16" cg="298.5"/>
+      <eng-data  t="2.297" f="1892.14" m="1827.82" cg="298.5"/>
+      <eng-data  t="2.318" f="1678.94" m="1805.61" cg="298.5"/>
+      <eng-data  t="2.929" f="1412.44" m="1246.3" cg="298.5"/>
+      <eng-data  t="3.748" f="1113.37" m="633.75" cg="298.5"/>
+      <eng-data  t="4.24" f="906.095" m="339.539" cg="298.5"/>
+      <eng-data  t="4.503" f="802.456" m="206.481" cg="298.5"/>
+      <eng-data  t="4.717" f="663.285" m="113.6" cg="298.5"/>
+      <eng-data  t="4.813" f="538.919" m="79.4249" cg="298.5"/>
+      <eng-data  t="4.92" f="387.903" m="50.0594" cg="298.5"/>
+      <eng-data  t="5.027" f="245.771" m="29.982" cg="298.5"/>
+      <eng-data  t="5.166" f="145.094" m="13.8941" cg="298.5"/>
+      <eng-data  t="5.263" f="79.95" m="7.4302" cg="298.5"/>
+      <eng-data  t="5.386" f="32.572" m="3.33193" cg="298.5"/>
+      <eng-data  t="5.498" f="23.689" m="1.46606" cg="298.5"/>
+      <eng-data  t="5.707" f="0." m="0." cg="298.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

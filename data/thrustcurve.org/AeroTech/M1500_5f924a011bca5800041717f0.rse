@@ -1,0 +1,58 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="M1500G" Type="reloadable" dia="75." len="665."
+initWt="4896." propWt="2631." delays="0,6,10,14,18" auto-calc-mass="1"
+auto-calc-cg="1" avgThrust="1449.23" peakThrust="1716.51" throatDia="0."
+exitDia="0." Itot="5217.24" burn-time="3.6" massFrac="53.74" Isp="202.21"
+tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10"
+mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Curvefit of AeroTech Instructions by C. Kobel 11/19/08</comments>
+    <data>
+      <eng-data  t="0." f="0." m="2631." cg="332.5"/>
+      <eng-data  t="0.012" f="1183.8" m="2627.42" cg="332.5"/>
+      <eng-data  t="0.023" f="1614.27" m="2619.66" cg="332.5"/>
+      <eng-data  t="0.05" f="1694.99" m="2597.13" cg="332.5"/>
+      <eng-data  t="0.1" f="1716.51" m="2554.12" cg="332.5"/>
+      <eng-data  t="0.15" f="1694.99" m="2511.11" cg="332.5"/>
+      <eng-data  t="0.2" f="1603.51" m="2469.52" cg="332.5"/>
+      <eng-data  t="0.25" f="1517.42" m="2430.18" cg="332.5"/>
+      <eng-data  t="0.3" f="1490.51" m="2392.26" cg="332.5"/>
+      <eng-data  t="0.4" f="1474.37" m="2317.5" cg="332.5"/>
+      <eng-data  t="0.5" f="1485.13" m="2242.88" cg="332.5"/>
+      <eng-data  t="0.6" f="1512.04" m="2167.3" cg="332.5"/>
+      <eng-data  t="0.7" f="1533.56" m="2090.51" cg="332.5"/>
+      <eng-data  t="0.8" f="1571.23" m="2012.22" cg="332.5"/>
+      <eng-data  t="0.9" f="1608.89" m="1932.04" cg="332.5"/>
+      <eng-data  t="1." f="1630.42" m="1850.36" cg="332.5"/>
+      <eng-data  t="1.1" f="1657.32" m="1767.46" cg="332.5"/>
+      <eng-data  t="1.2" f="1684.22" m="1683.21" cg="332.5"/>
+      <eng-data  t="1.3" f="1694.99" m="1598." cg="332.5"/>
+      <eng-data  t="1.4" f="1694.99" m="1512.53" cg="332.5"/>
+      <eng-data  t="1.5" f="1700.37" m="1426.91" cg="332.5"/>
+      <eng-data  t="1.6" f="1700.37" m="1341.17" cg="332.5"/>
+      <eng-data  t="1.7" f="1705.75" m="1255.28" cg="332.5"/>
+      <eng-data  t="1.8" f="1689.61" m="1169.67" cg="332.5"/>
+      <eng-data  t="1.9" f="1662.7" m="1085.14" cg="332.5"/>
+      <eng-data  t="2." f="1657.32" m="1001.43" cg="332.5"/>
+      <eng-data  t="2.1" f="1608.89" m="919.076" cg="332.5"/>
+      <eng-data  t="2.2" f="1581.99" m="838.619" cg="332.5"/>
+      <eng-data  t="2.3" f="1555.08" m="759.52" cg="332.5"/>
+      <eng-data  t="2.4" f="1522.8" m="681.912" cg="332.5"/>
+      <eng-data  t="2.5" f="1490.51" m="605.933" cg="332.5"/>
+      <eng-data  t="2.6" f="1463.61" m="531.447" cg="332.5"/>
+      <eng-data  t="2.7" f="1431.32" m="458.452" cg="332.5"/>
+      <eng-data  t="2.8" f="1415.18" m="386.679" cg="332.5"/>
+      <eng-data  t="2.9" f="1388.28" m="315.992" cg="332.5"/>
+      <eng-data  t="3." f="1361.37" m="246.661" cg="332.5"/>
+      <eng-data  t="3.1" f="1372.13" m="177.737" cg="332.5"/>
+      <eng-data  t="3.2" f="1286.04" m="110.712" cg="332.5"/>
+      <eng-data  t="3.25" f="1226.85" m="79.0318" cg="332.5"/>
+      <eng-data  t="3.3" f="973.945" m="51.2859" cg="332.5"/>
+      <eng-data  t="3.4" f="478.901" m="14.6531" cg="332.5"/>
+      <eng-data  t="3.45" f="220.617" m="5.83412" cg="332.5"/>
+      <eng-data  t="3.5" f="80.714" m="2.03516" cg="332.5"/>
+      <eng-data  t="3.6" f="0." m="0." cg="332.5"/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

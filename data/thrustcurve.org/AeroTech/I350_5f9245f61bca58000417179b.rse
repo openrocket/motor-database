@@ -1,0 +1,44 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="I350-10R" Type="single-use" dia="38." len="356."
+initWt="616." propWt="348." delays="0" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="401.007" peakThrust="486.027" throatDia="0." exitDia="0."
+Itot="643.616" burn-time="1.6" massFrac="56.49" Isp="188.59" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Aerotech I350-10R single use motor file created using Aerotech instruction
+sheet data and thrust tracer utility.
+</comments>
+    <data>
+      <eng-data  t="0." f="0." m="348." cg="178."/>
+      <eng-data  t="0.004" f="2.809" m="347.997" cg="178."/>
+      <eng-data  t="0.008" f="207.896" m="347.769" cg="178."/>
+      <eng-data  t="0.031" f="272.512" m="344.782" cg="178."/>
+      <eng-data  t="0.035" f="359.603" m="344.098" cg="178."/>
+      <eng-data  t="0.046" f="407.363" m="341.818" cg="178."/>
+      <eng-data  t="0.081" f="432.648" m="333.869" cg="178."/>
+      <eng-data  t="0.104" f="435.457" m="328.471" cg="178."/>
+      <eng-data  t="0.127" f="427.029" m="323.108" cg="178."/>
+      <eng-data  t="0.184" f="435.457" m="309.818" cg="178."/>
+      <eng-data  t="0.223" f="443.886" m="300.546" cg="178."/>
+      <eng-data  t="0.299" f="469.17" m="281.786" cg="178."/>
+      <eng-data  t="0.399" f="480.408" m="256.115" cg="178."/>
+      <eng-data  t="0.503" f="486.027" m="228.942" cg="178."/>
+      <eng-data  t="0.603" f="474.789" m="202.967" cg="178."/>
+      <eng-data  t="0.702" f="469.17" m="177.702" cg="178."/>
+      <eng-data  t="0.802" f="457.933" m="152.638" cg="178."/>
+      <eng-data  t="0.906" f="443.886" m="127.283" cg="178."/>
+      <eng-data  t="1.002" f="432.648" m="104.534" cg="178."/>
+      <eng-data  t="1.098" f="415.792" m="82.5137" cg="178."/>
+      <eng-data  t="1.205" f="390.507" m="59.1898" cg="178."/>
+      <eng-data  t="1.298" f="368.032" m="40.1183" cg="178."/>
+      <eng-data  t="1.401" f="345.556" m="20.2479" cg="178."/>
+      <eng-data  t="1.443" f="325.891" m="12.6239" cg="178."/>
+      <eng-data  t="1.497" f="216.324" m="4.70823" cg="178."/>
+      <eng-data  t="1.532" f="101.138" m="1.70435" cg="178."/>
+      <eng-data  t="1.57" f="33.713" m="0.318998" cg="178."/>
+      <eng-data  t="1.605" f="0." m="0." cg="178."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

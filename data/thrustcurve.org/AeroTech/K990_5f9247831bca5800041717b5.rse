@@ -1,0 +1,47 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="K990DM" Type="reloadable" dia="54." len="598."
+initWt="2109." propWt="1224." delays="14" auto-calc-mass="1" auto-calc-cg="1"
+avgThrust="877.19" peakThrust="1068.83" throatDia="0." exitDia="0."
+Itot="1874.56" burn-time="2.14" massFrac="58.04" Isp="156.17" tDiv="10"
+tStep="-1." tFix="1" FDiv="10" FStep="-1." FFix="1" mDiv="10" mStep="-1."
+mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <comments>Aerotech K990DM 54/2800</comments>
+    <data>
+      <eng-data  t="0." f="0." m="1224." cg="299."/>
+      <eng-data  t="0.016" f="35.558" m="1223.81" cg="299."/>
+      <eng-data  t="0.024" f="223.805" m="1223.14" cg="299."/>
+      <eng-data  t="0.028" f="868.03" m="1221.71" cg="299."/>
+      <eng-data  t="0.036" f="1068.83" m="1216.65" cg="299."/>
+      <eng-data  t="0.044" f="895.222" m="1211.52" cg="299."/>
+      <eng-data  t="0.048" f="863.847" m="1209.23" cg="299."/>
+      <eng-data  t="0.06" f="840.839" m="1202.55" cg="299."/>
+      <eng-data  t="0.228" f="966.337" m="1103.43" cg="299."/>
+      <eng-data  t="0.286" f="953.788" m="1067.07" cg="299."/>
+      <eng-data  t="0.369" f="964.246" m="1015.09" cg="299."/>
+      <eng-data  t="0.407" f="993.529" m="990.805" cg="299."/>
+      <eng-data  t="0.423" f="976.796" m="980.513" cg="299."/>
+      <eng-data  t="0.498" f="989.345" m="932.37" cg="299."/>
+      <eng-data  t="0.694" f="1024.9" m="803.479" cg="299."/>
+      <eng-data  t="0.865" f="1043.73" m="687.993" cg="299."/>
+      <eng-data  t="0.962" f="1054.19" m="621.555" cg="299."/>
+      <eng-data  t="1.117" f="1054.19" m="514.863" cg="299."/>
+      <eng-data  t="1.282" f="1029.09" m="402.64" cg="299."/>
+      <eng-data  t="1.51" f="983.071" m="252.861" cg="299."/>
+      <eng-data  t="1.589" f="960.063" m="202.744" cg="299."/>
+      <eng-data  t="1.688" f="953.788" m="140.886" cg="299."/>
+      <eng-data  t="1.732" f="968.429" m="113.274" cg="299."/>
+      <eng-data  t="1.748" f="1001.89" m="102.981" cg="299."/>
+      <eng-data  t="1.778" f="957.971" m="83.7858" cg="299."/>
+      <eng-data  t="1.802" f="891.038" m="69.2979" cg="299."/>
+      <eng-data  t="1.857" f="671.416" m="41.2421" cg="299."/>
+      <eng-data  t="1.913" f="447.611" m="20.7832" cg="299."/>
+      <eng-data  t="1.97" f="223.805" m="8.2887" cg="299."/>
+      <eng-data  t="2.006" f="129.682" m="4.13411" cg="299."/>
+      <eng-data  t="2.063" f="46.016" m="0.864505" cg="299."/>
+      <eng-data  t="2.097" f="14.641" m="0.191198" cg="299."/>
+      <eng-data  t="2.137" f="0." m="0." cg="299."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>

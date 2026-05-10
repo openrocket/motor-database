@@ -1,0 +1,28 @@
+<engine-database>
+  <engine-list>
+    <engine  mfg="Aerotech" code="J510" Type="reloadable" dia="38." len="584." initWt="1080."
+propWt="662." delays="0" auto-calc-mass="1" auto-calc-cg="1" avgThrust="472.2"
+peakThrust="1055.9" throatDia="0." exitDia="0." Itot="1180.5" burn-time="2.5"
+massFrac="61.3" Isp="181.84" tDiv="10" tStep="-1." tFix="1" FDiv="10" FStep="-1."
+FFix="1" mDiv="10" mStep="-1." mFix="1" cgDiv="10" cgStep="-1." cgFix="1">
+    <data>
+      <eng-data  t="0." f="0." m="662." cg="292."/>
+      <eng-data  t="0.032" f="1055.9" m="652.526" cg="292."/>
+      <eng-data  t="0.11" f="865.54" m="610.503" cg="292."/>
+      <eng-data  t="0.161" f="829.933" m="586.258" cg="292."/>
+      <eng-data  t="0.267" f="794.325" m="537.983" cg="292."/>
+      <eng-data  t="0.351" f="780.63" m="500.889" cg="292."/>
+      <eng-data  t="0.512" f="705.306" m="433.809" cg="292."/>
+      <eng-data  t="0.682" f="654.633" m="368.986" cg="292."/>
+      <eng-data  t="1.318" f="624.504" m="140.88" cg="292."/>
+      <eng-data  t="1.461" f="475.225" m="96.786" cg="292."/>
+      <eng-data  t="1.623" f="345.121" m="59.5233" cg="292."/>
+      <eng-data  t="1.934" f="153.387" m="16.0528" cg="292."/>
+      <eng-data  t="2.039" f="115.04" m="8.15004" cg="292."/>
+      <eng-data  t="2.177" f="41.086" m="2.10893" cg="292."/>
+      <eng-data  t="2.317" f="5.478" m="0.281083" cg="292."/>
+      <eng-data  t="2.5" f="0." m="0." cg="292."/>
+    </data>
+  </engine>
+</engine-list>
+</engine-database>
