@@ -205,7 +205,9 @@ Variant report filters:
 
 ## Signing
 
-Signing is done in CI after the database build completes.
+Signing is done in an isolated CI job after the database build completes and passes release validation. The signing
+job runs on a fresh runner, uses only Python's standard library and the runner-provided OpenSSL executable, and never
+runs the data-fetch or deployment actions with the private key available.
 
 What is signed:
 - Canonical message: `openrocket-motordb-v1\n{database_version}\n{sha256_gz}\n`
@@ -217,9 +219,12 @@ What gets added to `metadata.json` by the signing step:
 - `key_id` (optional): identifier for key rotation
 
 How CI handles it:
-- `.github/workflows/update-motors.yml` installs `cryptography`
-- It runs `python scripts/sign_database.py motors.db.gz metadata.json`
-- The private key is provided via secrets
+- The build job checks SQLite integrity and foreign keys, schema and metadata consistency, minimum row counts,
+  unexpected count drops, thrust-point bounds, and sufficient time coverage for every curve.
+- A fresh signing job revalidates the artifact and runs `python scripts/sign_database.py motors.db.gz metadata.json`.
+- The signer delegates Ed25519 operations to OpenSSL, so no third-party Python package is loaded with the private key.
+- A separate publishing job verifies the signature again before deploying only `motors.db.gz` and `metadata.json`.
+- All workflow actions are pinned to immutable commit SHAs.
 
 Set the private key in:
 
@@ -231,8 +236,7 @@ Manual signing: `python scripts/sign_database.py motors.db.gz metadata.json`
 ## Unit Tests
 
 1.  `pip install -r scripts/requirements.txt`
-2.  `pip install pytest cryptography`
-3.  `pytest`
+2.  `pytest`
 
 ## Data Attribution & License
 The motor data in this repository is cached from [ThrustCurve.org](https://www.thrustcurve.org). 

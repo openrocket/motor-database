@@ -1,38 +1,41 @@
-from cryptography.hazmat.primitives.asymmetric import ed25519
-from cryptography.hazmat.primitives import serialization
+"""Generate an Ed25519 signing key pair using the system OpenSSL executable."""
+
 import base64
+import os
+import subprocess
+import tempfile
 
-## Helper script to generate an Ed25519 keypair for OpenRocket update signing
 
-# 1. Generate the private key
-private_key = ed25519.Ed25519PrivateKey.generate()
+def run_openssl(arguments):
+    """Run OpenSSL and raise a concise error if key generation fails."""
+    try:
+        subprocess.run(["openssl", *arguments], check=True, capture_output=True)
+    except (OSError, subprocess.CalledProcessError) as error:
+        raise RuntimeError("OpenSSL could not generate the Ed25519 key pair") from error
 
-# 2. Extract Private Key bytes (PKCS8 format is standard and easy to handle)
-priv_bytes = private_key.private_bytes(
-    encoding=serialization.Encoding.DER,
-    format=serialization.PrivateFormat.PKCS8,
-    encryption_algorithm=serialization.NoEncryption()
-)
 
-# 3. Extract Public Key bytes (SubjectPublicKeyInfo format)
-public_key = private_key.public_key()
-pub_bytes = public_key.public_bytes(
-    encoding=serialization.Encoding.PEM, # Helper to get the bytes, we strip headers later if needed
-    format=serialization.PublicFormat.SubjectPublicKeyInfo
-)
+def main():
+    with tempfile.TemporaryDirectory(prefix="openrocket-motordb-keygen-") as temp_dir:
+        private_pem_path = os.path.join(temp_dir, "private.pem")
+        private_der_path = os.path.join(temp_dir, "private.der")
+        public_der_path = os.path.join(temp_dir, "public.der")
 
-# Convert to pure Base64 strings (stripping PEM headers for easier copy-pasting)
-priv_b64 = base64.b64encode(priv_bytes).decode('utf-8')
+        run_openssl(["genpkey", "-algorithm", "Ed25519", "-out", private_pem_path])
+        run_openssl(["pkey", "-in", private_pem_path, "-outform", "DER", "-out", private_der_path])
+        run_openssl([
+            "pkey", "-in", private_pem_path, "-pubout", "-outform", "DER", "-out", public_der_path,
+        ])
 
-# For the public key, let's get the raw bytes then base64 encode them
-# so it looks like "MCowBQYDK2VwAyEA..."
-raw_pub_bytes = public_key.public_bytes(
-    encoding=serialization.Encoding.DER,
-    format=serialization.PublicFormat.SubjectPublicKeyInfo
-)
-pub_b64 = base64.b64encode(raw_pub_bytes).decode('utf-8')
+        with open(private_der_path, "rb") as private_file:
+            private_key_b64 = base64.b64encode(private_file.read()).decode("utf-8")
+        with open(public_der_path, "rb") as public_file:
+            public_key_b64 = base64.b64encode(public_file.read()).decode("utf-8")
 
-print("=== COPY TO GITHUB SECRETS (Private Key) ===")
-print(priv_b64)
-print("\n=== COPY TO OPENROCKET JAVA CODE (Public Key) ===")
-print(pub_b64)
+    print("=== COPY TO GITHUB SECRETS (Private Key) ===")
+    print(private_key_b64)
+    print("\n=== COPY TO OPENROCKET JAVA CODE (Public Key) ===")
+    print(public_key_b64)
+
+
+if __name__ == "__main__":
+    main()

@@ -3,10 +3,9 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import subprocess
 
 import pytest
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import ed25519
 
 
 MODULE_PATH = Path(__file__).resolve().parents[1] / "scripts" / "sign_database.py"
@@ -17,14 +16,27 @@ sign_db = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(sign_db)
 
 
-def _generate_private_key_b64():
-    private_key = ed25519.Ed25519PrivateKey.generate()
-    private_key_bytes = private_key.private_bytes(
-        encoding=serialization.Encoding.DER,
-        format=serialization.PrivateFormat.PKCS8,
-        encryption_algorithm=serialization.NoEncryption(),
+def _generate_private_key_b64(tmp_path):
+    private_key_path = tmp_path / "private-key.pem"
+    private_key_der_path = tmp_path / "private-key.der"
+    public_key_path = tmp_path / "public-key.pem"
+    subprocess.run(
+        ["openssl", "genpkey", "-algorithm", "Ed25519", "-out", str(private_key_path)],
+        check=True,
+        capture_output=True,
     )
-    return private_key, base64.b64encode(private_key_bytes).decode("utf-8")
+    subprocess.run(
+        ["openssl", "pkey", "-in", str(private_key_path), "-outform", "DER", "-out", str(private_key_der_path)],
+        check=True,
+        capture_output=True,
+    )
+    subprocess.run(
+        ["openssl", "pkey", "-in", str(private_key_path), "-pubout", "-out", str(public_key_path)],
+        check=True,
+        capture_output=True,
+    )
+    private_key_b64 = base64.b64encode(private_key_der_path.read_bytes()).decode("utf-8")
+    return private_key_b64, public_key_path
 
 
 def test_compute_sha256_hex(tmp_path):
@@ -41,7 +53,7 @@ def test_load_private_key_rejects_invalid_base64():
 
 
 def test_sign_metadata_writes_signature(tmp_path):
-    private_key, key_b64 = _generate_private_key_b64()
+    key_b64, public_key_path = _generate_private_key_b64(tmp_path)
     gz_path = tmp_path / "motors.db.gz"
     meta_path = tmp_path / "metadata.json"
     gz_path.write_bytes(b"payload")
@@ -59,12 +71,22 @@ def test_sign_metadata_writes_signature(tmp_path):
     assert metadata["key_id"] == "1"
 
     message = f"{sign_db.MESSAGE_PREFIX}\n{metadata['database_version']}\n{sha}\n"
-    signature = base64.b64decode(metadata["sig"])
-    private_key.public_key().verify(signature, message.encode("utf-8"))
+    message_path = tmp_path / "message"
+    signature_path = tmp_path / "signature"
+    message_path.write_text(message)
+    signature_path.write_bytes(base64.b64decode(metadata["sig"]))
+    subprocess.run(
+        [
+            "openssl", "pkeyutl", "-verify", "-pubin", "-rawin",
+            "-inkey", str(public_key_path), "-in", str(message_path), "-sigfile", str(signature_path),
+        ],
+        check=True,
+        capture_output=True,
+    )
 
 
 def test_sign_metadata_missing_database_version(tmp_path):
-    _, key_b64 = _generate_private_key_b64()
+    key_b64, _ = _generate_private_key_b64(tmp_path)
     gz_path = tmp_path / "motors.db.gz"
     meta_path = tmp_path / "metadata.json"
     gz_path.write_bytes(b"payload")
