@@ -795,6 +795,7 @@ def build(force=False):
             "motor_count": build_state["motor_count"],
             "curve_count": build_state["curve_count"],
             "sha256": build_state["sha256"],
+            "sha256_gz": build_state["sha256"],
             "last_checked": last_checked,
             "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
         }
@@ -1185,6 +1186,7 @@ def build(force=False):
         "motor_count": motor_count,
         "curve_count": curve_count,
         "sha256": sha256_hex,
+        "sha256_gz": sha256_hex,
         "last_checked": last_checked,
         "download_url": "https://openrocket.github.io/motor-database/motors.db.gz"
     }
