@@ -8686,7 +8686,7 @@
       "caseInfo": "AMW 54-2550",
       "propInfo": "Skidmark",
       "sparky": true,
-      "updatedOn": "2019-04-17"
+      "updatedOn": "2026-08-21"
     },
     "5f4294d200023100000003af": {
       "motorId": "5f4294d200023100000003af",
@@ -8926,7 +8926,7 @@
       "caseInfo": "AMW 54-2550",
       "propInfo": "Blue Baboon",
       "sparky": false,
-      "updatedOn": "2019-04-17"
+      "updatedOn": "2026-08-21"
     },
     "5f4294d2000231000000017a": {
       "motorId": "5f4294d2000231000000017a",
@@ -9161,12 +9161,12 @@
       "dataFiles": 2,
       "infoUrl": "http://nar.org/SandT/pdf/Animal/M1350.pdf",
       "totalWeightG": 5403,
-      "propWeightG": 2927.3,
+      "propWeightG": 2927.2999999999997,
       "delays": "P",
       "caseInfo": "AMW 75-6000",
       "propInfo": "White Wolf",
       "sparky": false,
-      "updatedOn": "2019-04-17"
+      "updatedOn": "2026-08-21"
     },
     "5f4294d200023100000001a9": {
       "motorId": "5f4294d200023100000001a9",
@@ -9238,7 +9238,7 @@
       "caseInfo": "AMW 75-6000",
       "propInfo": "Blue Baboon",
       "sparky": false,
-      "updatedOn": "2019-04-17"
+      "updatedOn": "2026-08-21"
     },
     "5f4294d200023100000001b4": {
       "motorId": "5f4294d200023100000001b4",
@@ -9454,7 +9454,7 @@
       "caseInfo": "AMW 98-11000",
       "propInfo": "Blue Baboon",
       "sparky": false,
-      "updatedOn": "2019-04-17"
+      "updatedOn": "2026-08-21"
     },
     "5f4294d2000231000000027f": {
       "motorId": "5f4294d2000231000000027f",
@@ -9520,13 +9520,13 @@
       "burnTimeS": 4.2,
       "dataFiles": 2,
       "infoUrl": null,
-      "totalWeightG": 13668.3,
+      "totalWeightG": 13668.300000000001,
       "propWeightG": 7565.7,
       "delays": "P",
       "caseInfo": "AMW 98-17500",
       "propInfo": "Blue Baboon",
       "sparky": false,
-      "updatedOn": "2019-04-17"
+      "updatedOn": "2026-08-21"
     },
     "5f4294d20002310000000003": {
       "motorId": "5f4294d20002310000000003",
@@ -19414,7 +19414,7 @@
       "caseInfo": null,
       "propInfo": "black powder",
       "sparky": false,
-      "updatedOn": "2019-10-05"
+      "updatedOn": "2026-08-20"
     },
     "5f4294d20002310000000028": {
       "motorId": "5f4294d20002310000000028",
