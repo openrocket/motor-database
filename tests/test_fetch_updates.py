@@ -12,15 +12,6 @@ fetch_updates = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(fetch_updates)
 
 
-class DummyResponse:
-    def __init__(self, status_code, payload):
-        self.status_code = status_code
-        self._payload = payload
-
-    def json(self):
-        return self._payload
-
-
 def test_load_state_handles_missing_and_corrupt(tmp_path, monkeypatch):
     state_file = tmp_path / "state.json"
     monkeypatch.setattr(fetch_updates, "STATE_LAST_UPDATE_FILE", str(state_file))
@@ -48,11 +39,12 @@ def test_get_manufacturers_saves_list(tmp_path, monkeypatch):
     manuf_file = tmp_path / "data" / "manufacturers.json"
     monkeypatch.setattr(fetch_updates, "MANUFACTURERS_FILE", str(manuf_file))
 
-    def fake_get(url, json=None, headers=None):
+    def fake_request(url, payload, method):
         assert url == fetch_updates.TC_API_METADATA
-        return DummyResponse(200, {"manufacturers": [{"name": "Acme", "abbrev": "AC"}]})
+        assert method == "GET"
+        return 200, {"manufacturers": [{"name": "Acme", "abbrev": "AC"}]}
 
-    monkeypatch.setattr(fetch_updates.requests, "get", fake_get)
+    monkeypatch.setattr(fetch_updates, "request_json", fake_request)
 
     names = fetch_updates.get_manufacturers()
 
@@ -68,9 +60,10 @@ def test_download_motor_data_writes_files_and_mapping(tmp_path, monkeypatch):
     content = "F32 29 124 0 0.05 0.07 Test Motors\n0 5\n0.5 0\n"
     encoded = base64.b64encode(content.encode("utf-8")).decode("utf-8")
 
-    def fake_post(url, json=None, headers=None):
+    def fake_request(url, payload, method):
         assert url == fetch_updates.TC_API_DOWNLOAD
-        return DummyResponse(
+        assert method == "POST"
+        return (
             200,
             {
                 "results": [
@@ -87,7 +80,7 @@ def test_download_motor_data_writes_files_and_mapping(tmp_path, monkeypatch):
             },
         )
 
-    monkeypatch.setattr(fetch_updates.requests, "post", fake_post)
+    monkeypatch.setattr(fetch_updates, "request_json", fake_request)
 
     mapping = {}
     saved_count, simfile_ids = fetch_updates.download_motor_data(
@@ -114,10 +107,11 @@ def test_download_motor_data_writes_multiple_formats(tmp_path, monkeypatch):
         "<eng-data t=\"0.5\" f=\"0.0\" /></data></engine></engine-list></engine-database>"
     )
 
-    def fake_post(url, json=None, headers=None):
+    def fake_request(url, payload, method):
         assert url == fetch_updates.TC_API_DOWNLOAD
-        assert "format" not in json
-        return DummyResponse(
+        assert "format" not in payload
+        assert method == "POST"
+        return (
             200,
             {
                 "results": [
@@ -137,7 +131,7 @@ def test_download_motor_data_writes_multiple_formats(tmp_path, monkeypatch):
             },
         )
 
-    monkeypatch.setattr(fetch_updates.requests, "post", fake_post)
+    monkeypatch.setattr(fetch_updates, "request_json", fake_request)
 
     mapping = {}
     saved_count, simfile_ids = fetch_updates.download_motor_data(
@@ -176,16 +170,16 @@ def test_fetch_motors_saves_metadata_mapping_and_state(tmp_path, monkeypatch):
         str(data_dir / "manufacturers.json"),
     )
 
-    def fake_get(url, json=None, headers=None):
-        assert url == fetch_updates.TC_API_METADATA
-        return DummyResponse(200, {"manufacturers": [{"name": "Acme", "abbrev": "AC"}]})
-
     content = "G64 29 150 0 0.08 0.1 Acme\n0 10\n0.6 0\n"
     encoded = base64.b64encode(content.encode("utf-8")).decode("utf-8")
 
-    def fake_post(url, json=None, headers=None):
+    def fake_request(url, payload, method):
+        if url == fetch_updates.TC_API_METADATA:
+            assert method == "GET"
+            return 200, {"manufacturers": [{"name": "Acme", "abbrev": "AC"}]}
         if url == fetch_updates.TC_API_SEARCH:
-            return DummyResponse(
+            assert method == "POST"
+            return (
                 200,
                 {
                     "results": [
@@ -217,8 +211,9 @@ def test_fetch_motors_saves_metadata_mapping_and_state(tmp_path, monkeypatch):
                 },
             )
         if url == fetch_updates.TC_API_DOWNLOAD:
-            assert "format" not in json
-            return DummyResponse(
+            assert "format" not in payload
+            assert method == "POST"
+            return (
                 200,
                 {
                     "results": [
@@ -236,8 +231,7 @@ def test_fetch_motors_saves_metadata_mapping_and_state(tmp_path, monkeypatch):
             )
         raise AssertionError(f"Unexpected URL: {url}")
 
-    monkeypatch.setattr(fetch_updates.requests, "get", fake_get)
-    monkeypatch.setattr(fetch_updates.requests, "post", fake_post)
+    monkeypatch.setattr(fetch_updates, "request_json", fake_request)
     monkeypatch.setattr(fetch_updates.time, "sleep", lambda _: None)
 
     fetch_updates.fetch_motors()
