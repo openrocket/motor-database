@@ -1,9 +1,10 @@
 import os
 import json
-import requests
 import time
 import base64
 from datetime import datetime
+from urllib.error import HTTPError
+from urllib.request import Request, urlopen
 
 # Config
 DATA_DIR = "data/thrustcurve.org"
@@ -21,6 +22,28 @@ HEADERS = {
     'User-Agent': 'OpenRocket-Updater/1.0',
     'Content-Type': 'application/json'
 }
+
+REQUEST_TIMEOUT_SECONDS = 30
+MAX_API_RESPONSE_BYTES = 25 * 1024 * 1024
+
+
+def request_json(url, payload, method):
+    """Send a bounded JSON request and return ``(status_code, response_json)``."""
+    request_data = json.dumps(payload).encode("utf-8")
+    request = Request(url, data=request_data, headers=HEADERS, method=method)
+
+    try:
+        with urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
+            content_length = response.headers.get("Content-Length")
+            if content_length and int(content_length) > MAX_API_RESPONSE_BYTES:
+                raise ValueError(f"API response exceeds {MAX_API_RESPONSE_BYTES} bytes")
+
+            response_data = response.read(MAX_API_RESPONSE_BYTES + 1)
+            if len(response_data) > MAX_API_RESPONSE_BYTES:
+                raise ValueError(f"API response exceeds {MAX_API_RESPONSE_BYTES} bytes")
+            return response.status, json.loads(response_data.decode("utf-8"))
+    except HTTPError as error:
+        return error.code, None
 
 
 def load_state():
@@ -122,9 +145,8 @@ def get_manufacturers():
             "availability": "all"
         }
 
-        resp = requests.get(TC_API_METADATA, json=payload, headers=HEADERS)
-        if resp.status_code == 200:
-            data = resp.json()
+        status_code, data = request_json(TC_API_METADATA, payload, "GET")
+        if status_code == 200:
             manufacturers = data.get('manufacturers', [])
             
             # Save the full manufacturers list for use in build_database.py
@@ -151,12 +173,11 @@ def download_motor_data(motor_id, mfr_name, motor_name, simfile_mapping):
     }
 
     try:
-        resp = requests.post(TC_API_DOWNLOAD, json=payload, headers=HEADERS)
-        if resp.status_code != 200:
-            print(f"  [Error] Download failed for {motor_id}: Status {resp.status_code}")
+        status_code, data = request_json(TC_API_DOWNLOAD, payload, "POST")
+        if status_code != 200:
+            print(f"  [Error] Download failed for {motor_id}: Status {status_code}")
             return 0, []
 
-        data = resp.json()
         results = data.get('results', [])
 
         saved_count = 0
@@ -244,12 +265,12 @@ def fetch_motors():
         }
 
         try:
-            resp = requests.post(TC_API_SEARCH, json=search_payload, headers=HEADERS)
-            if resp.status_code != 200:
-                print(f"Failed to search {mfr}: {resp.status_code}")
+            status_code, data = request_json(TC_API_SEARCH, search_payload, "POST")
+            if status_code != 200:
+                print(f"Failed to search {mfr}: {status_code}")
                 continue
 
-            results = resp.json().get('results', [])
+            results = data.get('results', [])
 
             # Client-side filtering for dates (since API search criteria is limited)
             motors_to_update = []
@@ -356,9 +377,8 @@ def rebuild_simfile_mapping():
         }
         
         try:
-            resp = requests.post(TC_API_DOWNLOAD, json=payload, headers=HEADERS)
-            if resp.status_code == 200:
-                data = resp.json()
+            status_code, data = request_json(TC_API_DOWNLOAD, payload, "POST")
+            if status_code == 200:
                 results = data.get('results', [])
                 
                 for res in results:
