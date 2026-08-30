@@ -3228,7 +3228,7 @@
       "type": "reload",
       "avgThrustN": 218,
       "maxThrustN": null,
-      "totImpulseNs": 330,
+      "totImpulseNs": 319.63,
       "burnTimeS": 1.51,
       "dataFiles": 2,
       "infoUrl": "https://nar.org/SandT/pdf/Aerotech/I218.pdf",
@@ -3238,7 +3238,7 @@
       "caseInfo": "RMS-38/360",
       "propInfo": "Redline",
       "sparky": false,
-      "updatedOn": "2022-07-23"
+      "updatedOn": "2026-08-29"
     },
     "5f4294d2000231000000046f": {
       "motorId": "5f4294d2000231000000046f",
