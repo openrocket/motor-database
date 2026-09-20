@@ -27719,6 +27719,30 @@
       "propInfo": "black powder",
       "sparky": false,
       "updatedOn": "2026-08-12"
+    },
+    "6aa672715eabcd0002df9b36": {
+      "motorId": "6aa672715eabcd0002df9b36",
+      "manufacturer": "ZEVETA Bojkovice, a.s.",
+      "manufacturerAbbrev": "ZEVETA",
+      "designation": "ROS-40-5",
+      "commonName": "F27",
+      "impulseClass": "F",
+      "diameter": 34,
+      "length": 60,
+      "type": "SU",
+      "avgThrustN": 27.1,
+      "maxThrustN": 123,
+      "totImpulseNs": 41.7,
+      "burnTimeS": 1.6,
+      "dataFiles": 1,
+      "infoUrl": "https://www.raketaci.eu/index.php/knihovna-jen-si-vybrat/vsechny-clanky/97-motory-na-thp/kupovane-motory/41-raketove-moroty-ros-40",
+      "totalWeightG": 135,
+      "propWeightG": 30,
+      "delays": "5",
+      "caseInfo": null,
+      "propInfo": "composite",
+      "sparky": false,
+      "updatedOn": "2026-09-13"
     }
   }
 }

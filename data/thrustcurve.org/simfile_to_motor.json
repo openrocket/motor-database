@@ -15582,5 +15582,13 @@
     "license": null,
     "infoUrl": "/simfiles/5f4294d20002e9000000054b/",
     "dataUrl": "/simfiles/5f4294d20002e9000000054b/download/data.rse"
+  },
+  "6aa6d2a7593d99000250d4f8": {
+    "motorId": "6aa672715eabcd0002df9b36",
+    "format": "RASP",
+    "source": "user",
+    "license": "PD",
+    "infoUrl": "/simfiles/6aa6d2a7593d99000250d4f8/",
+    "dataUrl": "/simfiles/6aa6d2a7593d99000250d4f8/download/data.eng"
   }
 }
